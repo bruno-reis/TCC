@@ -1,6 +1,6 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ui.calendar'])
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {

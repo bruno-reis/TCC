@@ -17,7 +17,7 @@ angular.module('app.routes', [])
     views: {
       'tab5': {
         templateUrl: 'templates/horarios.html',
-        controller: 'horariosCtrl'
+        controller: 'scheduleCtrl'
       }
     }
   })
