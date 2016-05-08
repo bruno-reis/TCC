@@ -2,90 +2,80 @@
 
 angular.module('app.routes', [])
 
-.config(function($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
-    
-  
+      .state('root', {
+        url: '/root',
+        templateUrl: 'templates/app.html',
+        abstract:true
+      })
 
-      .state('estudaAi.horarios', {
-    url: '/page2',
-    views: {
-      'tab5': {
-        templateUrl: 'templates/horarios.html',
-        controller: 'scheduleCtrl'
-      }
-    }
-  })
+      .state('root.calendar', {
+        url: '/calendar',
+        views: {
+          'calendar': {
+            templateUrl: 'templates/calendar.html',
+            controller: 'scheduleCtrl'
+          }
+        }
+      })
 
-  .state('estudaAi.materias', {
-    url: '/page3',
-    views: {
-      'tab4': {
-        templateUrl: 'templates/materias.html',
-        controller: 'materiasCtrl'
-      }
-    }
-  })
+      .state('root.subjectList', {
+        url: '/subject-list',
+        views: {
+          'subjectList': {
+            templateUrl: 'templates/subject-list.html',
+            controller: 'subjectListCtrl'
+          }
+        }
+      })
 
-  .state('estudaAi', {
-    url: '/page1',
-    templateUrl: 'templates/estudaAi.html',
-    abstract:true
-  })
+      .state('root.subject', {
+        url: '/subject',
+        views: {
+          'subjectList': {
+            templateUrl: 'templates/subject.html',
+            controller: 'subjectCtrl'
+          }
+        }
+      })
 
-  .state('estudaAi.concorrentes', {
-    url: '/page5',
-    views: {
-      'tab4': {
-        templateUrl: 'templates/concorrentes.html',
-        controller: 'concorrentesCtrl'
-      }
-    }
-  })
+      .state('root.subjectAdd', {
+        url: '/subject-add',
+        views: {
+          'subjectList': {
+            templateUrl: 'templates/subject-add.html',
+            controller: 'subjectAddCtrl'
+          }
+        }
+      })
 
-  .state('estudaAi.adicionarMateria', {
-    url: '/page9',
-    views: {
-      'tab4': {
-        templateUrl: 'templates/adicionarMateria.html',
-        controller: 'adicionarMateriaCtrl'
-      }
-    }
-  })
+      .state('root.subjectAddExam', {
+        url: '/subeject-add-exam',
+        views: {
+          'subjectList': {
+            templateUrl: 'templates/subject-add-exam.html',
+            controller: 'subjectAddExamCtrl'
+          }
+        }
+      })
 
-  .state('estudaAi.adicionarProva', {
-    url: '/page10',
-    views: {
-      'tab4': {
-        templateUrl: 'templates/adicionarProva.html',
-        controller: 'adicionarProvaCtrl'
-      }
-    }
-  })
+      .state('root.subjectAddHomework', {
+        url: '/subject-add-homework',
+        views: {
+          'subjectList': {
+            templateUrl: 'templates/subject-add-homework.html',
+            controller: 'subjectAddHomeworkCtrl'
+          }
+        }
+      })
 
-  .state('estudaAi.adicionarLista', {
-    url: '/page11',
-    views: {
-      'tab4': {
-        templateUrl: 'templates/adicionarLista.html',
-        controller: 'adicionarListaCtrl'
-      }
-    }
-  })
+      .state('activities', {
+        url: '/activities',
+        templateUrl: 'templates/activities.html',
+        controller: 'activitiesCtrl'
+      })
 
-  .state('atividades', {
-    url: '/page12',
-    templateUrl: 'templates/atividades.html',
-    controller: 'atividadesCtrl'
-  })
-
-$urlRouterProvider.otherwise('/page1/page2')
-
-  
-
-});
+    $urlRouterProvider.otherwise('/root/calendar')
+  });

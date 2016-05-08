@@ -1,34 +1,29 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 angular.module('app.controllers', [])
-     
-.controller('horariosCtrl', function($scope) {
+  .controller('subjectCtrl', function($scope) {
 
-})
-   
-.controller('materiasCtrl', function($scope) {
+  })
 
-})
-      
-.controller('concorrentesCtrl', function($scope) {
+  .controller('subjectListCtrl', function($scope) {
 
-})
-   
-.controller('adicionarMateriaCtrl', function($scope) {
+  })
 
-})
-   
-.controller('adicionarProvaCtrl', function($scope) {
+  .controller('subjectAddCtrl', function($scope) {
 
-})
-   
-.controller('adicionarListaCtrl', function($scope) {
+  })
 
-})
-   
-.controller('atividadesCtrl', function($scope) {
+  .controller('subjectAddExamCtrl', function($scope) {
 
-})
+  })
+
+  .controller('subjectAddHomeworkCtrl', function($scope) {
+
+  })
+
+  .controller('activitiesCtrl', function($scope) {
+
+  })
 
   .controller('scheduleCtrl',function($scope, Events){
 
