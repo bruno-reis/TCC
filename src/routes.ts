@@ -26,7 +26,7 @@ angular.module('app.routes', [])
         views: {
           'subjectList': {
             templateUrl: 'templates/subject-list.html',
-            controller: 'subjectListCtrl'
+            controller: 'subjectListCtrl as vm'
           }
         }
       })
@@ -36,7 +36,7 @@ angular.module('app.routes', [])
         views: {
           'subjectList': {
             templateUrl: 'templates/subject.html',
-            controller: 'subjectCtrl'
+            controller: 'subjectCtrl as vm'
           }
         }
       })

@@ -1,13 +1,38 @@
 /// <reference path="../typings/tsd.d.ts" />
 
+class SubjectCtrl {
+  public $inject = ['$stateParams', '$state']
+  subjects: Array<string>
+
+  constructor() {
+    this.subjects = ['Análise', 'Concorrentes', 'Robótica']
+  }
+
+  selectSubject() {
+    // this.$state.go('root.subjectAdd')
+  }
+
+  addSubject() {
+    // this.$state.go()
+  }
+}
+
+class SubjectListCtrl {
+  public $inject = ['$state']
+
+  constructor(public $state) {
+
+  }
+
+  addSubject() {
+    this.$state.go('root.subjectAdd')
+  }
+}
+
 angular.module('app.controllers', [])
-  .controller('subjectCtrl', function($scope) {
+  .controller('subjectCtrl', ['$scope', '$state', SubjectCtrl])
 
-  })
-
-  .controller('subjectListCtrl', function($scope) {
-
-  })
+  .controller('subjectListCtrl', SubjectListCtrl)
 
   .controller('subjectAddCtrl', function($scope) {
 
@@ -78,7 +103,7 @@ angular.module('app.controllers', [])
         header:{
           left: 'agendaDay',
           center: 'title',
-          right: 'today prev,next'
+          right: 'prev,next'
         },
         dayClick: $scope.alertEventOnClick,
       }
