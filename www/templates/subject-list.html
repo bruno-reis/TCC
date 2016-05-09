@@ -1,11 +1,15 @@
 <ion-view style="" id="subject-list" title="Materias">
   <ion-content class="has-header" padding="true">
-    <ion-list style="">
-      <ion-item style="" ui-sref="root.subject">Concorrentes</ion-item>
-      <ion-item style="">Robos</ion-item>
-      <ion-item style="">IHC</ion-item>
-    </ion-list>
-    <a class="button button-stable  button-clear icon-right ion-android-add-circle"
-       style="border-radius:12px 12px 12px 12px;" id="materias-button2" ng-click="vm.addSubject()"></a>
+
+    <div class="card" ng-repeat="subject in vm.subjects" ng-click="vm.selectSubject()">
+      <div class="item item-text-wrap">
+        {{subject}}
+      </div>
+    </div>
+
+    <button class="button icon-left ion-plus button-block button-positive"
+            ng-click="vm.addSubject()">Adiconar
+    </button>
+
   </ion-content>
 </ion-view>

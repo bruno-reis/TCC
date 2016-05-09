@@ -1,27 +1,36 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 class SubjectCtrl {
-  public $inject = ['$stateParams', '$state']
-  subjects: Array<string>
+  public $inject = ['$stateParams', '$state', 'SubjectService']
 
-  constructor() {
-    this.subjects = ['Análise', 'Concorrentes', 'Robótica']
+  subject: any
+
+  constructor(public $state,
+              public $stateParams,
+              public SubjectService) {
+    this.subject = this.SubjectService.getSubject(2)
   }
 
-  selectSubject() {
-    // this.$state.go('root.subjectAdd')
+  createExam() {
+    this.$state.go('root.subjectAddExam')
   }
 
-  addSubject() {
-    // this.$state.go()
+  createHomework() {
+    this.$state.go('root.subjectAddHomework')
   }
 }
 
 class SubjectListCtrl {
-  public $inject = ['$state']
+  public $inject = ['$state', 'SubjectService']
+
+  subjects: Array<string>
 
   constructor(public $state) {
+    this.subjects = ['Análise', 'Concorrentes', 'Robótica']
+  }
 
+  selectSubject() {
+    this.$state.go('root.subject')
   }
 
   addSubject() {
@@ -30,7 +39,7 @@ class SubjectListCtrl {
 }
 
 angular.module('app.controllers', [])
-  .controller('subjectCtrl', ['$scope', '$state', SubjectCtrl])
+  .controller('subjectCtrl', SubjectCtrl)
 
   .controller('subjectListCtrl', SubjectListCtrl)
 

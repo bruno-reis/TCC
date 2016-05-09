@@ -1,34 +1,78 @@
 <ion-view style="" id="subject" title="Concorrentes">
-    <ion-content class="has-header" padding="false">
-        <div style="" class="list card">
-            <div class="item item-divider">Aulas</div>
-            <div class="item item-body">
-                <ion-list style="">
-                    <ion-item style="">Terça- 0800:0940 - B4</ion-item>
-                    <ion-item style="">Sexta- 1000:1140- B4</ion-item>
-                </ion-list>
-            </div>
-            <div class="item item-divider">+ Adicionar</div>
+  <ion-content class="has-header" padding="false">
+    <!--<div style="" class="list card">-->
+    <!--<div class="item item-divider">Aulas</div>-->
+    <!--<div class="item item-body">-->
+    <!--<ion-list style="">-->
+    <!--<ion-item style="">Terça- 0800:0940 - B4</ion-item>-->
+    <!--<ion-item style="">Sexta- 1000:1140- B4</ion-item>-->
+    <!--</ion-list>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div style="" class="list card">-->
+    <!--<div class="item item-divider">Provas</div>-->
+    <!--<div class="item item-body">-->
+    <!--<ion-list style="">-->
+    <!--<ion-item style="">P1 - 29/Março - Nota: 6.0</ion-item>-->
+    <!--</ion-list>-->
+    <!--</div>-->
+    <!--<div class="item item-divider">+ Adicionar</div>-->
+    <!--</div>-->
+
+    <!--<div style="" class="list card">-->
+    <!--<div class="item item-divider">Listas</div>-->
+    <!--<div class="item item-body">-->
+    <!--<ion-list style="">-->
+    <!--<ion-item style="">Lista 1 - 14/Março - Nota: 7.0</ion-item>-->
+    <!--</ion-list>-->
+    <!--</div>-->
+    <!--<div class="item item-divider">+ Adicionar</div>-->
+    <!--</div>-->
+
+    <div class="card">
+      <div class="item item-divider">Aulas</div>
+      <div class="item item-text-wrap">
+        <ul class="list" ng-repeat="class in vm.subject.classes">
+          <li class="item">
+            {{class.day}} : {{class.hour}} : {{class.room}}
+          </li>
+        </ul>
+        <div class="item item-divider">
+          <button class="button icon-left ion-plus button-outline button-positive"></button>
         </div>
-        <div style="" class="list card">
-            <div class="item item-divider">Provas</div>
-            <div class="item item-body">
-                <ion-list style="">
-                    <ion-item style="">P1 - 29/Março - Nota: 6.0</ion-item>
-                </ion-list>
-                <a class="button button-positive  button-block button-clear icon ion-android-add" id="concorrentes-button3" ui-sref="root.subjectAddExam"></a>
-            </div>
-            <div class="item item-divider">+ Adicionar</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">Provas</div>
+      <div class="item item-text-wrap">
+        <ul class="list" ng-repeat="exam in vm.subject.exams">
+          <li class="item">
+            {{exam.name}} : {{exam.date}} : {{exam.grade}}
+          </li>
+        </ul>
+        <div class="item item-divider">
+          <button class="button icon-left ion-plus button-outline button-positive"
+                  ng-click="vm.createExam()"></button>
         </div>
-        <div style="" class="list card">
-            <div class="item item-divider">Listas</div>
-            <div class="item item-body">
-                <ion-list style="">
-                    <ion-item style="">Lista 1 - 14/Março - Nota: 7.0</ion-item>
-                </ion-list>
-                <a class="button button-positive  button-block button-clear icon ion-android-add" id="concorrentes-button4" ui-sref="root.subjectAddHomework"></a>
-            </div>
-            <div class="item item-divider">+ Adicionar</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">Listas</div>
+      <div class="item item-text-wrap">
+        <ul class="list" ng-repeat="homework in vm.subject.homeworks">
+          <li class="item">
+            {{homework.name}} : {{homework.date}} : {{homework.grade}}
+          </li>
+        </ul>
+        <div class="item item-divider">
+          <button class="button icon-left ion-plus button-outline button-positive"
+                  ng-click="vm.createHomework()"></button>
         </div>
-    </ion-content>
+      </div>
+    </div>
+
+  </ion-content>
 </ion-view>
