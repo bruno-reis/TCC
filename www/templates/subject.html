@@ -1,4 +1,4 @@
-<ion-view style="" id="subject" title="Concorrentes">
+<ion-view style="" id="subject" title="{{vm.subject.name}}">
   <ion-content class="has-header" padding="false">
     <div class="card">
       <div class="item item-divider">Aulas</div>
@@ -8,9 +8,10 @@
             {{class.day}} : {{class.hour}} : {{class.room}}
           </li>
         </ul>
-        <div class="item item-divider">
-          <button class="button icon-left ion-plus button-outline button-positive"></button>
-        </div>
+        <a class="item item-icon-left positive" ng-click="vm.addClass()">
+          <i class="icon ion-android-add"></i>
+          Adicionar
+        </a>
       </div>
     </div>
 
@@ -22,10 +23,10 @@
             {{exam.name}} : {{exam.date}} : {{exam.grade}}
           </li>
         </ul>
-        <div class="item item-divider">
-          <button class="button icon-left ion-plus button-outline button-positive"
-                  ng-click="vm.createExam()"></button>
-        </div>
+        <a class="item item-icon-left positive" ng-click="vm.addExam()">
+          <i class="icon ion-android-add"></i>
+          Adicionar
+        </a>
       </div>
     </div>
 
@@ -37,10 +38,10 @@
             {{homework.name}} : {{homework.date}} : {{homework.grade}}
           </li>
         </ul>
-        <div class="item item-divider">
-          <button class="button icon-left ion-plus button-outline button-positive"
-                  ng-click="vm.createHomework()"></button>
-        </div>
+        <a class="item item-icon-left positive" ng-click="vm.addHomework()">
+          <i class="icon ion-android-add"></i>
+          Adicionar
+        </a>
       </div>
     </div>
 
