@@ -11,11 +11,15 @@ class SubjectCtrl {
     this.subject = this.SubjectService.getSubject(Math.floor((Math.random() * 2) + 1) )
   }
 
-  createExam() {
+  addClass() {
+    this.$state.go('root.subjectAddClass')
+  }
+
+  addExam() {
     this.$state.go('root.subjectAddExam')
   }
 
-  createHomework() {
+  addHomework() {
     this.$state.go('root.subjectAddHomework')
   }
 }
@@ -67,6 +71,10 @@ angular.module('app.controllers', [])
 
   })
 
+  .controller('subjectAddClassCtrl', function($scope) {
+
+  })
+  
   .controller('activitiesCtrl', function($scope) {
 
   })

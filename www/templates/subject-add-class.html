@@ -1,0 +1,26 @@
+<ion-view style="" id="subject-add-homework" title="Adicionar Aula">
+  <ion-content class="has-header" padding="true">
+    <form style="" class="list">
+      <label style="" class="item item-input item-select">
+        <div class="input-label">Dia</div>
+        <select ng-model="vm.input.day">
+          <option selected>Seg</option>
+          <option>Ter</option>
+          <option>Qua</option>
+          <option>Qui</option>
+          <option>Sex</option>
+        </select>
+      </label>
+      </label>
+      <label style="" class="item item-input">
+        <input placeholder="Horário" type="time" ng-model="vm.input.time">
+      </label>
+      <label style="" class="item item-input">
+        <input placeholder="Sala" type="text" ng-model="vm.input.room">
+      </label>
+      <button class="button icon-left button-block button-positive"
+              ng-click="vm.addClass()">Adiconar
+      </button>
+    </form>
+  </ion-content>
+</ion-view>

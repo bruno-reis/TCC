@@ -51,6 +51,16 @@ angular.module('app.routes', [])
         }
       })
 
+      .state('root.subjectAddClass', {
+        url: '/subeject-add-class',
+        views: {
+          'subjectList': {
+            templateUrl: 'templates/subject-add-class.html',
+            controller: 'subjectAddClassCtrl'
+          }
+        }
+      })
+
       .state('root.subjectAddExam', {
         url: '/subeject-add-exam',
         views: {
