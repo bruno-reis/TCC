@@ -8,7 +8,7 @@ class SubjectCtrl {
   constructor(public $state,
               public $stateParams,
               public SubjectService) {
-    this.subject = this.SubjectService.getSubject(2)
+    this.subject = this.SubjectService.getSubject(Math.floor((Math.random() * 2) + 1) )
   }
 
   createExam() {
@@ -22,11 +22,11 @@ class SubjectCtrl {
 
 class SubjectListCtrl {
   public $inject = ['$state', 'SubjectService']
+  private subjects: Array<string>
 
-  subjects: Array<string>
-
-  constructor(public $state) {
-    this.subjects = ['Análise', 'Concorrentes', 'Robótica']
+  constructor(public $state,
+              public SubjectService) {
+    this.subjects = this.SubjectService.getSubjects()
   }
 
   selectSubject() {
@@ -38,14 +38,26 @@ class SubjectListCtrl {
   }
 }
 
+class SubjectAddCtrl {
+  public $inject = ['$state', 'SubjectService']
+  private input
+
+  constructor(public $state,
+              public SubjectService) {
+  }
+
+  addSubject() {
+    this.SubjectService.addSubject(this.input.name)
+    this.$state.go('root.subjectList')
+  }
+}
+
 angular.module('app.controllers', [])
   .controller('subjectCtrl', SubjectCtrl)
 
   .controller('subjectListCtrl', SubjectListCtrl)
 
-  .controller('subjectAddCtrl', function($scope) {
-
-  })
+  .controller('subjectAddCtrl', SubjectAddCtrl)
 
   .controller('subjectAddExamCtrl', function($scope) {
 

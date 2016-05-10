@@ -1,7 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 class SubjectService {
-  subjects: Array<any>
+  subjects
   subject1: any
   subject2: any
 
@@ -56,11 +56,21 @@ class SubjectService {
         grade: '-'
       }]
     }
+    this.subjects = ['Análise', 'Concorrentes', 'Robos']
   }
 
   getSubject(subjectId) {
     if (subjectId === 1) return this.subject1
     if (subjectId === 2) return this.subject2
+  }
+
+  getSubjects() {
+    return this.subjects
+  }
+
+  addSubject(subject) {
+    // subject.id  = this.subjects[this.subjects.length].id + 1
+    this.subjects.push(subject)
   }
 }
 
