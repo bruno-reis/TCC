@@ -46,7 +46,7 @@ angular.module('app.routes', [])
         views: {
           'subjectList': {
             templateUrl: 'templates/subject-add.html',
-            controller: 'subjectAddCtrl'
+            controller: 'subjectAddCtrl as vm'
           }
         }
       })
@@ -56,7 +56,7 @@ angular.module('app.routes', [])
         views: {
           'subjectList': {
             templateUrl: 'templates/subject-add-class.html',
-            controller: 'subjectAddClassCtrl'
+            controller: 'subjectAddClassCtrl as vm'
           }
         }
       })
@@ -66,7 +66,7 @@ angular.module('app.routes', [])
         views: {
           'subjectList': {
             templateUrl: 'templates/subject-add-exam.html',
-            controller: 'subjectAddExamCtrl'
+            controller: 'subjectAddExamCtrl as vm'
           }
         }
       })
@@ -76,7 +76,7 @@ angular.module('app.routes', [])
         views: {
           'subjectList': {
             templateUrl: 'templates/subject-add-homework.html',
-            controller: 'subjectAddHomeworkCtrl'
+            controller: 'subjectAddHomeworkCtrl as vm'
           }
         }
       })
@@ -84,7 +84,7 @@ angular.module('app.routes', [])
       .state('activities', {
         url: '/activities',
         templateUrl: 'templates/activities.html',
-        controller: 'activitiesCtrl'
+        controller: 'activitiesCtrl as vm'
       })
 
     $urlRouterProvider.otherwise('/root/calendar')
