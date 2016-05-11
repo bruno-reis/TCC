@@ -32,7 +32,7 @@ angular.module('app.routes', [])
       })
 
       .state('root.subject', {
-        url: '/subject',
+        url: '/subject/:subjectId',
         views: {
           'subjectList': {
             templateUrl: 'templates/subject.html',
