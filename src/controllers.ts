@@ -8,7 +8,7 @@ class SubjectCtrl {
   constructor(public $state,
               public $stateParams,
               public SubjectService) {
-    this.subject = this.SubjectService.getSubject(Math.floor((Math.random() * 2) + 1) )
+    this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
   }
 
   addClass() {
@@ -33,8 +33,8 @@ class SubjectListCtrl {
     this.subjects = this.SubjectService.getSubjects()
   }
 
-  selectSubject() {
-    this.$state.go('root.subject')
+  selectSubject(subjectId) {
+    this.$state.go('root.subject', {subjectId: subjectId})
   }
 
   addSubject() {
@@ -51,7 +51,7 @@ class SubjectAddCtrl {
   }
 
   addSubject() {
-    this.SubjectService.addSubject(this.input.name)
+    this.SubjectService.addSubject(this.input)
     this.$state.go('root.subjectList')
   }
 }

@@ -1,12 +1,11 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 class SubjectService {
+  subjectList
   subjects
-  subject1: any
-  subject2: any
-
+  
   constructor() {
-    this.subject1 = {
+    this.subjects = [{}, {
       name: 'Análise',
       id: 1,
       classes: [{
@@ -28,8 +27,7 @@ class SubjectService {
         date: '15/Março',
         grade: '5.0'
       }]
-    }
-    this.subject2 = {
+    }, {
       name: 'Concorrentes',
       id: 2,
       classes: [{
@@ -55,22 +53,36 @@ class SubjectService {
         date: '10/Maio',
         grade: '-'
       }]
-    }
-    this.subjects = ['Análise', 'Concorrentes', 'Robos']
+    }]
+    this.subjectList = [{
+      name: 'Análise',
+      id: 1
+    }, {
+      name: 'Concorrentes',
+      id: 2
+    }]
   }
 
   getSubject(subjectId) {
-    if (subjectId === 1) return this.subject1
-    if (subjectId === 2) return this.subject2
+    return this.subjects[subjectId]
   }
 
   getSubjects() {
-    return this.subjects
+    return this.subjectList
   }
 
   addSubject(subject) {
-    // subject.id  = this.subjects[this.subjects.length].id + 1
+    subject.id = ''
+    subject.id  = this.subjects[this.subjects.length - 1].id + 1
+    this.subjectList.push(subject)
+    subject.classes = [{}]
+    subject.exams = [{}]
+    subject.homeworks = [{}]
     this.subjects.push(subject)
+  }
+  
+  addClass(subjectId, classInput) {
+    this.subjects[subjectId].class.push(classInput)
   }
 }
 
