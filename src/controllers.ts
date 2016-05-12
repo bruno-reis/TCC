@@ -12,15 +12,63 @@ class SubjectCtrl {
   }
 
   addClass() {
-    this.$state.go('root.subjectAddClass')
+    this.$state.go('subject.addClass')
   }
 
   addExam() {
-    this.$state.go('root.subjectAddExam')
+    this.$state.go('subject.addExam')
   }
 
   addHomework() {
-    this.$state.go('root.subjectAddHomework')
+    this.$state.go('subject.addHomework')
+  }
+}
+
+class subjectAddClassCtrl {
+  public $inject = ['$stateParams', '$state', 'SubjectService']
+  
+  private input
+
+  constructor(public $state,
+              public $stateParams,
+              public SubjectService) { 
+  }
+  
+  submit() {
+    this.SubjectService.addClass(this.$state.params['subjectId'], this.input)
+    this.$state.go('.^.info')
+  }
+}
+
+class subjectAddExamCtrl {
+  public $inject = ['$stateParams', '$state', 'SubjectService']
+
+  private input
+
+  constructor(public $state,
+              public $stateParams,
+              public SubjectService) {
+  }
+
+  submit() {
+    this.SubjectService.addExam(this.$state.params['subjectId'], this.input)
+    this.$state.go('.^.info')
+  }
+}
+
+class subjectAddHomeworkCtrl {
+  public $inject = ['$stateParams', '$state', 'SubjectService']
+
+  private input
+
+  constructor(public $state,
+              public $stateParams,
+              public SubjectService) {
+  }
+
+  submit() {
+    this.SubjectService.addHomework(this.$state.params['subjectId'], this.input)
+    this.$state.go('.^.info')
   }
 }
 
@@ -34,7 +82,7 @@ class SubjectListCtrl {
   }
 
   selectSubject(subjectId) {
-    this.$state.go('root.subject', {subjectId: subjectId})
+    this.$state.go('subject.info', {subjectId: subjectId})
   }
 
   addSubject() {
@@ -63,17 +111,11 @@ angular.module('app.controllers', [])
 
   .controller('subjectAddCtrl', SubjectAddCtrl)
 
-  .controller('subjectAddExamCtrl', function($scope) {
+  .controller('subjectAddExamCtrl', subjectAddExamCtrl)
 
-  })
+  .controller('subjectAddHomeworkCtrl', subjectAddHomeworkCtrl)
 
-  .controller('subjectAddHomeworkCtrl', function($scope) {
-
-  })
-
-  .controller('subjectAddClassCtrl', function($scope) {
-
-  })
+  .controller('subjectAddClassCtrl', subjectAddClassCtrl)
   
   .controller('activitiesCtrl', function($scope) {
 

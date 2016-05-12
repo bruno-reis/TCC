@@ -10,48 +10,48 @@ class SubjectService {
       id: 1,
       classes: [{
         day: 'Terça',
-        hour: '0800:0940',
+        time: '0800:0940',
         room: 'B4'
       }, {
         day: 'Sexta',
-        hour: '1000:1140',
+        time: '1000:1140',
         room: 'B4'
       }],
       exams: [{
-        name: 'P1',
+        title: 'P1',
         date: '29/Março',
-        grade: '6.0'
+        weight: '1'
       }],
       homeworks: [{
-        name: 'Lista 1',
+        title: 'Lista 1',
         date: '15/Março',
-        grade: '5.0'
+        weight: '1'
       }]
     }, {
       name: 'Concorrentes',
       id: 2,
       classes: [{
         day: 'Segunda',
-        hour: '0800:0940',
+        time: '0800:0940',
         room: 'B2'
       }, {
         day: 'Quarta',
-        hour: '1000:1140',
+        time: '1000:1140',
         room: 'B2'
       }],
       exams: [{
-        name: 'P1',
+        title: 'P1',
         date: '24/Março',
-        grade: '4.5'
+        weight: '1'
       }, {
-        name: 'P2',
+        title: 'P2',
         date: '22/Maio',
-        grade: '-'
+        weight: '2'
       }],
       homeworks: [{
-        name: 'Lista 2',
+        title: 'Lista 2',
         date: '10/Maio',
-        grade: '-'
+        weight: '1'
       }]
     }]
     this.subjectList = [{
@@ -75,14 +75,22 @@ class SubjectService {
     subject.id = ''
     subject.id  = this.subjects[this.subjects.length - 1].id + 1
     this.subjectList.push(subject)
-    subject.classes = [{}]
-    subject.exams = [{}]
-    subject.homeworks = [{}]
+    subject.classes = []
+    subject.exams = []
+    subject.homeworks = []
     this.subjects.push(subject)
   }
   
-  addClass(subjectId, classInput) {
-    this.subjects[subjectId].class.push(classInput)
+  addClass(subjectId, input) {
+    this.subjects[subjectId].classes.push(input)
+  }
+
+  addExam(subjectId, input) {
+    this.subjects[subjectId].exams.push(input)
+  }
+
+  addHomework(subjectId, input) {
+    this.subjects[subjectId].homeworks.push(input)
   }
 }
 

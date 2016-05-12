@@ -1,25 +1,40 @@
 <ion-view style="" id="subject-add-homework" title="Adicionar Lista">
-    <ion-content class="has-header" padding="true">
-        <form style="" class="list">
-            <label style="" class="item item-input">
-                <input placeholder="Título" type="text" ng-model="vm.input.title">
-            </label>
-            <label style="" class="item item-input">
-                <input placeholder="01/01/2016" type="date" ng-model="vm.input.date">
-            </label>
-            <label style="" class="item item-input">
-                <input placeholder="12:34" type="time" ng-model="vm.input.time">
-            </label>
-            <label style="" class="item item-input">
-                <input placeholder="Sala" type="text" ng-model="vm.input.room">
-            </label>
-            <label style="" class="item item-input">
-                <input placeholder="Peso" type="number"
-                       ng-min="0" ng-max="10" ng-model="vm.input.weight">
-            </label>
-            <button class="button icon-left button-block button-positive"
-                    ng-click="vm.addHomeWork()">Adiconar
-            </button>
-        </form>
-    </ion-content>
+  <ion-content class="has-header" padding="true">
+    <form style="" class="list">
+      <label style="" class="item item-input">
+        <span class="input-label">Titulo</span>
+        <input type="text" ng-model="vm.input.title">
+      </label>
+      <label style="" class="item item-input">
+          <span class="input-label">Data</span>
+        <input type="date" ng-model="vm.input.date">
+      </label>
+      <label style="" class="item item-input">
+        <span class="input-label">Horário</span>
+        <input placeholder="12:34" type="time" ng-model="vm.input.time">
+      </label>
+      <label style="" class="item item-input">
+        <span class="input-label">Sala</span>
+        <input type="text" ng-model="vm.input.room">
+      </label>
+      <label style="" class="item item-input">
+        <span class="input-label">Peso</span>
+        <input type="number" ng-min="0" ng-max="10" ng-model="vm.input.weight">
+      </label>
+      <button class="button icon-left button-block button-positive"
+              ng-click="vm.submit()">Adiconar
+      </button>
+    </form>
+  </ion-content>
 </ion-view>
+
+<div class="list">
+  <label class="item item-input">
+    <span class="input-label">Username</span>
+    <input type="text">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Password</span>
+    <input type="password">
+  </label>
+</div>
