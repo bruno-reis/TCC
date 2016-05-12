@@ -31,16 +31,6 @@ angular.module('app.routes', [])
         }
       })
 
-      .state('root.subject', {
-        url: '/subject/:subjectId',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject.html',
-            controller: 'subjectCtrl as vm'
-          }
-        }
-      })
-
       .state('root.subjectAdd', {
         url: '/subject-add',
         views: {
@@ -51,34 +41,34 @@ angular.module('app.routes', [])
         }
       })
 
-      .state('root.subjectAddClass', {
-        url: '/subeject-add-class',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-add-class.html',
-            controller: 'subjectAddClassCtrl as vm'
-          }
-        }
+      .state('subject', {
+        url: '/subject/:subjectId',
+        template: '<ion-view id="subjetcInfo"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
       })
 
-      .state('root.subjectAddExam', {
-        url: '/subeject-add-exam',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-add-exam.html',
-            controller: 'subjectAddExamCtrl as vm'
-          }
-        }
+      .state('subject.info', {
+        url: '/',
+        templateUrl: 'templates/subject.html',
+        controller: 'subjectCtrl as vm'
       })
 
-      .state('root.subjectAddHomework', {
-        url: '/subject-add-homework',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-add-homework.html',
-            controller: 'subjectAddHomeworkCtrl as vm'
-          }
-        }
+      .state('subject.addClass', {
+        url: '/add-class',
+        templateUrl: 'templates/subject-add-class.html',
+        controller: 'subjectAddClassCtrl as vm'
+      })
+
+      .state('subject.addExam', {
+        url: '/add-exam',
+        templateUrl: 'templates/subject-add-exam.html',
+        controller: 'subjectAddExamCtrl as vm'
+      })
+
+      .state('subject.addHomework', {
+        url: '/add-homework',
+        templateUrl: 'templates/subject-add-homework.html',
+        controller: 'subjectAddHomeworkCtrl as vm'
       })
 
       .state('activities', {

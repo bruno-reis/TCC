@@ -5,7 +5,7 @@
       <div class="item item-text-wrap">
         <ul class="list" ng-repeat="class in vm.subject.classes">
           <li class="item">
-            {{class.day}} : {{class.hour}} : {{class.room}}
+            {{class.day}} : {{class.time | date: 'shortTime'}} : {{class.room}}
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addClass()">
@@ -20,7 +20,7 @@
       <div class="item item-text-wrap">
         <ul class="list" ng-repeat="exam in vm.subject.exams">
           <li class="item">
-            {{exam.name}} : {{exam.date}} : {{exam.grade}}
+            {{exam.title}} : {{exam.date | date: 'mediumDate'}} : {{exam.weight}}
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addExam()">
@@ -35,7 +35,7 @@
       <div class="item item-text-wrap">
         <ul class="list" ng-repeat="homework in vm.subject.homeworks">
           <li class="item">
-            {{homework.name}} : {{homework.date}} : {{homework.grade}}
+            {{homework.title}} : {{homework.date | date: 'mediumDate'}} : {{homework.weight}}
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addHomework()">
