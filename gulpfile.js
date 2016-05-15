@@ -9,21 +9,23 @@ var sh = require('shelljs');
 var typescript = require('gulp-tsc');
 var paths = {
   sass: ['./scss/**/*.scss'],
-  src: ['./src/*.ts']
+  src: ['src/**/*.ts']
 };
 
 gulp.task('default', ['sass', 'compile']);
 
-gulp.task('compile', function() {
+function compileTS(done) {
+  "use strict";
   gulp.src(paths.src)
-    .pipe(typescript({
-      emitError: false
-    }))
-    .pipe(gulp.dest('www/js/'))
-})
+    .pipe(typescript( {emitError: false}) )
+    .pipe(gulp.dest('./www/js/'))
+    .on('end', done);
+}
+
+gulp.task('compile', compileTS);
 
 gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
+  gulp.src(paths.sass)
     .pipe(sass())
     .on('error', sass.logError)
     .pipe(gulp.dest('./www/css/'))
@@ -36,6 +38,7 @@ gulp.task('sass', function(done) {
 });
 
 gulp.task('watch', function() {
+  compileTS();
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.src, ['compile']);
 });
