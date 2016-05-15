@@ -1,126 +1,13 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-class SubjectCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService']
-
-  subject: any
-
-  constructor(public $state,
-              public $stateParams,
-              public SubjectService) {
-    this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
-  }
-
-  addClass() {
-    this.$state.go('subject.addClass')
-  }
-
-  addExam() {
-    this.$state.go('subject.addExam')
-  }
-
-  addHomework() {
-    this.$state.go('subject.addHomework')
-  }
-}
-
-class subjectAddClassCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService']
-  
-  private input
-
-  constructor(public $state,
-              public $stateParams,
-              public SubjectService) { 
-  }
-  
-  submit() {
-    this.SubjectService.addClass(this.$state.params['subjectId'], this.input)
-    this.$state.go('.^.info')
-  }
-}
-
-class subjectAddExamCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService']
-
-  private input
-
-  constructor(public $state,
-              public $stateParams,
-              public SubjectService) {
-  }
-
-  submit() {
-    this.SubjectService.addExam(this.$state.params['subjectId'], this.input)
-    this.$state.go('.^.info')
-  }
-}
-
-class subjectAddHomeworkCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService']
-
-  private input
-
-  constructor(public $state,
-              public $stateParams,
-              public SubjectService) {
-  }
-
-  submit() {
-    this.SubjectService.addHomework(this.$state.params['subjectId'], this.input)
-    this.$state.go('.^.info')
-  }
-}
-
-class SubjectListCtrl {
-  public $inject = ['$state', 'SubjectService']
-  private subjects: Array<string>
-
-  constructor(public $state,
-              public SubjectService) {
-    this.subjects = this.SubjectService.getSubjects()
-  }
-
-  selectSubject(subjectId) {
-    this.$state.go('subject.info', {subjectId: subjectId})
-  }
-
-  addSubject() {
-    this.$state.go('root.subjectAdd')
-  }
-}
-
-class SubjectAddCtrl {
-  public $inject = ['$state', 'SubjectService']
-  private input
-
-  constructor(public $state,
-              public SubjectService) {
-  }
-
-  addSubject() {
-    this.SubjectService.addSubject(this.input)
-    this.$state.go('root.subjectList')
-  }
-}
-
 angular.module('app.controllers', [])
-  .controller('subjectCtrl', SubjectCtrl)
-
-  .controller('subjectListCtrl', SubjectListCtrl)
-
-  .controller('subjectAddCtrl', SubjectAddCtrl)
-
-  .controller('subjectAddExamCtrl', subjectAddExamCtrl)
-
-  .controller('subjectAddHomeworkCtrl', subjectAddHomeworkCtrl)
-
-  .controller('subjectAddClassCtrl', subjectAddClassCtrl)
-  
   .controller('activitiesCtrl', function($scope) {
 
   })
 
+
+  //Test controller to make ui-calendar directive work, will be moved to a
+  //seperate file after it is integrated with the rest of the app
   .controller('scheduleCtrl',function($scope, Events){
 
     Events.loadEvents()
