@@ -2,10 +2,8 @@
 
 angular.module('app.controllers', [])
   .controller('activitiesCtrl', function($scope) {
-
   })
-
-
+    
   //Test controller to make ui-calendar directive work, will be moved to a
   //seperate file after it is integrated with the rest of the app
   .controller('scheduleCtrl',function($scope, Events){
