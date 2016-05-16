@@ -16,7 +16,7 @@ angular.module('app.routes', [])
         views: {
           'calendar': {
             templateUrl: 'templates/calendar.html',
-            controller: 'scheduleCtrl'
+            controller: 'CalendarDemoCtrl'
           }
         }
       })

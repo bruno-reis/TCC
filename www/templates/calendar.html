@@ -1,17 +1,17 @@
-<ion-view style="" id="calendar" title="Calendário">
-  <ion-content class="has-header" scroll="false" padding="true">
-    <div class="card">
-      <!--<div ui-calendar='uiConfig.calendar' ng-model='eventSources' width='300' height='400'></div>-->
-      <calendar calendar-mode="mode" event-source="eventSource">
-    </div>
-    <!--<div class="list">-->
-      <!--<div class="item" style="text-align: center;">-->
-        <!--events in {{select_date}}-->
-      <!--</div>-->
-      <!--<div class="item balanced-bg" ng-repeat="event in events_in_select_date" >-->
-        <!--{{event.title}}-->
-        <!--<span>{{event.start}}</span>-->
-      <!--</div>-->
-    <!--</div>-->
+<ion-view style="" id="calendar">
+  <!--<ion-content class="has-header" scroll="false" padding="true">-->
+  <ion-nav-buttons side="right">
+    <button class="button" ng-disabled="isToday()" ng-click="today()">Today</button>
+    <button class="button" ng-click="changeMode('month')">M</button>
+    <button class="button" ng-click="changeMode('week')">W</button>
+    <button class="button" ng-click="changeMode('day')">D</button>
+    <button class="button" ng-click="loadEvents()">Load Events</button>
+  </ion-nav-buttons>
+
+  <ion-content scroll="false" class="main-content">
+    <calendar ng-model="calendar.currentDate" calendar-mode="calendar.mode" event-source="calendar.eventSource"
+              range-changed="reloadSource(startTime, endTime)"
+              event-selected="onEventSelected(event)" title-changed="onViewTitleChanged(title)"
+              time-selected="onTimeSelected(selectedTime)" step="30"></calendar>
   </ion-content>
 </ion-view>
