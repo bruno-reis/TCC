@@ -10,7 +10,7 @@ class SubjectAddCtrl {
 
   addSubject() {
     this.SubjectService.addSubject(this.input)
-    this.$state.go('root.subjectList')
+    this.$state.go('subjectList')
   }
 }
 
