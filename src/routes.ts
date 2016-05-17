@@ -11,24 +11,16 @@ angular.module('app.routes', [])
         abstract:true
       })
 
-      .state('root.calendar', {
+      .state('calendar', {
         url: '/calendar',
-        views: {
-          'calendar': {
-            templateUrl: 'templates/calendar.html',
-            controller: 'CalendarDemoCtrl'
-          }
-        }
+        templateUrl: 'templates/calendar.html',
+        controller: 'CalendarDemoCtrl'
       })
 
-      .state('root.subjectList', {
+      .state('subjectList', {
         url: '/subject-list',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-list.html',
-            controller: 'subjectsCtrl as vm'
-          }
-        }
+        templateUrl: 'templates/subject-list.html',
+        controller: 'subjectsCtrl as vm'
       })
 
       .state('root.subjectAdd', {
@@ -77,5 +69,5 @@ angular.module('app.routes', [])
         controller: 'activitiesCtrl as vm'
       })
 
-    $urlRouterProvider.otherwise('/root/calendar')
+    $urlRouterProvider.otherwise('/subject-list')
   });
