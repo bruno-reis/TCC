@@ -69,6 +69,8 @@ angular.module('app.controllers', [])
 .controller('CalendarDemoCtrl', function ($scope) {
   'use strict';
   $scope.calendar = {};
+  $scope.calendar.eventSource = createRandomEvents();
+
   $scope.changeMode = function (mode) {
     $scope.calendar.mode = mode;
   };
