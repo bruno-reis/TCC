@@ -1,12 +1,12 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 
 class SubjectService {
-  subjectList
-  subjects
-  
+  private subjectList: Array<any>
+  private subjects: Array<any>
+
   constructor() {
     this.subjects = [{}, {
-      name: 'Análise',
+      name: 'Introdução ao Design',
       id: 1,
       classes: [{
         day: 'Terça',
@@ -23,12 +23,12 @@ class SubjectService {
         weight: '1'
       }],
       homeworks: [{
-        title: 'Lista 1',
+        title: 'Maquete ',
         date: '15/Março',
-        weight: '1'
+        weight: '2'
       }]
     }, {
-      name: 'Concorrentes',
+      name: 'Cálculo Diferencial e Integral I',
       id: 2,
       classes: [{
         day: 'Segunda',
@@ -49,16 +49,16 @@ class SubjectService {
         weight: '2'
       }],
       homeworks: [{
-        title: 'Lista 2',
+        title: 'Lista de Exercicios 2',
         date: '10/Maio',
         weight: '1'
       }]
     }]
     this.subjectList = [{
-      name: 'Análise',
+      name: 'Introdução ao Design',
       id: 1
     }, {
-      name: 'Concorrentes',
+      name: 'Cálculo Diferencial e Integral I',
       id: 2
     }]
   }
@@ -80,7 +80,7 @@ class SubjectService {
     subject.homeworks = []
     this.subjects.push(subject)
   }
-  
+
   addClass(subjectId, input) {
     this.subjects[subjectId].classes.push(input)
   }
@@ -94,45 +94,5 @@ class SubjectService {
   }
 }
 
-angular.module('app.services', [])
-
-  .factory('BlankFactory', [function(){
-
-  }])
-
+angular.module('app.services')
   .service('SubjectService', SubjectService)
-
-  .service('Events',function($rootScope){
-    var events=[]
-
-    return {
-      loadEvents:function(){
-        events=[{
-          title:'medicine',
-          start:'2016-05-20'
-        },{
-          title:'examination',
-          start:'2016-05-08'
-        },{
-          title:'cost',
-          start:'2016-05-16'
-        },{
-          title:'examination',
-          start:'2016-05-17'
-        }]
-
-        $rootScope.$broadcast('events_get')
-      },
-
-      getAllEvents:function(){
-        return events
-      },
-
-      getEventsByDate:function(date){
-        return events.filter(function(e){
-          return e.start===date
-        })
-      }
-    }
-  })
-
