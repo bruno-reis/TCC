@@ -1,16 +1,18 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 class subjectAddExamCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService']
+  public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService']
 
   private input
 
   constructor(public $state,
               public $stateParams,
-              public SubjectService) {
+              public SubjectService,
+              public CalendarService) {
   }
 
   submit() {
+    this.CalendarService.createEvent(this.input)
     this.SubjectService.addExam(this.$state.params['subjectId'], this.input)
     this.$state.go('.^.info')
   }
