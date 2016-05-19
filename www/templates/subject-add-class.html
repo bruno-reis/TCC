@@ -4,17 +4,21 @@
       <label style="" class="item item-input item-select">
         <div class="input-label">Dia</div>
         <select ng-model="vm.input.day">
-          <option selected>Seg</option>
-          <option>Ter</option>
-          <option>Qua</option>
-          <option>Qui</option>
-          <option>Sex</option>
+          <option selected>Segunda</option>
+          <option>Terça</option>
+          <option>Quata</option>
+          <option>Quinta</option>
+          <option>Sexta</option>
         </select>
       </label>
       </label>
       <label style="" class="item item-input">
-        <span class="input-label">Horário</span>
-        <input type="time" ng-model="vm.input.time">
+        <span class="input-label">Horário Inicio</span>
+        <input type="time" ng-model="vm.input.startTime">
+      </label>
+      <label style="" class="item item-input">
+        <span class="input-label">Horário Fim</span>
+        <input type="time" ng-model="vm.input.endTime">
       </label>
       <label style="" class="item item-input">
         <span class="input-label">Sala</span>
