@@ -9,6 +9,14 @@
         <span class="input-label">Código</span>
         <input placeholder="Opcional" type="text">
       </label>
+      <label style="" class="item item-input">
+        <span class="input-label">Data Inicio</span>
+        <input type="date" ng-model="vm.input.startDate">
+      </label>
+      <label style="" class="item item-input">
+        <span class="input-label">Data Fim</span>
+        <input type="date" ng-model="vm.input.endDate">
+      </label>
       <button class="button icon-left button-block button-positive"
               ng-click="vm.addSubject()">Adiconar
       </button>

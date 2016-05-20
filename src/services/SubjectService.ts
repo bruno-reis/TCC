@@ -4,10 +4,13 @@ class SubjectService {
   private subjectList: Array<any>
   private subjects: Array<any>
 
+  //Creating a dummy empty object because we are using the index as an index
   constructor() {
     this.subjects = [{}, {
       name: 'Introdução ao Design',
       id: 1,
+      startDate: '1455501600000',
+      endDate: '1467255600000',
       classes: [{
         day: 'Terça',
         time: '0800:0940',
@@ -30,6 +33,8 @@ class SubjectService {
     }, {
       name: 'Cálculo Diferencial e Integral I',
       id: 2,
+      startDate: '1455501600000',
+      endDate: '1467255600000',
       classes: [{
         day: 'Segunda',
         time: '0800:0940',
