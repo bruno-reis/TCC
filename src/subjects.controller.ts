@@ -14,7 +14,7 @@ class SubjectsCtrl {
   }
 
   addSubject() {
-    this.$state.go('root.subjectAdd')
+    this.$state.go('subjects.add')
   }
 }
 

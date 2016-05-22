@@ -1,24 +1,24 @@
-<ion-view style="" id="subject-add" title="Adicionar Materia">
+<ion-view id="subject-add" title="Adicionar Materia">
   <ion-content class="has-header" padding="true">
-    <form name="form" style="" class="list">
-      <label style="" class="item item-input">
+    <form name="form" class="list" novalidate>
+      <label class="item item-input">
         <span class="input-label">Nome</span>
-        <input type="text" ng-model="vm.input.name">
+        <input type="text" ng-model="vm.input.name" required>
       </label>
-      <label style="" class="item item-input">
+      <label class="item item-input">
         <span class="input-label">Código</span>
         <input placeholder="Opcional" type="text">
       </label>
-      <label style="" class="item item-input">
+      <label class="item item-input">
         <span class="input-label">Data Inicio</span>
-        <input type="date" ng-model="vm.input.startDate">
+        <input type="date" ng-model="vm.input.startDate" required>
       </label>
-      <label style="" class="item item-input">
+      <label class="item item-input">
         <span class="input-label">Data Fim</span>
-        <input type="date" ng-model="vm.input.endDate">
+        <input type="date" ng-model="vm.input.endDate" required>
       </label>
       <button class="button icon-left button-block button-positive"
-              ng-click="vm.addSubject()">Adiconar
+              ng-click="vm.addSubject()" ng-disabled="form.$invalid">Adiconar
       </button>
     </form>
   </ion-content>
