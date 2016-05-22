@@ -17,20 +17,22 @@ angular.module('app.routes', [])
         controller: 'CalendarDemoCtrl'
       })
 
-      .state('subjectList', {
-        url: '/subject-list',
+      .state('subjects', {
+        url: '/subjects',
+        template: '<ion-view id="subjectsList"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
+      })
+
+      .state('subjects.list', {
+        url: '/list',
         templateUrl: 'templates/subject-list.html',
         controller: 'subjectsCtrl as vm'
       })
 
-      .state('root.subjectAdd', {
-        url: '/subject-add',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-add.html',
-            controller: 'subjectAddCtrl as vm'
-          }
-        }
+      .state('subjects.add', {
+        url: '/add',
+        templateUrl: 'templates/subject-add.html',
+        controller: 'subjectAddCtrl as vm'
       })
 
       .state('subject', {
@@ -69,5 +71,5 @@ angular.module('app.routes', [])
         controller: 'activitiesCtrl as vm'
       })
 
-    $urlRouterProvider.otherwise('/subject-list')
+    $urlRouterProvider.otherwise('/subjects/list')
   });

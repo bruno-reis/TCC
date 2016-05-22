@@ -1,31 +1,33 @@
 <ion-view style="" id="subject-add-homework" title="Adicionar Aula">
   <ion-content class="has-header" padding="true">
-    <form style="" class="list">
+    <form name="form" class="list" novalidate>
       <label style="" class="item item-input item-select">
         <div class="input-label">Dia</div>
-        <select ng-model="vm.input.day">
-          <option selected>Segunda</option>
+        <select ng-model="vm.input.day" required>
+          <option>Segunda</option>
           <option>Terça</option>
           <option>Quata</option>
           <option>Quinta</option>
           <option>Sexta</option>
+          <option>Sábado</option>
+          <option value="">Escolha um dia</option>
         </select>
       </label>
       </label>
       <label style="" class="item item-input">
         <span class="input-label">Horário Inicio</span>
-        <input type="time" ng-model="vm.input.startTime">
+        <input type="time" ng-model="vm.input.startTime" required>
       </label>
       <label style="" class="item item-input">
         <span class="input-label">Horário Fim</span>
-        <input type="time" ng-model="vm.input.endTime">
+        <input type="time" ng-model="vm.input.endTime" required>
       </label>
       <label style="" class="item item-input">
         <span class="input-label">Sala</span>
-        <input type="text" ng-model="vm.input.room">
+        <input type="text" ng-model="vm.input.room" placeholder="(Opcional)">
       </label>
       <button class="button icon-left button-block button-positive"
-              ng-click="vm.submit()">Adiconar
+              ng-click="vm.submit()" ng-disabled="form.$invalid">Adiconar
       </button>
     </form>
   </ion-content>
