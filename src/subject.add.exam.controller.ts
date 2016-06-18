@@ -3,12 +3,13 @@
 class subjectAddExamCtrl {
   public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService']
 
-  private input = {}
+  private input
 
   constructor(public $state,
               public $stateParams,
               public SubjectService,
               public CalendarService) {
+    this.input = {}
     this.input.weight = 1
   }
 
