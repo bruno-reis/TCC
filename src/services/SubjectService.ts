@@ -9,8 +9,8 @@ class SubjectService {
     this.subjects = [{}, {
       name: 'Introdução ao Design',
       id: 1,
-      startDate: '1455501600000',
-      endDate: '1467255600000',
+      startDate: 1455501600000,
+      endDate: 1467255600000,
       classes: [{
         day: '2',
         startTime: '39600000',
@@ -35,8 +35,8 @@ class SubjectService {
     }, {
       name: 'Cálculo Diferencial e Integral I',
       id: 2,
-      startDate: '1455501600000',
-      endDate: '1467255600000',
+      startDate: 1455501600000,
+      endDate: 1467255600000,
       classes: [{
         day: '1',
         startTime: '39600000',
