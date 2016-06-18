@@ -12,12 +12,14 @@ class SubjectService {
       startDate: '1455501600000',
       endDate: '1467255600000',
       classes: [{
-        day: 'Terça',
-        time: '0800:0940',
+        day: '2',
+        startTime: '39600000',
+        endTime: '45600000',
         room: 'B4'
       }, {
-        day: 'Sexta',
-        time: '1000:1140',
+        day: '5',
+        startTime: '46800000',
+        endTime: '52800000',
         room: 'B4'
       }],
       exams: [{
@@ -36,12 +38,14 @@ class SubjectService {
       startDate: '1455501600000',
       endDate: '1467255600000',
       classes: [{
-        day: 'Segunda',
-        time: '0800:0940',
+        day: '1',
+        startTime: '39600000',
+        endTime: '45600000',
         room: 'B2'
       }, {
-        day: 'Quarta',
-        time: '1000:1140',
+        day: '3',
+        startTime: '46800000',
+        endTime: '52800000',
         room: 'B2'
       }],
       exams: [{

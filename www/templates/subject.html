@@ -5,7 +5,8 @@
       <div class="item item-text-wrap">
         <ul class="list" ng-repeat="class in vm.subject.classes">
           <li class="item">
-            {{class.day}} : {{class.time | date: 'shortTime'}} : {{class.room}}
+            {{vm.dayName[class.day]}} : {{class.startTime | date: 'HH:mm'}}
+            - {{class.endTime | date: 'HH:mm'}} : {{class.room}}
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addClass()">

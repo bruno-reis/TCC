@@ -4,6 +4,7 @@ class SubjectCtrl {
   public $inject = ['$stateParams', '$state', 'SubjectService']
 
   subject: any
+  dayName = ['','Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 
   constructor(public $state,
               public $stateParams,
