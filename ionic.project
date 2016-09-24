@@ -1,4 +1,5 @@
 {
   "name": "mvp",
-  "app_id": ""
+  "app_id": "",
+  "defaultBrowser": "google-chrome"
 }
