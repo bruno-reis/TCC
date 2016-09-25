@@ -75,7 +75,7 @@ class SubjectService {
     let list = this.StorageService.get('subjectsList')
     if (list) this.subjectList = list
     let data = this.StorageService.get('subjects')
-    if (data) this.subjects.push(data)
+    if (data) this.subjects = data
     console.log(this.StorageService.get('subjects'))
   }
 
