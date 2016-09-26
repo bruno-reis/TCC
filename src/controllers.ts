@@ -1,8 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 angular.module('app.controllers', [])
-  .controller('activitiesCtrl', function($scope) {
-  })
+  .controller('activitiesCtrl', function($scope) { })
 
   .controller('CalendarDemoCtrl', function ($scope, CalendarService) {
     'use strict';
