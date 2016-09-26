@@ -18,7 +18,6 @@ class SubjectService {
   update() {
     let data = this.StorageService.get('subjects')
     if (data) this.subjects = data
-    console.log(this.StorageService.get('subjects'))
   }
 
   getSubject(subjectId) {
@@ -42,6 +41,7 @@ class SubjectService {
   }
 
   addClass(subjectId, input) {
+    input.id = this.subjects[subjectId].classes.length + 1
     this.subjects[subjectId].classes.push(input)
     this.StorageService.add('subjects', this.subjects)
     this.update()
