@@ -19,7 +19,7 @@
     <div class="card">
       <div class="item item-divider">Provas</div>
       <div class="item item-text-wrap">
-        <ul class="list" ng-repeat="exam in vm.subject.exams">
+        <ul class="list" ng-repeat="exam in vm.subject.exams" ng-if="exam.id">
           <li class="item">
             {{exam.title}} : {{exam.date | date: 'mediumDate'}} : {{exam.weight}}
           </li>
@@ -34,7 +34,8 @@
     <div class="card">
       <div class="item item-divider">Trabalhos</div>
       <div class="item item-text-wrap">
-        <ul class="list" ng-repeat="homework in vm.subject.homeworks">
+        <ul class="list" ng-repeat="homework in vm.subject.homeworks"
+            ng-if="homework.id">
           <li class="item">
             {{homework.title}} : {{homework.date | date: 'mediumDate'}} : {{homework.weight}}
           </li>

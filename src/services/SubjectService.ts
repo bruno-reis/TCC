@@ -85,8 +85,8 @@ class SubjectService {
     subject.id  = this.subjects[this.subjects.length - 1].id + 1
     this.subjectList.push(subject)
     subject.classes = []
-    subject.exams = []
-    subject.homeworks = []
+    subject.exams = [{}]
+    subject.homeworks = [{}]
     this.subjects.push(subject)
   }
 
@@ -94,12 +94,24 @@ class SubjectService {
     this.subjects[subjectId].classes.push(input)
   }
 
-  addExam(subjectId, input) {
-    this.subjects[subjectId].exams.push(input)
+  addExam(subjectId, exam) {
+    exam.id = ''
+    exam.id = this.subjects[subjectId].exams.length
+    this.subjects[subjectId].exams.push(exam)
   }
 
-  addHomework(subjectId, input) {
-    this.subjects[subjectId].homeworks.push(input)
+  getExam(subjectId, examId) {
+    return this.subjects[subjectId].exams[examId]
+  }
+
+  addHomework(subjectId, homework) {
+    homework.id = ''
+    homework.id = this.subjects[subjectId].homeworks.length
+    this.subjects[subjectId].homeworks.push(homework)
+  }
+
+  getHomework(subjectId, homeworkId) {
+    return this.subjects[subjectId].homeworks[homeworkId]
   }
 }
 
