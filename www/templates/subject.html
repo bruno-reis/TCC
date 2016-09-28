@@ -20,8 +20,12 @@
       <div class="item item-divider">Provas</div>
       <div class="item item-text-wrap">
         <ul class="list" ng-repeat="exam in vm.subject.exams" ng-if="exam.id">
-          <li class="item">
-            {{exam.title}} : {{exam.date | date: 'mediumDate'}} : {{exam.weight}}
+          <li class="item item-icon-right">
+            {{exam.title}} : {{exam.date | date: 'dd/MM/yyyy'}} :
+            {{(exam.result | number: 2) || 'Sem nota'}}
+            <a ng-click="vm.editExam(exam.id)">
+              <i class="icon ion-android-arrow-forward"></i>
+            </a>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addExam()">
@@ -36,8 +40,12 @@
       <div class="item item-text-wrap">
         <ul class="list" ng-repeat="homework in vm.subject.homeworks"
             ng-if="homework.id">
-          <li class="item">
-            {{homework.title}} : {{homework.date | date: 'mediumDate'}} : {{homework.weight}}
+          <li class="item item-icon-right">
+            {{homework.title}} : {{homework.date | date: 'dd/MM/yyyy'}} :
+            {{(homework.result | number: 2) || 'Sem nota'}}
+            <a ng-click="vm.editHomework(homework.id)">
+              <i class="icon ion-android-arrow-forward"></i>
+            </a>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addHomework()">
