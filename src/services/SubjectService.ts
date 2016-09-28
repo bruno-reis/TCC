@@ -100,6 +100,10 @@ class SubjectService {
     this.subjects[subjectId].exams.push(exam)
   }
 
+  editExam(subjectId, exam) {
+    this.subjects[subjectId].exams[exam.id] = exam
+  }
+
   getExam(subjectId, examId) {
     return this.subjects[subjectId].exams[examId]
   }
@@ -108,6 +112,10 @@ class SubjectService {
     homework.id = ''
     homework.id = this.subjects[subjectId].homeworks.length
     this.subjects[subjectId].homeworks.push(homework)
+  }
+
+  editHomework(subjectId, homework) {
+    this.subjects[subjectId].homeworks[homework.id] = homework
   }
 
   getHomework(subjectId, homeworkId) {
