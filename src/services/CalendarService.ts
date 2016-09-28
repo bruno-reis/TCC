@@ -1,48 +1,77 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class CalendarService {
-  private events: Array<any>
+  private $inject = ['StorageService']
 
-  constructor() {
-    this.events = []
+  private events: Array<any> = []
+
+  constructor(public StorageService) {
+    this.update()
+  }
+
+  update() {
+    let data = this.StorageService.get('events')
+    if (data) this.events = data
+    console.log("events", this.StorageService.get('events'))
   }
 
   createEvent(input) {
+    input.startTime.setMonth(input.date.getMonth())
+    input.startTime.setDate(input.date.getDate())
+    input.startTime.setFullYear(input.date.getFullYear())
+
+    input.endTime.setMonth(input.date.getMonth())
+    input.endTime.setDate(input.date.getDate())
+    input.endTime.setFullYear(input.date.getFullYear())
+
     this.events.push({
       title: input.title,
-      startTime: input.date.getTime() + input.startTime.getTime() - input.date.getTimezoneOffset()*60000,
-      endTime: input.date.getTime() + input.endTime.getTime() - input.date.getTimezoneOffset()*60000,
+      startTime: input.startTime.getTime(),
+      endTime: input.endTime.getTime(),
       allDay: false
     })
+    this.StorageService.add('events', this.events)
+    this.update()
+  }
+
+  mod(n, m) {
+    return ((n % m) + m) % m
   }
 
   createClassEvents(input, startDate, endDate, name) {
     //TODO: Currently timezone is affecting the start/end of the events on calendar. Try to calculate days in another way
     startDate = new Date(startDate)
     endDate = new Date(endDate)
-    let currDate = startDate
-  
-  //Get the closest day to the subject startDay on a Date Object
-    while ( input.day != currDate.getDay()) {
-      currDate = new Date(currDate.getTime() + 24*3600000)
-    }
-  //Increment currDate by 7 days until we get to the endDate.
-  //So we add this class for the whole period on the calendar.
-    while ( currDate.getTime() <= endDate.getTime() ) {
+
+    let diff = this.mod(input.day - startDate.getDay() , 7 )
+    startDate.setDate( startDate.getDate() + diff)
+    
+    while ( startDate <= endDate ) {
+
+      input.startTime.setMonth(startDate.getMonth())
+      input.startTime.setDate(startDate.getDate())
+      input.startTime.setFullYear(startDate.getFullYear())
+
+      input.endTime.setMonth(startDate.getMonth())
+      input.endTime.setDate(startDate.getDate())
+      input.endTime.setFullYear(startDate.getFullYear())
+
       this.events.push({
         title: name,
-        startTime: currDate.getTime() + input.startTime.getTime(),
-        endTime: currDate.getTime() + input.endTime.getTime(),
+        startTime: input.startTime.getTime(),
+        endTime: input.endTime.getTime(),
         allDay: false
       })
-      currDate = new Date(currDate.getTime() + 7*24*3600000)
+      startDate.setDate(startDate.getDate() + 7)
     }
+
+    this.StorageService.add('events', this.events)
+    this.update()
   }
 
   getEvents() {
     return this.events
   }
-
 }
 
 angular.module('app.services')

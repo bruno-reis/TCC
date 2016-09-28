@@ -16,6 +16,7 @@ class subjectAddHomeworkCtrl {
   submit() {
     this.CalendarService.createEvent(this.input)
     this.SubjectService.addHomework(this.$state.params['subjectId'], this.input)
+    this.SubjectService.update()
     this.$state.go('.^.info')
   }
 }
