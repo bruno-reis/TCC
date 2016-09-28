@@ -74,7 +74,7 @@ angular.module('app.routes', [])
       .state('subject.editHomework', {
         url: '/homework/:homeworkId',
         templateUrl: '/templates/subject-edit-homework.html',
-        controller 'subjectEditHomeworkCtrl as vm'
+        controller: 'subjectEditHomeworkCtrl as vm'
       })
 
       .state('activities', {
