@@ -33,8 +33,8 @@ class SubjectService {
     this.subjectList.push(subject)
     this.StorageService.add('subjectsList', this.subjectList)
     subject.classes = []
-    subject.exams = []
-    subject.homeworks = []
+    subject.exams = [{}]
+    subject.homeworks = [{}]
     this.subjects.push(subject)
     this.StorageService.add('subjects', this.subjects)
     this.update()
@@ -47,16 +47,38 @@ class SubjectService {
     this.update()
   }
 
-  addExam(subjectId, input) {
-    this.subjects[subjectId].exams.push(input)
+  addExam(subjectId, exam) {
+    exam.id = this.subjects[subjectId].exams.length
+    this.subjects[subjectId].exams.push(exam)
     this.StorageService.add('subjects', this.subjects)
     this.update()
   }
 
-  addHomework(subjectId, input) {
-    this.subjects[subjectId].homeworks.push(input)
+  editExam(subjectId, exam) {
+    this.subjects[subjectId].exams[exam.id] = exam
     this.StorageService.add('subjects', this.subjects)
     this.update()
+  }
+
+  getExam(subjectId, examId) {
+    return this.subjects[subjectId].exams[examId]
+  }
+
+  addHomework(subjectId, homework) {
+    homework.id = this.subjects[subjectId].homeworks.length
+    this.subjects[subjectId].homeworks.push(homework)
+    this.StorageService.add('subjects', this.subjects)
+    this.update()
+  }
+
+  editHomework(subjectId, homework) {
+    this.subjects[subjectId].homeworks[homework.id] = homework
+    this.StorageService.add('subjects', this.subjects)
+    this.update()
+  }
+
+  getHomework(subjectId, homeworkId) {
+    return this.subjects[subjectId].homeworks[homeworkId]
   }
 }
 

@@ -59,10 +59,22 @@ angular.module('app.routes', [])
         controller: 'subjectAddExamCtrl as vm'
       })
 
+      .state('subject.editExam', {
+        url: '/exam/:examId',
+        templateUrl: 'templates/subject-edit-exam.html',
+        controller: 'subjectEditExamCtrl as vm'
+      })
+
       .state('subject.addHomework', {
         url: '/add-homework',
         templateUrl: 'templates/subject-add-homework.html',
         controller: 'subjectAddHomeworkCtrl as vm'
+      })
+
+      .state('subject.editHomework', {
+        url: '/homework/:homeworkId',
+        templateUrl: '/templates/subject-edit-homework.html',
+        controller: 'subjectEditHomeworkCtrl as vm'
       })
 
       .state('activities', {

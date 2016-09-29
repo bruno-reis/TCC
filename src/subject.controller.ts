@@ -20,8 +20,16 @@ class SubjectCtrl {
     this.$state.go('subject.addExam')
   }
 
+  editExam(examId) {
+    this.$state.go('subject.editExam', {examId: examId})
+  }
+
   addHomework() {
     this.$state.go('subject.addHomework')
+  }
+
+  editHomework(homeworkId) {
+    this.$state.go('subject.editHomework', {homeworkId: homeworkId})
   }
 }
 
