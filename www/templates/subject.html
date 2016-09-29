@@ -3,7 +3,7 @@
     <div class="card">
       <div class="item item-divider">Aulas</div>
       <div class="item item-text-wrap">
-        <ul class="list" ng-repeat="class in vm.subject.classes">
+        <ul class="list" ng-repeat="class in vm.subject.classes track by class.id">
           <li class="item">
             {{vm.dayName[class.day]}} : {{class.startTime | date: 'HH:mm'}}
             - {{class.endTime | date: 'HH:mm'}} : {{class.room}}
