@@ -11,6 +11,9 @@ class subjectEditHomeworkCtrl {
     var subjectId = this.$state.params['subjectId']
     var homeworkId = this.$state.params['homeworkId']
     this.input = this.SubjectService.getHomework(subjectId, homeworkId)
+    this.input.date = new Date(this.input.date)
+    this.input.startTime = new Date(this.input.startTime)
+    this.input.endTime = new Date(this.input.endTime)
   }
 
   submit() {

@@ -11,6 +11,9 @@ class subjectEditExamCtrl {
     var subjectId = this.$state.params['subjectId']
     var examId = this.$state.params['examId']
     this.input = this.SubjectService.getExam(subjectId, examId)
+    this.input.date = new Date(this.input.date)
+    this.input.startTime = new Date(this.input.startTime)
+    this.input.endTime = new Date(this.input.endTime)
   }
 
   submit() {
