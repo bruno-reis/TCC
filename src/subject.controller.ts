@@ -31,6 +31,15 @@ class SubjectCtrl {
   editHomework(homeworkId) {
     this.$state.go('subject.editHomework', {homeworkId: homeworkId})
   }
+
+  hasAnyExam() {
+    return this.subject.exams.length > 1;
+  }
+
+  hasAnyHomework() {
+    return this.subject.homeworks.length > 1;
+  }
+
 }
 
 angular.module('app.controllers')

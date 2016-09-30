@@ -55,5 +55,21 @@
       </div>
     </div>
 
+    <div class="card" ng-show="vm.hasAnyExam() || vm.hasAnyHomework()">
+      <div class="item item-divider">Média Final</div>
+      <div class="item item-text-wrap">
+        <ul class="list">
+          <li class="item" ng-show="vm.hasAnyExam() && vm.hasAnyHomework()">
+            Média das Provas (MP)
+            <p></p>
+          </li>
+          <li class="item" ng-show="vm.hasAnyHomework() && vm.hasAnyExam()">
+            Média dos Trabalhos (MT)
+            <p></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>
