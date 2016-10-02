@@ -32,7 +32,7 @@ class SubjectService {
     subject.id = this.subjects.length + 1
     this.subjectList.push(subject)
     this.StorageService.add('subjectsList', this.subjectList)
-    subject.classes = []
+    subject.classes = [{}]
     subject.exams = [{}]
     subject.homeworks = [{}]
     this.subjects.push(subject)
@@ -41,7 +41,7 @@ class SubjectService {
   }
 
   addClass(subjectId, input) {
-    input.id = this.subjects[subjectId].classes.length + 1
+    input.id = this.subjects[subjectId].classes.length
     this.subjects[subjectId].classes.push(input)
     this.StorageService.add('subjects', this.subjects)
     this.update()

@@ -3,10 +3,11 @@
     <div class="card">
       <div class="item item-divider">Aulas</div>
       <div class="item item-text-wrap">
-        <ul class="list" ng-repeat="class in vm.subject.classes track by class.id">
+        <ul class="list" ng-repeat="class in vm.subject.classes track by class.id" ng-if="class.id">
           <li class="item">
             {{vm.dayName[class.day]}} : {{class.startTime | date: 'HH:mm'}}
-            - {{class.endTime | date: 'HH:mm'}} : {{class.room}}
+            - {{class.endTime | date: 'HH:mm'}}
+            <span ng-show="class.room">: {{class.room}}</span>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addClass()">
@@ -55,6 +56,5 @@
         </a>
       </div>
     </div>
-
   </ion-content>
 </ion-view>
