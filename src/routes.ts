@@ -79,8 +79,20 @@ angular.module('app.routes', [])
 
       .state('activities', {
         url: '/activities',
-        templateUrl: 'templates/activities.html',
+        template: '<ion-view id="activitiesList"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
+      })
+
+      .state('activities.list', {
+        url: '/list',
+        templateUrl: 'templates/activity.html',
         controller: 'activitiesCtrl as vm'
+      })
+
+      .state('activities.add', {
+        url: '/add',
+        templateUrl: 'templates/activity.html',
+        controller: 'activitiesAddCtrl as vm'
       })
 
     $urlRouterProvider.otherwise('/subjects/list')
