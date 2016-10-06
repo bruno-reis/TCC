@@ -21,7 +21,11 @@ class ActivityService {
   }
 
   getActivities() {
-    return this.activityList
+    return this.activities
+  }
+
+  getActivity(activityId) {
+    return this.activities[activityId]
   }
 
   addActivity(activity) {
