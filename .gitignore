@@ -10,3 +10,4 @@ www/js/
 www/css/
 .idea/
 .editorconfig
+ionic.config.json
