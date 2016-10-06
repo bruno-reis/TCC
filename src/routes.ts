@@ -85,14 +85,20 @@ angular.module('app.routes', [])
 
       .state('activities.list', {
         url: '/list',
-        templateUrl: 'templates/activity.html',
+        templateUrl: 'templates/activity-list.html',
         controller: 'activitiesCtrl as vm'
       })
 
       .state('activities.add', {
         url: '/add',
-        templateUrl: 'templates/activity.html',
+        templateUrl: 'templates/activity-add.html',
         controller: 'activitiesAddCtrl as vm'
+      })
+
+      .state('activities.info', {
+        url: '/:activityId',
+        templateUrl: 'templates/activity-info.html',
+        controller: 'activitiesInfoCtrl as vm'
       })
 
     $urlRouterProvider.otherwise('/subjects/list')
