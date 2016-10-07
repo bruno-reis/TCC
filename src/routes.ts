@@ -95,10 +95,22 @@ angular.module('app.routes', [])
         controller: 'activitiesAddCtrl as vm'
       })
 
-      .state('activities.info', {
+      .state('activity', {
         url: '/:activityId',
+        template: '<ion-view id="activity"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
+      })
+
+      .state('activity.info', {
+        url: '/info',
         templateUrl: 'templates/activity-info.html',
         controller: 'activitiesInfoCtrl as vm'
+      })
+
+      .state('activity.addDay', {
+        url: '/add/day/',
+        templateUrl: 'templates/activity-add-day.html',
+        controller: 'activitiesAddDayCtrl as vm'
       })
 
     $urlRouterProvider.otherwise('/subjects/list')
