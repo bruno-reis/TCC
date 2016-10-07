@@ -10,7 +10,7 @@ class ActivitiesCtrl {
   }
 
   selectActivity(activityId) {
-    this.$state.go('activities.info', {activityId: activityId})
+    this.$state.go('activity.info', {activityId: activityId})
   }
 
   addActivity() {

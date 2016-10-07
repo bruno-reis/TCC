@@ -2,13 +2,18 @@
 
 class ActivitiesInfoCtrl {
   public $inject = ['$stateParams', '$state', 'ActivitiesService']
-
+  
+  dayName = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
   activity:any
 
   constructor(public $state,
               public $stateParams,
               public ActivityService) {
     this.activity = this.ActivityService.getActivity(this.$state.params['activityId'])
+  }
+
+  addDay() {
+    this.$state.go('activity.addDay')
   }
 }
 

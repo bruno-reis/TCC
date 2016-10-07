@@ -32,14 +32,17 @@ class ActivityService {
     activity.id = this.activities.length + 1
     this.activityList.push(activity)
     this.StorageService.add('activitiesList', this.activityList)
+    activity.days = [{}]
+    activity.startDate = new Date()
+    console.log("act: ", activity)
     this.activities.push(activity)
     this.StorageService.add('activities', this.activities)
     this.update()
   }
 
-  addClass(activityId, input) {
-    input.id = this.activities[activityId].classes.length
-    this.activities[activityId].classes.push(input)
+  addDay(activityId, input) {
+    input.id = this.activities[activityId].days.length
+    this.activities[activityId].days.push(input)
     this.StorageService.add('activities', this.activities)
     this.update()
   }

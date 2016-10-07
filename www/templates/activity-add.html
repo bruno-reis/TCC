@@ -5,9 +5,14 @@
         <span class="input-label">Nome</span>
         <input type="text" ng-model="vm.input.name" required>
       </label>
-      <label class="item item-input">
-        <span class="input-label">Horário</span>
-        <input type="text"  required>
+      <label class="item item-input item-select">
+        <div class="input-label">Duração</div>
+        <select ng-model="vm.input.duration" required>
+          <option value=1>1 Mês</option>
+          <option value=3>3 Meses</option>
+          <option value=6>6 Meses</option>
+          <option value="">Escolha uma duração</option>
+        </select>
       </label>
       <button class="button icon-left button-block button-positive"
               ng-click="vm.addActivity()" ng-disabled="form.$invalid">Adiconar
