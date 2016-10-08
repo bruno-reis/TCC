@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div class="card" ng-show="vm.hasAnyExam() || vm.hasAnyHomework()">
+    <div class="card" ng-if="vm.hasAnyExam() || vm.hasAnyHomework()">
       <div class="item item-divider">Notas</div>
       <div class="item item-text-wrap">
         <ul class="list">
@@ -68,8 +68,17 @@
               Média de Provas : {{ vm.getExamsGrade() | number: 2 }}
             </span>
             <span class="grade">
-              Média dos Trabalhos: {{ vm.getHomeworksGrade() | number: 2 }}
+              Média de Trabalhos: {{ vm.getHomeworksGrade() | number: 2 }}
             </span>
+          </li>
+          <li class="item item-button-right">
+            Média Final:
+            {{ vm.getFinalGrade() === null ? 'Indefinida' : (vm.getFinalGrade() | number: 2) }}
+            <a href="#" class="button button-clear button-positive" 
+               ng-click="vm.editFinalGrade()"
+               ng-if="vm.getFinalGrade() === null">
+              Definir
+            </a>
           </li>
         </ul>
       </div>

@@ -32,6 +32,10 @@ class SubjectCtrl {
     this.$state.go('subject.editHomework', {homeworkId: homeworkId})
   }
 
+  editFinalGrade() {
+    this.$state.go('subject.editFinalGrade')
+  }
+
   hasAnyExam() {
     return this.subject.exams.length > 1
   }
@@ -73,7 +77,17 @@ class SubjectCtrl {
   }
 
   getFinalGrade() {
-    return 10
+    if (this.hasAnyExam() && this.hasAnyHomework()) {
+      if (this.subject.examsWeight != null && this.subject.homeworksWeight != null) {
+        let examsPart = this.getExamsGrade() * this.subject.examsWeight
+        let homeworksPart = this.getHomeworksGrade() * this.subject.homeworksWeight
+        let result = examsPart + homeworksPart
+        return result > 10 ? 10 : result
+      }
+      return null
+    }
+    if (this.hasAnyExam()) return this.getExamsGrade()
+    if (this.hasAnyHomework()) return this.getHomeworksGrade()
   }
 }
 
