@@ -75,9 +75,8 @@
             Média Final:
             {{ vm.getFinalGrade() === null ? 'Indefinida' : (vm.getFinalGrade() | number: 2) }}
             <a href="#" class="button button-clear button-positive" 
-               ng-click="vm.editFinalGrade()"
-               ng-if="vm.getFinalGrade() === null">
-              Definir
+               ng-click="vm.editFinalGrade()">
+              {{ vm.getFinalGrade() === null? 'Definir' : 'Editar' }}
             </a>
           </li>
         </ul>
