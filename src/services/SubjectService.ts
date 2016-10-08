@@ -80,6 +80,13 @@ class SubjectService {
   getHomework(subjectId, homeworkId) {
     return this.subjects[subjectId].homeworks[homeworkId]
   }
+
+  setFinalGradeWeights(subjectId, examsWeight, homeworksWeight) {
+    this.subjects[subjectId].examsWeight = examsWeight
+    this.subjects[subjectId].homeworksWeight = homeworksWeight
+    this.StorageService.add('subjects', this.subjects)
+    this.update()
+  }
 }
 
 angular.module('app.services')
