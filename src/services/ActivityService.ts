@@ -34,7 +34,7 @@ class ActivityService {
     this.StorageService.add('activitiesList', this.activityList)
     activity.days = [{}]
     activity.startDate = new Date()
-    console.log("act: ", activity)
+    console.log("a: ", activity)
     this.activities.push(activity)
     this.StorageService.add('activities', this.activities)
     this.update()

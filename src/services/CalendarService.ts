@@ -68,6 +68,36 @@ class CalendarService {
     this.StorageService.add('events', this.events)
     this.update()
   }
+  
+  createActivityEvents(input, startDate, duration, name) {
+    let end = new Date(startDate)
+    let start = new Date(startDate)
+    duration = parseInt(duration, 10);
+
+    end.setMonth(start.getMonth() + duration)
+
+    while (start <= end ) {
+
+      input.startTime.setMonth(start.getMonth())
+      input.startTime.setDate(start.getDate())
+      input.startTime.setFullYear(start.getFullYear())
+
+      input.endTime.setMonth(start.getMonth())
+      input.endTime.setDate(start.getDate())
+      input.endTime.setFullYear(start.getFullYear())
+
+      this.events.push({
+        title: name,
+        startTime: input.startTime.getTime(),
+        endTime: input.endTime.getTime(),
+        allDay: false
+      })
+      start.setDate(start.getDate() + 7)
+    }
+
+    this.StorageService.add('events', this.events)
+    this.update()
+  }
 
   getEvents() {
     return this.events
