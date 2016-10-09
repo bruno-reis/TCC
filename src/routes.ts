@@ -96,7 +96,7 @@ angular.module('app.routes', [])
       })
 
       .state('activity', {
-        url: '/:activityId',
+        url: 'activity/:activityId',
         template: '<ion-view id="activity"> <ion-nav-view></ion-nav-view> </ion-view>',
         abstract: true
       })
@@ -108,7 +108,7 @@ angular.module('app.routes', [])
       })
 
       .state('activity.addDay', {
-        url: '/add/day/',
+        url: '/day/',
         templateUrl: 'templates/activity-add-day.html',
         controller: 'activitiesAddDayCtrl as vm'
       })
