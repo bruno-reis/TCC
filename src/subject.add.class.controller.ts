@@ -10,12 +10,12 @@ class subjectAddClassCtrl {
               public $stateParams,
               public SubjectService,
               public CalendarService) {
+    this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
   }
 
   submit() {
-    this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
-    this.CalendarService.createClassEvents(this.input, this.subject.startDate, this.subject.endDate, this.subject.name)
     this.SubjectService.addClass(this.$state.params['subjectId'], this.input)
+    this.CalendarService.createClassEvents(this.input, this.subject)
     this.SubjectService.update()
     this.$state.go('.^.info')
   }

@@ -2,76 +2,86 @@
 
 class CalendarService {
   private $inject = ['StorageService']
-
   private events: Array<any> = []
 
   constructor(public StorageService) {
     this.update()
   }
+  
+  getEvents() {
+    return this.events
+  }
 
   update() {
     let data = this.StorageService.get('events')
     if (data) this.events = data
-    console.log("events", this.StorageService.get('events'))
   }
-
-  createEvent(input) {
-    input.startTime.setMonth(input.date.getMonth())
-    input.startTime.setDate(input.date.getDate())
-    input.startTime.setFullYear(input.date.getFullYear())
-
-    input.endTime.setMonth(input.date.getMonth())
-    input.endTime.setDate(input.date.getDate())
-    input.endTime.setFullYear(input.date.getFullYear())
-
-    this.events.push({
-      title: input.title,
-      startTime: input.startTime.getTime(),
-      endTime: input.endTime.getTime(),
-      allDay: false
-    })
-    this.StorageService.add('events', this.events)
-    this.update()
-  }
-
+  
+  //Defined as external function to handle negatives values
   mod(n, m) {
     return ((n % m) + m) % m
   }
 
-  createClassEvents(input, startDate, endDate, name) {
-    //TODO: Currently timezone is affecting the start/end of the events on calendar. Try to calculate days in another way
-    startDate = new Date(startDate)
-    endDate = new Date(endDate)
+  createEvent(input, owner, date) {
+    input.startTime.setMonth(date.getMonth())
+    input.startTime.setDate(date.getDate())
+    input.startTime.setFullYear(date.getFullYear())
 
-    let diff = this.mod(input.day - startDate.getDay() , 7 )
-    startDate.setDate( startDate.getDate() + diff)
+    input.endTime.setMonth(date.getMonth())
+    input.endTime.setDate(date.getDate())
+    input.endTime.setFullYear(date.getFullYear())
+
+    this.events.push({
+      eventId: input.id,
+      ownerId: owner.id,
+      type: owner.type,
+      title: owner.name,
+      startTime: input.startTime.getTime(),
+      endTime: input.endTime.getTime(),
+      allDay: false
+    })
+
+    this.StorageService.add('events', this.events)
+    this.update()
+  }
+
+  createClassEvents(input, subject) {
+    subject.startDate = new Date(subject.startDate)
+    subject.endDate = new Date(subject.endDate)
     
-    while ( startDate <= endDate ) {
-
-      input.startTime.setMonth(startDate.getMonth())
-      input.startTime.setDate(startDate.getDate())
-      input.startTime.setFullYear(startDate.getFullYear())
-
-      input.endTime.setMonth(startDate.getMonth())
-      input.endTime.setDate(startDate.getDate())
-      input.endTime.setFullYear(startDate.getFullYear())
-
-      this.events.push({
-        title: name,
-        startTime: input.startTime.getTime(),
-        endTime: input.endTime.getTime(),
-        allDay: false
-      })
-      startDate.setDate(startDate.getDate() + 7)
+    //Using MOD to adjust between subject start date and day when class starts
+    let diff = this.mod(input.day - subject.startDate.getDay() , 7 )
+    subject.startDate.setDate( subject.startDate.getDate() + diff)
+    
+    subject.type = "class"
+    
+    while ( subject.startDate <= subject.endDate ) {
+      this.createEvent(input, subject, subject.startDate)
+      subject.startDate.setDate(subject.startDate.getDate() + 7)
     }
 
     this.StorageService.add('events', this.events)
     this.update()
   }
+  
+  createActivityEvents(input, activity) {
+    let end = new Date(activity.startDate)
+    let start = new Date(activity.startDate)
 
-  getEvents() {
-    return this.events
+    activity.duration = parseInt(activity.duration, 10);
+    end.setMonth(start.getMonth() + activity.duration)
+    activity.type = "activity"
+
+    while (start <= end ) {
+      this.createEvent(input, activity, start)
+      start.setDate(start.getDate() + 7)
+    }
+
+    this.StorageService.add('events', this.events)
+    this.update()
   }
+  
+ 
 }
 
 angular.module('app.services')

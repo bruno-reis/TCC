@@ -29,7 +29,8 @@ class SubjectService {
   }
 
   addSubject(subject) {
-    subject.id = this.subjects.length + 1
+    //Adding 5000 to differentiate activities IDs from subjects ones
+    subject.id = (this.subjects.length + 1) + 5000
     this.subjectList.push(subject)
     this.StorageService.add('subjectsList', this.subjectList)
     subject.classes = [{}]
