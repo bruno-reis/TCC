@@ -29,7 +29,8 @@ class ActivityService {
   }
 
   addActivity(activity) {
-    activity.id = this.activities.length + 1
+    //Adding 1000 to differentiate activities IDs from subjects ones
+    activity.id = (this.activities.length + 1) + 1000
     this.activityList.push(activity)
     this.StorageService.add('activitiesList', this.activityList)
     activity.days = [{}]
@@ -46,6 +47,7 @@ class ActivityService {
     this.StorageService.add('activities', this.activities)
     this.update()
   }
+  
 }
 
 angular.module('app.services')

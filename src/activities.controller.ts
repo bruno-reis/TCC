@@ -7,6 +7,7 @@ class ActivitiesCtrl {
   constructor(public $state,
               public ActivityService) {
     this.activities = this.ActivityService.getActivities()
+    console.log("activities", this.activities)
   }
 
   selectActivity(activityId) {
