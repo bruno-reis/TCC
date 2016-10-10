@@ -16,7 +16,6 @@ class activitiesAddDayCtrl {
   submit() {
     this.ActivityService.addDay(this.$state.params['activityId'], this.input)
     this.CalendarService.createActivityEvents(this.input, this.activity)
-    console.log("id:",this.input)
     this.$state.go('.^.info')
   }
 }

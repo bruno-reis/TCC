@@ -11,7 +11,6 @@ class ActivitiesAddCtrl {
 
   addActivity() {
     this.ActivityService.addActivity(this.input)
-    console.log(this.StorageService.get('activities'))
     this.$state.go('activities.list')
   }
 }

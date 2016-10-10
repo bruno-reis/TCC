@@ -4,7 +4,7 @@ class ActivitiesInfoCtrl {
   public $inject = ['$stateParams', '$state', 'ActivitiesService', 'CalendarService']
   
   dayName = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
-  activity:any
+  private activity
 
   constructor(public $state,
               public $stateParams,
