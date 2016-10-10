@@ -22,7 +22,9 @@ class CalendarService {
     return ((n % m) + m) % m
   }
 
-  createEvent(input, owner, date) {
+  createEvent(input, owner, start, type) {
+    let date = new Date(start)
+
     input.startTime.setMonth(date.getMonth())
     input.startTime.setDate(date.getDate())
     input.startTime.setFullYear(date.getFullYear())
@@ -34,13 +36,14 @@ class CalendarService {
     this.events.push({
       eventId: input.id,
       ownerId: owner.id,
-      type: owner.type,
-      title: owner.name,
+      type: type,
+      title: input.type || owner.name,
       startTime: input.startTime.getTime(),
       endTime: input.endTime.getTime(),
       allDay: false
     })
 
+    console.log("events", this.events)
     this.StorageService.add('events', this.events)
     this.update()
   }
@@ -53,10 +56,8 @@ class CalendarService {
     let diff = this.mod(input.day - subject.startDate.getDay() , 7 )
     subject.startDate.setDate( subject.startDate.getDate() + diff)
     
-    subject.type = "class"
-    
     while ( subject.startDate <= subject.endDate ) {
-      this.createEvent(input, subject, subject.startDate)
+      this.createEvent(input, subject, subject.startDate, "class")
       subject.startDate.setDate(subject.startDate.getDate() + 7)
     }
 
@@ -70,10 +71,9 @@ class CalendarService {
 
     activity.duration = parseInt(activity.duration, 10);
     end.setMonth(start.getMonth() + activity.duration)
-    activity.type = "activity"
 
     while (start <= end ) {
-      this.createEvent(input, activity, start)
+      this.createEvent(input, activity, start, "activity")
       start.setDate(start.getDate() + 7)
     }
 
