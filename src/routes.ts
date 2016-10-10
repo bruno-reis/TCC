@@ -77,6 +77,12 @@ angular.module('app.routes', [])
         controller: 'subjectEditHomeworkCtrl as vm'
       })
 
+      .state('subject.editFinalGrade', {
+        url: '/edit-finalGrade',
+        templateUrl: '/templates/subject-edit-finalgrade.html',
+        controller: 'subjectEditFinalGradeCtrl as vm'
+      })
+
       .state('activities', {
         url: '/activities',
         templateUrl: 'templates/activities.html',
