@@ -9,7 +9,13 @@ class subjectEditFinalGradeCtrl {
   constructor(public $state,
               public $stateParams,
               public SubjectService) {
+    let subject
     this.subjectId = this.$state.params['subjectId']
+    subject = this.SubjectService.getSubject(this.subjectId)
+    this.input = {
+      examsWeight: subject.examsWeight,
+      homeworksWeight: subject.homeworksWeight
+    }
   }
 
   submit() {
