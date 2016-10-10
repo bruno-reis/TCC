@@ -1,5 +1,12 @@
 {
   "name": "mvp",
   "app_id": "",
-  "defaultBrowser": "google-chrome"
+  "defaultBrowser": "google-chrome",
+  "gulpStartupTasks": [
+    "default"
+  ],
+  "watchPatterns": [
+    "src/**/*",
+    "www/templates/**/*"
+  ]
 }

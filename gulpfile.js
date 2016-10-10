@@ -13,7 +13,8 @@ var paths = {
   sass: ['./scss/**/*.scss'],
   src: ['./src/app.ts', './src/controllers.ts',
         './src/directives.ts', './src/services.ts',
-        './src/services/*.ts', './src/*.ts'],
+        './src/services/*.ts', './src/activities/*.ts',
+        './src/*.ts', './src/routes.ts'],
   ts: ['./dist/bundle.ts']
 };
 
@@ -81,5 +82,5 @@ gulp.task('clean', function() {
   ]);
 });
 
-gulp.task('default', ['sass', 'compile']);
+gulp.task('default', ['sass', 'compile', "watch"]);
 

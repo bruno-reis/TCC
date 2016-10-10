@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 
 class ActivitiesInfoCtrl {
   public $inject = ['$stateParams', '$state', 'ActivitiesService', 'CalendarService']
