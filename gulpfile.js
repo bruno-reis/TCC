@@ -70,5 +70,5 @@ gulp.task('clean', function() {
   ]);
 });
 
-gulp.task('default', ['sass', 'compile']);
+gulp.task('default', ['sass', 'compile', "watch"]);
 
