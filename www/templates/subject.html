@@ -27,7 +27,7 @@
             {{(exam.result | number: 2) || 'Sem nota'}}
             <a ng-click="vm.editExam(exam.id)"
                class="button button-clear button-positive">
-              Editar
+              <i class="icon ion-edit"></i>
             </a>
           </li>
         </ul>
@@ -48,7 +48,7 @@
             {{(homework.result | number: 2) || 'Sem nota'}}
             <a ng-click="vm.editHomework(homework.id)"
                class="button button-clear button-positive">
-              Editar
+              <i class="icon ion-edit"></i>
             </a>
           </li>
         </ul>
@@ -76,7 +76,7 @@
             {{ vm.getFinalGrade() === null ? 'Indefinida' : (vm.getFinalGrade() | number: 2) }}
             <a href="#" class="button button-clear button-positive" 
                ng-click="vm.editFinalGrade()">
-              {{ vm.getFinalGrade() === null? 'Definir' : 'Editar' }}
+              <i class="icon ion-edit"></i>
             </a>
           </li>
         </ul>
