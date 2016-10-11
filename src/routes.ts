@@ -85,8 +85,38 @@ angular.module('app.routes', [])
 
       .state('activities', {
         url: '/activities',
-        templateUrl: 'templates/activities.html',
+        template: '<ion-view id="activitiesList"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
+      })
+
+      .state('activities.list', {
+        url: '/list',
+        templateUrl: 'templates/activity-list.html',
         controller: 'activitiesCtrl as vm'
+      })
+
+      .state('activities.add', {
+        url: '/add',
+        templateUrl: 'templates/activity-add.html',
+        controller: 'activitiesAddCtrl as vm'
+      })
+
+      .state('activity', {
+        url: 'activity/:activityId',
+        template: '<ion-view id="activity"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
+      })
+
+      .state('activity.info', {
+        url: '/info',
+        templateUrl: 'templates/activity-info.html',
+        controller: 'activitiesInfoCtrl as vm'
+      })
+
+      .state('activity.addDay', {
+        url: '/day/',
+        templateUrl: 'templates/activity-add-day.html',
+        controller: 'activitiesAddDayCtrl as vm'
       })
 
     $urlRouterProvider.otherwise('/subjects/list')

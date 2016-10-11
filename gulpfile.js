@@ -11,19 +11,31 @@ var del = require('del');
 var concat = require('gulp-concat');
 var paths = {
   sass: ['./scss/**/*.scss'],
-  src: ['./src/**/*.ts']
+  src: ['./src/app.ts', './src/controllers.ts',
+        './src/directives.ts', './src/services.ts',
+        './src/services/*.ts', './src/activities/*.ts',
+        './src/*.ts', './src/routes.ts'],
+  ts: ['./dist/bundle.ts']
 };
 
-function compileTS(done) {
-  "use strict";
+function bundleTS(done) {
   gulp.src(paths.src)
+    .pipe(concat('bundle.ts'))
+    .pipe(gulp.dest('./dist/'))
+    .on('end', done);
+}
+
+function compileTS(done) {
+  gulp.src(paths.ts)
     .pipe(typescript( {emitError: false}) )
     .pipe(concat('dist.js'))
     .pipe(gulp.dest('./www/js/'))
     .on('end', done);
 }
 
-gulp.task('compile', compileTS);
+gulp.task('bundle', bundleTS);
+
+gulp.task('compile', ['bundle'], compileTS);
 
 gulp.task('sass', function(done) {
   gulp.src(paths.sass)
