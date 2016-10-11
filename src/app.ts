@@ -2,6 +2,10 @@
 
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ui.calendar', 'ui.rCalendar'])
 
+  angular.module('app.directives', [])
+
+  angular.module('app.services', [])
+
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

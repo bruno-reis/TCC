@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 
 class SubjectCtrl {
   public $inject = ['$stateParams', '$state', 'SubjectService']

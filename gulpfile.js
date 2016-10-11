@@ -12,9 +12,9 @@ var concat = require('gulp-concat');
 var paths = {
   sass: ['./scss/**/*.scss'],
   src: ['./src/app.ts', './src/controllers.ts',
-        './src/directives.ts', './src/services.ts',
-        './src/services/*.ts', './src/activities/*.ts',
-        './src/*.ts', './src/routes.ts'],
+    './src/directives.ts', './src/services.ts',
+    './src/services/*.ts', './src/activities/*.ts', './src/subject/*.ts',
+    './src/*.ts', './src/routes.ts'],
   ts: ['./dist/bundle.ts']
 };
 

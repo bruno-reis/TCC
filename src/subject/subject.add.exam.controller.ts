@@ -1,6 +1,6 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 
-class subjectAddClassCtrl {
+class subjectAddExamCtrl {
   public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService']
 
   private input
@@ -11,15 +11,18 @@ class subjectAddClassCtrl {
               public SubjectService,
               public CalendarService) {
     this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
+    this.input = {}
+    this.input.weight = 1
   }
 
   submit() {
-    this.SubjectService.addClass(this.$state.params['subjectId'], this.input)
-    this.CalendarService.createClassEvents(this.input, this.subject)
+    this.SubjectService.addExam(this.$state.params['subjectId'], this.input)
+    this.CalendarService.createEvent(this.input, this.subject, this.input.date, "exam")
     this.SubjectService.update()
     this.$state.go('.^.info')
   }
 }
 
 angular.module('app.controllers')
-  .controller('subjectAddClassCtrl', subjectAddClassCtrl)
+  .controller('subjectAddExamCtrl', subjectAddExamCtrl)
+
