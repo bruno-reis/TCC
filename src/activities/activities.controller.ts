@@ -1,10 +1,11 @@
 /// <reference path="../../typings/tsd.d.ts" />
 //
 class ActivitiesCtrl {
-  public $inject = ['$state', 'ActivityService']
+  public $inject = ['$state', 'ActivityService', 'CalendarService']
   private activities: Array<string>
 
   constructor(public $state,
+              public CalendarService,
               public ActivityService) {
     this.activities = this.ActivityService.getActivities()
     console.log("activities", this.activities)
@@ -16,6 +17,12 @@ class ActivitiesCtrl {
 
   addActivity() {
     this.$state.go('activities.add')
+  }
+  
+  deleteActivity(activityId) {
+    this.ActivityService.deleteActivity(activityId)
+    this.CalendarService.deleteEvent(activityId)
+    this.$state.go('.^.list', {reload: true})
   }
 }
 

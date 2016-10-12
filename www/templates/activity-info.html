@@ -7,6 +7,12 @@
           <li class="item">
             {{vm.dayName[day.day]}} : {{day.startTime | date: 'HH:mm'}}
             - {{day.endTime | date: 'HH:mm'}}
+            <spam>
+            <a ng-click="vm.deleteDay(vm.activity.id, day.id)"
+               class="button button-clear button-positive">
+              <i class="icon ion-trash-b"></i>
+            </a>
+            </spam>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addDay()">

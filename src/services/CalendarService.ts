@@ -23,6 +23,7 @@ class CalendarService {
   }
 
   createEvent(input, owner, start, type) {
+    //TODO: refactor these create methods
     let date = new Date(start)
 
     input.startTime.setMonth(date.getMonth())
@@ -49,6 +50,7 @@ class CalendarService {
   }
 
   createClassEvents(input, subject) {
+    //TODO: refactor these create methods
     subject.startDate = new Date(subject.startDate)
     subject.endDate = new Date(subject.endDate)
     
@@ -66,6 +68,7 @@ class CalendarService {
   }
   
   createActivityEvents(input, activity) {
+    //TODO: refactor these create methods
     let end = new Date(activity.startDate)
     let start = new Date(activity.startDate)
 
@@ -80,8 +83,23 @@ class CalendarService {
     this.StorageService.add('events', this.events)
     this.update()
   }
+
+  deleteEvent(ownerId) {
+    //filter out the events given ownerId(activityId/subjectId)
+    let events = this.events.filter( ev => ev.ownerId != ownerId)
+    this.StorageService.add('events', events)
+    this.update()
+    console.log("ev", this.events)
+  }
+
+  deleteChildEvent(ownerId, eventId) {
+    //filter out the events from the ownerId that have the same eventId
+    let events = this.events
+      .filter( ev => (ev.ownerId == ownerId && ev.eventId != eventId) || ev.ownerId != ownerId)
+    this.StorageService.add('events', events)
+    this.update()
+  }
   
- 
 }
 
 angular.module('app.services')
