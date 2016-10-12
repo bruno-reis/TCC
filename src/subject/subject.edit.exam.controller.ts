@@ -18,6 +18,7 @@ class subjectEditExamCtrl {
 
   submit() {
     this.SubjectService.editExam(this.$state.params['subjectId'], this.input)
+    // this.SubjectService.editSubjectChild(this.$state.params['subjectId'], this.input, 'exams')
     this.$state.go('.^.info')
   }
 }

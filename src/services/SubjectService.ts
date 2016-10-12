@@ -2,7 +2,7 @@
 
 class SubjectService {
   private $inject = ['StorageService']
-  private subjects = []
+  private subjects
 
   //Creating a dummy empty object because we are using the index as an index
   constructor(public StorageService) {
@@ -15,14 +15,20 @@ class SubjectService {
     console.log("subs", this.subjects)
   }
 
+  getSubjects() {
+    return this.subjects
+  }
+
   getSubject(subjectId) {
     //Using filter instead of array index bc indexes would change after delete
     let subject = this.subjects.filter(sb => sb.id == subjectId)
     return subject[0]
   }
 
-  getSubjects() {
-    return this.subjects
+  getSubjectChild(subjectId, childId, child) {
+    let subject = this.subjects.find(sb => sb.id == subjectId)
+    let subjectChild = subject[child].find(sc => sc.id == childId) 
+    return subjectChild
   }
 
   getNextId(list, startValue) {
@@ -38,6 +44,21 @@ class SubjectService {
     subject.exams = []
     subject.homeworks = []
     this.subjects.push(subject)
+    this.StorageService.add('subjects', this.subjects)
+    this.update()
+  }
+
+  addSubjectChild(subjectId, child, input) {
+    let subject = this.getSubject(subjectId)
+    input.id = this.getNextId(subject[child], 1)
+    subject[child].push(input)
+    this.StorageService.add('subjects', this.subjects)
+    this.update()
+  }
+
+  editSubjectChild(subjectId, input, child) {
+    let subjectChild = this.getSubjectChild(subjectId, input.id, child)
+    subjectChild = input
     this.StorageService.add('subjects', this.subjects)
     this.update()
   }
