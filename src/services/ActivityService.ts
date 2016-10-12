@@ -23,6 +23,11 @@ class ActivityService {
     return this.activities
   }
 
+  storeActivities() {
+    this.StorageService.add('activities', this.activities)
+    this.update()
+  }
+
   getActivity(activityId) {
     //Using filter instead of array index bc indexes would change after delete
     let activity =  this.activities.filter( ac => ac.id == activityId)
@@ -37,16 +42,14 @@ class ActivityService {
     activity.days = [{}]
     activity.startDate = new Date()
     this.activities.push(activity)
-    this.StorageService.add('activities', this.activities)
-    this.update()
+    this.storeActivities()
   }
 
   addDay(activityId, input) {
     let activity = this.getActivity(activityId)
     input.id = activity.days.length
     activity.days.push(input)
-    this.StorageService.add('activities', this.activities)
-    this.update()
+    this.storeActivities()
   }
   
 }

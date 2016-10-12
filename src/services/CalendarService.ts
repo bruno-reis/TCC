@@ -16,6 +16,11 @@ class CalendarService {
     let data = this.StorageService.get('events')
     if (data) this.events = data
   }
+
+  storeEvents() {
+    this.StorageService.add('events', this.events)
+    this.update()
+  }
   
   //Defined as external function to handle negatives values
   mod(n, m) {
@@ -44,8 +49,7 @@ class CalendarService {
     })
 
     console.log("events", this.events)
-    this.StorageService.add('events', this.events)
-    this.update()
+    this.storeEvents()
   }
 
   createClassEvents(input, subject) {
@@ -61,8 +65,7 @@ class CalendarService {
       subject.startDate.setDate(subject.startDate.getDate() + 7)
     }
 
-    this.StorageService.add('events', this.events)
-    this.update()
+    this.storeEvents()
   }
   
   createActivityEvents(input, activity) {
@@ -77,8 +80,7 @@ class CalendarService {
       start.setDate(start.getDate() + 7)
     }
 
-    this.StorageService.add('events', this.events)
-    this.update()
+    this.storeEvents()
   }
   
  

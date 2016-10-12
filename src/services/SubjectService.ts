@@ -25,6 +25,11 @@ class SubjectService {
     return subject[0]
   }
 
+  storeSubjects() {
+    this.StorageService.add('subjects', this.subjects)
+    this.update()
+  }
+
   getSubjects() {
     //Using map to get subjectsList from subjects array to avoid errors on delete
     // let subjectList = this.subjects.map( s =>  [s.name, s.id])
@@ -42,32 +47,28 @@ class SubjectService {
     subject.exams = [{}]
     subject.homeworks = [{}]
     this.subjects.push(subject)
-    this.StorageService.add('subjects', this.subjects)
     console.log("subs", this.subjects)
-    this.update()
+    this.storeSubjects()
   }
 
   addClass(subjectId, input) {
     let subject = this.getSubject(subjectId)
     input.id = subject.classes.length
     subject.classes.push(input)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    this.storeSubjects()
   }
 
   addExam(subjectId, exam) {
     let subject = this.getSubject(subjectId)
     exam.id = subject.exams.length
     subject.exams.push(exam)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    this.storeSubjects()
   }
 
   editExam(subjectId, exam) {
     let subject = this.getSubject(subjectId)
     subject.exams[exam.id] = exam
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    this.storeSubjects()
   }
 
   getExam(subjectId, examId) {
@@ -79,15 +80,13 @@ class SubjectService {
     let subject = this.getSubject(subjectId)
     homework.id = subject.homeworks.length
     subject.homeworks.push(homework)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    this.storeSubjects()
   }
 
   editHomework(subjectId, homework) {
     let subject = this.getSubject(subjectId)
     subject.homeworks[homework.id] = homework
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    this.storeSubjects()
   }
 
   getHomework(subjectId, homeworkId) {
@@ -96,10 +95,10 @@ class SubjectService {
   }
 
   setFinalGradeWeights(subjectId, examsWeight, homeworksWeight) {
-    this.subjects[subjectId].examsWeight = examsWeight
-    this.subjects[subjectId].homeworksWeight = homeworksWeight
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    let subject = this.getSubject(subjectId)
+    subject.examsWeight = examsWeight
+    subject.homeworksWeight = homeworksWeight
+    this.storeSubjects()
   }
 }
 
