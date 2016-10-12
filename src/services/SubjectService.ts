@@ -2,21 +2,17 @@
 
 class SubjectService {
   private $inject = ['StorageService']
-
-  private subjectList: Array<any> = []
-  private subjects: Array<any> = []
+  private subjects = []
 
   //Creating a dummy empty object because we are using the index as an index
   constructor(public StorageService) {
-    let list = this.StorageService.get('subjectsList')
-    if (list) this.subjectList = list
-    let data = this.StorageService.get('subjects')
-    if (data) this.subjects = data
+    this.update()
   }
 
   update() {
     let data = this.StorageService.get('subjects')
     if (data) this.subjects = data
+    console.log("subs", this.subjects)
   }
 
   getSubject(subjectId) {
@@ -26,30 +22,29 @@ class SubjectService {
   }
 
   getSubjects() {
-    //Using map to get subjectsList from subjects array to avoid errors on delete
-    // let subjectList = this.subjects.map( s =>  [s.name, s.id])
-    // console.log("sublist", subjectList)
-    // return subjectList
     return this.subjects
+  }
+
+  getNextId(list, startValue) {
+    //Get the id of the list last element and increase it by 1
+    let nextId = (list.length > 0) ? list[list.length-1].id + 1 : startValue
+    return nextId
   }
 
   addSubject(subject) {
     //Adding 5000 to differentiate activities IDs from subjects ones
-    subject.id = (this.subjects.length) + 5000
-    this.subjectList.push(subject)
-    this.StorageService.add('subjectsList', this.subjectList)
-    subject.classes = [{}]
-    subject.exams = [{}]
-    subject.homeworks = [{}]
+    subject.id = this.getNextId(this.subjects, 5000)
+    subject.classes = []
+    subject.exams = []
+    subject.homeworks = []
     this.subjects.push(subject)
     this.StorageService.add('subjects', this.subjects)
-    console.log("subs", this.subjects)
     this.update()
   }
 
   addClass(subjectId, input) {
     let subject = this.getSubject(subjectId)
-    input.id = subject.classes.length
+    input.id = this.getNextId(subject.classes, 1)
     subject.classes.push(input)
     this.StorageService.add('subjects', this.subjects)
     this.update()
@@ -57,7 +52,7 @@ class SubjectService {
 
   addExam(subjectId, exam) {
     let subject = this.getSubject(subjectId)
-    exam.id = subject.exams.length
+    exam.id = this.getNextId(subject.exams, 1)
     subject.exams.push(exam)
     this.StorageService.add('subjects', this.subjects)
     this.update()
@@ -77,7 +72,7 @@ class SubjectService {
 
   addHomework(subjectId, homework) {
     let subject = this.getSubject(subjectId)
-    homework.id = subject.homeworks.length
+    homework.id = this.getNextId(subject.homeworks, 1)
     subject.homeworks.push(homework)
     this.StorageService.add('subjects', this.subjects)
     this.update()
@@ -93,6 +88,20 @@ class SubjectService {
   getHomework(subjectId, homeworkId) {
     let subject = this.getSubject(subjectId)
     return subject.homeworks[homeworkId]
+  }
+  
+  deleteSubject(subjectId) {
+    let subjects = this.subjects.filter( sb => sb.id != subjectId)
+    this.StorageService.add('subjects', subjects)
+    this.update()
+  }
+  
+  deleteSubjectChild(subjectId, childId, child) {
+    //Child can be a homework/exam/class
+    let subject = this.getSubject(subjectId)
+    subject[child] = subject[child].filter( ch => ch.id != childId)
+    this.StorageService.add('subjects', this.subjects)
+    this.update()
   }
 
   setFinalGradeWeights(subjectId, examsWeight, homeworksWeight) {

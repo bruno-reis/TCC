@@ -8,7 +8,6 @@ class ActivitiesCtrl {
               public CalendarService,
               public ActivityService) {
     this.activities = this.ActivityService.getActivities()
-    console.log("activities", this.activities)
   }
 
   selectActivity(activityId) {
@@ -22,7 +21,6 @@ class ActivitiesCtrl {
   deleteActivity(activityId) {
     this.ActivityService.deleteActivity(activityId)
     this.CalendarService.deleteEvent(activityId)
-    this.$state.go('.^.list', {reload: true})
   }
 }
 

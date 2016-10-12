@@ -5,10 +5,16 @@
       <div class="item item-text-wrap">
         <ul class="list" ng-repeat="class in vm.subject.classes track by class.id" ng-if="class.id">
           <li class="item">
-            {{vm.dayName[class.day]}} : {{class.startTime | date: 'HH:mm'}}
+            {{vm.days[class.day]}} : {{class.startTime | date: 'HH:mm'}}
             - {{class.endTime | date: 'HH:mm'}}
             <span ng-show="class.room">: {{class.room}}</span>
           </li>
+          <spam>
+            <a ng-click="vm.deleteSubjectChild(class.id, 'classes')"
+               class="button button-clear button-positive">
+              <i class="icon ion-trash-b"></i>
+            </a>
+          </spam>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addClass()">
           <i class="icon ion-android-add"></i>
@@ -29,6 +35,12 @@
                class="button button-clear button-positive">
               <i class="icon ion-edit"></i>
             </a>
+            <spam>
+            <a ng-click="vm.deleteSubjectChild(exam.id, 'exams')"
+               class="button button-clear button-positive">
+              <i class="icon ion-trash-b"></i>
+            </a>
+            </spam>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addExam()">
@@ -50,6 +62,12 @@
                class="button button-clear button-positive">
               <i class="icon ion-edit"></i>
             </a>
+            <spam>
+              <a ng-click="vm.deleteSubjectChild(homework.id, 'homeworks')"
+                 class="button button-clear button-positive">
+                <i class="icon ion-trash-b"></i>
+              </a>
+            </spam>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addHomework()">

@@ -3,6 +3,8 @@
 class CalendarService {
   private $inject = ['StorageService']
   private events: Array<any> = []
+  private days = ['Domingo','Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+
 
   constructor(public StorageService) {
     this.update()
@@ -11,10 +13,15 @@ class CalendarService {
   getEvents() {
     return this.events
   }
+  
+  getDays() {
+    return this.days
+  }
 
   update() {
     let data = this.StorageService.get('events')
     if (data) this.events = data
+    console.log("events", this.events)
   }
   
   //Defined as external function to handle negatives values
@@ -89,14 +96,20 @@ class CalendarService {
     let events = this.events.filter( ev => ev.ownerId != ownerId)
     this.StorageService.add('events', events)
     this.update()
-    console.log("ev", this.events)
   }
 
   deleteChildEvent(ownerId, eventId) {
     //filter out the events from the ownerId that have the same eventId
-    let events = this.events
-      .filter( ev => (ev.ownerId == ownerId && ev.eventId != eventId) || ev.ownerId != ownerId)
-    this.StorageService.add('events', events)
+    // let events = this.events
+    //   .filter( ev => (ev.ownerId == ownerId && ev.eventId != eventId) || ev.ownerId != ownerId)
+    // this.StorageService.add('events', events)
+
+    this.events.map( ev => {
+      if (ev.eventId == eventId && ev.ownerId == ownerId) {
+        this.events.splice(this.events.indexOf(ev), 1)
+      }
+    })
+    this.StorageService.add('events', this.events)
     this.update()
   }
   

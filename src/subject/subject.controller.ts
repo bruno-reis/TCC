@@ -1,15 +1,16 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class SubjectCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService']
-
-  subject: any
-  dayName = ['','Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+  public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService']
+  private subject
+  private days
 
   constructor(public $state,
               public $stateParams,
+              public CalendarService,
               public SubjectService) {
     this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
+    this.days = this.CalendarService.getDays()
   }
 
   addClass() {
@@ -42,6 +43,11 @@ class SubjectCtrl {
 
   hasAnyHomework() {
     return this.subject.homeworks.length > 1
+  }
+
+  deleteSubjectChild(childId, child) {
+    this.SubjectService.deleteSubjectChild(this.subject.id, childId, child)
+    this.CalendarService.deleteChildEvent(this.subject.id, childId)
   }
 
   getExamsGrade() {

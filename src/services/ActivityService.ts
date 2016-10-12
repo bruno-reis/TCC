@@ -3,7 +3,6 @@
 class ActivityService {
   private $inject = ['StorageService']
   private activities = []
-  private lastId = 1000
 
   //Creating a dummy empty object because we are using the index as an index
   constructor(public StorageService) {
