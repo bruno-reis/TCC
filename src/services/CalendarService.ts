@@ -2,9 +2,8 @@
 
 class CalendarService {
   private $inject = ['StorageService']
-  private events: Array<any> = []
+  private events = []
   private days = ['Domingo','Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
-
 
   constructor(public StorageService) {
     this.update()
@@ -21,7 +20,7 @@ class CalendarService {
   update() {
     let data = this.StorageService.get('events')
     if (data) this.events = data
-    console.log("events", this.events)
+    // console.log("events", this.events)
   }
   
   //Defined as external function to handle negatives values
@@ -29,29 +28,36 @@ class CalendarService {
     return ((n % m) + m) % m
   }
 
+  createSingleEvent() {
+
+  }
+
+  createMultipleEvent() {
+    
+  }
+
   createEvent(input, owner, start, type) {
     //TODO: refactor these create methods
-    let date = new Date(start)
+    // let date = new Date(start)
 
-    input.startTime.setMonth(date.getMonth())
-    input.startTime.setDate(date.getDate())
-    input.startTime.setFullYear(date.getFullYear())
+    input.startTime.setMonth(start.getMonth())
+    input.startTime.setDate(start.getDate())
+    input.startTime.setFullYear(start.getFullYear())
 
-    input.endTime.setMonth(date.getMonth())
-    input.endTime.setDate(date.getDate())
-    input.endTime.setFullYear(date.getFullYear())
+    input.endTime.setMonth(start.getMonth())
+    input.endTime.setDate(start.getDate())
+    input.endTime.setFullYear(start.getFullYear())
 
     this.events.push({
       eventId: input.id,
       ownerId: owner.id,
       type: type,
-      title: input.type || owner.name,
-      startTime: input.startTime.getTime(),
-      endTime: input.endTime.getTime(),
+      title: input.title || owner.name,
+      startTime: input.startTime,
+      endTime: input.endTime,
       allDay: false
     })
 
-    console.log("events", this.events)
     this.StorageService.add('events', this.events)
     this.update()
   }
@@ -100,10 +106,6 @@ class CalendarService {
 
   deleteChildEvent(ownerId, eventId) {
     //filter out the events from the ownerId that have the same eventId
-    // let events = this.events
-    //   .filter( ev => (ev.ownerId == ownerId && ev.eventId != eventId) || ev.ownerId != ownerId)
-    // this.StorageService.add('events', events)
-
     this.events.map( ev => {
       if (ev.eventId == eventId && ev.ownerId == ownerId) {
         this.events.splice(this.events.indexOf(ev), 1)
@@ -112,7 +114,6 @@ class CalendarService {
     this.StorageService.add('events', this.events)
     this.update()
   }
-  
 }
 
 angular.module('app.services')

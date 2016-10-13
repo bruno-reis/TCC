@@ -2,7 +2,7 @@
 
 class ActivityService {
   private $inject = ['StorageService']
-  private activities = []
+  private activities
 
   //Creating a dummy empty object because we are using the index as an index
   constructor(public StorageService) {
@@ -11,7 +11,7 @@ class ActivityService {
 
   update() {
     let data = this.StorageService.get('activities')
-    if (data) this.activities = data
+    this.activities = data ? data : []
   }
 
   getActivities() {
