@@ -37,6 +37,11 @@ class SubjectService {
     return subjectProperty
   }
 
+  storeSubjects() {
+    this.StorageService.add('subjects', this.subjects)
+    this.update()
+  }
+
   addSubject(subject) {
     //Adding 5000 to differentiate activities IDs from subjects ones
     subject.id = this.getNextId(this.subjects, 5000)
@@ -44,8 +49,7 @@ class SubjectService {
     subject.exams = []
     subject.homeworks = []
     this.subjects.push(subject)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    this.storeSubjects()
   }
 
   addSubjectProperty(subjectId, propName, input) {
@@ -68,6 +72,7 @@ class SubjectService {
     this.StorageService.add('subjects', subjects)
     this.update()
   }
+  
 
   deleteSubjectProperty(subjectId, propName, propId) {
     //Property can be a homework/exam/class
@@ -78,10 +83,10 @@ class SubjectService {
   }
 
   setFinalGradeWeights(subjectId, examsWeight, homeworksWeight) {
-    this.subjects[subjectId].examsWeight = examsWeight
-    this.subjects[subjectId].homeworksWeight = homeworksWeight
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    let subject = this.getSubject(subjectId)
+    subject.examsWeight = examsWeight
+    subject.homeworksWeight = homeworksWeight
+    this.storeSubjects()
   }
 }
 

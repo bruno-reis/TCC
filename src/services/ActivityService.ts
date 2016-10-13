@@ -18,8 +18,9 @@ class ActivityService {
     return this.activities
   }
 
-  setActivities() {
+  storeActivities() {
     this.StorageService.add('activities', this.activities)
+    this.update()
   }
 
   getActivity(activityId) {
@@ -40,16 +41,14 @@ class ActivityService {
     activity.days = []
     activity.startDate = new Date()
     this.activities.push(activity)
-    this.StorageService.add('activities', this.activities)
-    this.update()
+    this.storeActivities()
   }
 
   addDay(activityId, input) {
     let activity = this.getActivity(activityId)
     input.id = this.getNextId(activity.days, 1)
     activity.days.push(input)
-    this.StorageService.add('activities', this.activities)
-    this.update()
+    this.storeActivities()
   }
   
   deleteActivity(activityId) {
@@ -61,8 +60,7 @@ class ActivityService {
   deleteDay(activityId, dayId) {
     let activity = this.getActivity(activityId)
     activity.days = activity.days.filter( day => day.id != dayId)
-    this.StorageService.add('activities', this.activities)
-    this.update()
+    this.storeActivities()
   }
 }
 

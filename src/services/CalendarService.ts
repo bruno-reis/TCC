@@ -22,6 +22,11 @@ class CalendarService {
     if (data) this.events = data
     // console.log("events", this.events)
   }
+
+  storeEvents() {
+    this.StorageService.add('events', this.events)
+    this.update()
+  }
   
   //Defined as external function to handle negatives values
   mod(n, m) {
@@ -57,9 +62,7 @@ class CalendarService {
       endTime: input.endTime,
       allDay: false
     })
-
-    this.StorageService.add('events', this.events)
-    this.update()
+    this.storeEvents()
   }
 
   createClassEvents(input, subject) {
@@ -76,8 +79,7 @@ class CalendarService {
       subject.startDate.setDate(subject.startDate.getDate() + 7)
     }
 
-    this.StorageService.add('events', this.events)
-    this.update()
+    this.storeEvents()
   }
   
   createActivityEvents(input, activity) {
@@ -93,8 +95,7 @@ class CalendarService {
       start.setDate(start.getDate() + 7)
     }
 
-    this.StorageService.add('events', this.events)
-    this.update()
+    this.storeEvents()
   }
 
   deleteEvent(ownerId) {
