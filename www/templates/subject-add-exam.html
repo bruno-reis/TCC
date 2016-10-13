@@ -23,7 +23,7 @@
       </label>
       <label class="item item-input">
         <span class="input-label">Peso</span>
-        <input type="number" ng-min="1" ng-max="10" ng-model="vm.input.weight">
+        <input type="number" step="1" ng-min="1" ng-max="10" ng-model="vm.input.weight">
       </label>
       <button class="button icon-left button-block button-positive"
               ng-click="vm.submit()" ng-disabled="form.$invalid">Adiconar
