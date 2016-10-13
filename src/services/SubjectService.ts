@@ -11,8 +11,14 @@ class SubjectService {
 
   update() {
     let data = this.StorageService.get('subjects')
-    if (data) this.subjects = data
-    console.log("subs", this.subjects)
+    this.subjects = data ? data : []
+    // console.log("subs", this.subjects)
+  }
+
+  getNextId(list, startValue) {
+    //Get the id of the list last element and increase it by 1
+    let nextId = (list.length > 0) ? list[list.length-1].id + 1 : startValue
+    return nextId
   }
 
   getSubjects() {
@@ -25,16 +31,10 @@ class SubjectService {
     return subject[0]
   }
 
-  getSubjectChild(subjectId, childId, child) {
+  getSubjectProperty(subjectId, propId, propName) {
     let subject = this.subjects.find(sb => sb.id == subjectId)
-    let subjectChild = subject[child].find(sc => sc.id == childId) 
-    return subjectChild
-  }
-
-  getNextId(list, startValue) {
-    //Get the id of the list last element and increase it by 1
-    let nextId = (list.length > 0) ? list[list.length-1].id + 1 : startValue
-    return nextId
+    let subjectProperty = subject[propName].find(sc => sc.id == propId)
+    return subjectProperty
   }
 
   addSubject(subject) {
@@ -48,79 +48,31 @@ class SubjectService {
     this.update()
   }
 
-  addSubjectChild(subjectId, child, input) {
+  addSubjectProperty(subjectId, propName, input) {
     let subject = this.getSubject(subjectId)
-    input.id = this.getNextId(subject[child], 1)
-    subject[child].push(input)
+    input.id = this.getNextId(subject[propName], 1)
+    subject[propName].push(input)
     this.StorageService.add('subjects', this.subjects)
     this.update()
   }
 
-  editSubjectChild(subjectId, input, child) {
-    let subjectChild = this.getSubjectChild(subjectId, input.id, child)
-    subjectChild = input
+  editSubjectProperty(subjectId, propName, input) {
+    let subjectProp = this.getSubjectProperty(subjectId, input.id, propName)
+    subjectProp = input
     this.StorageService.add('subjects', this.subjects)
     this.update()
   }
 
-  addClass(subjectId, input) {
-    let subject = this.getSubject(subjectId)
-    input.id = this.getNextId(subject.classes, 1)
-    subject.classes.push(input)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
-  }
-
-  addExam(subjectId, exam) {
-    let subject = this.getSubject(subjectId)
-    exam.id = this.getNextId(subject.exams, 1)
-    subject.exams.push(exam)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
-  }
-
-  editExam(subjectId, exam) {
-    let subject = this.getSubject(subjectId)
-    subject.exams[exam.id] = exam
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
-  }
-
-  getExam(subjectId, examId) {
-    let subject = this.getSubject(subjectId)
-    return subject.exams[examId]
-  }
-
-  addHomework(subjectId, homework) {
-    let subject = this.getSubject(subjectId)
-    homework.id = this.getNextId(subject.homeworks, 1)
-    subject.homeworks.push(homework)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
-  }
-
-  editHomework(subjectId, homework) {
-    let subject = this.getSubject(subjectId)
-    subject.homeworks[homework.id] = homework
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
-  }
-
-  getHomework(subjectId, homeworkId) {
-    let subject = this.getSubject(subjectId)
-    return subject.homeworks[homeworkId]
-  }
-  
   deleteSubject(subjectId) {
     let subjects = this.subjects.filter( sb => sb.id != subjectId)
     this.StorageService.add('subjects', subjects)
     this.update()
   }
-  
-  deleteSubjectChild(subjectId, childId, child) {
-    //Child can be a homework/exam/class
+
+  deleteSubjectProperty(subjectId, propName, propId) {
+    //Property can be a homework/exam/class
     let subject = this.getSubject(subjectId)
-    subject[child] = subject[child].filter( ch => ch.id != childId)
+    subject[propName] = subject[propName].filter( ch => ch.id != propId)
     this.StorageService.add('subjects', this.subjects)
     this.update()
   }
