@@ -45,9 +45,10 @@ class SubjectCtrl {
     return this.subject.homeworks.length > 1
   }
 
-  deleteSubjectChild(childId, child) {
-    this.SubjectService.deleteSubjectChild(this.subject.id, childId, child)
-    this.CalendarService.deleteChildEvent(this.subject.id, childId)
+  deleteSubjectProperty(propId, propName) {
+    this.SubjectService.deleteSubjectProperty(this.subject.id, propName, propId)
+    this.CalendarService.deleteChildEvent(this.subject.id, propId)
+    this.$state.go('.^.info', this.$stateParams, {reload: true, inherit: false});
   }
 
   getExamsGrade() {

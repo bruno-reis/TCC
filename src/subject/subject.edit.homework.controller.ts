@@ -2,7 +2,6 @@
 
 class subjectEditHomeworkCtrl {
   public $inject = ['$stateParams', '$state', 'SubjectService']
-
   private input
 
   constructor(public $state,
@@ -17,7 +16,7 @@ class subjectEditHomeworkCtrl {
   }
 
   submit() {
-    this.SubjectService.editHomework(this.$state.params['subjectId'], this.input)
+    this.SubjectService.editSubjectProperty(this.$state.params['subjectId'], "homeworks", this.input)
     this.$state.go('.^.info')
   }
 }

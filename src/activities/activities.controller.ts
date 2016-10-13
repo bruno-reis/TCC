@@ -21,6 +21,7 @@ class ActivitiesCtrl {
   deleteActivity(activityId) {
     this.ActivityService.deleteActivity(activityId)
     this.CalendarService.deleteEvent(activityId)
+    this.$state.go('.^.list', null, {reload: true, inherit: false});
   }
 }
 

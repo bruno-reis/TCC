@@ -21,6 +21,7 @@ class SubjectsCtrl {
   deleteSubject(subjectId) {
     this.SubjectService.deleteSubject(subjectId)
     this.CalendarService.deleteEvent(subjectId)
+    this.$state.go('.^.list', {reload: true, inherit: false});
   }
 }
 

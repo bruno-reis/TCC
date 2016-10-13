@@ -20,6 +20,7 @@ class ActivitiesInfoCtrl {
   deleteDay(activityId, dayId) {
     this.ActivityService.deleteDay(activityId, dayId )
     this.CalendarService.deleteChildEvent(activityId, dayId )
+    this.$state.go('.^.info', this.$stateParams, {reload: true, inherit: false});
   }
 }
 
