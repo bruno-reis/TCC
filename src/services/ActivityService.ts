@@ -12,7 +12,7 @@ class ActivityService {
   update() {
     let data = this.StorageService.get('activities')
     this.activities = data ? data : []
-    console.log("activities", this.activities)
+    // console.log("activities", this.activities)
   }
 
   getActivities() {

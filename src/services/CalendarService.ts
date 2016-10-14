@@ -20,7 +20,7 @@ class CalendarService {
   update() {
     let data = this.StorageService.get('events')
     if (data) this.events = data
-    console.log("events", this.events)
+    // console.log("events", this.events)
   }
 
   storeEvents() {

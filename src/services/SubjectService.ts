@@ -12,7 +12,7 @@ class SubjectService {
   update() {
     let data = this.StorageService.get('subjects')
     this.subjects = data ? data : []
-    console.log("subs", this.subjects)
+    // console.log("subs", this.subjects)
   }
 
   getNextId(list, startValue) {
