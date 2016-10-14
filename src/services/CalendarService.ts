@@ -46,7 +46,6 @@ class CalendarService {
       this.createEvent(input, owner, date)
       date.setDate(date.getDate() + 7)
     }
-    this.storeEvents()
   }
 
   createEvent(input, owner, date) {
@@ -70,13 +69,29 @@ class CalendarService {
     this.storeEvents()
   }
   
-  
+  editChildEvent(ownerId, eventId, input) {
+    this.events.map( ev => {
+      if (ev.eventId == eventId && ev.ownerId == ownerId && ev.type == input.type) {
+        input.startTime.setMonth(input.date.getMonth())
+        input.startTime.setDate(input.date.getDate())
+        input.startTime.setFullYear(input.date.getFullYear())
+
+        input.endTime.setMonth(input.date.getMonth())
+        input.endTime.setDate(input.date.getDate())
+        input.endTime.setFullYear(input.date.getFullYear())
+
+        ev.title = input.title
+        ev.startTime = input.startTime
+        ev.endTime = input.endTime
+      }
+    })
+   this.storeEvents()
+  }
 
   deleteEvent(ownerId) {
     //filter out the events given ownerId(activityId/subjectId)
     let events = this.events.filter( ev => ev.ownerId != ownerId)
-    this.StorageService.add('events', events)
-    this.update()
+    this.storeEvents()
   }
 
   deleteChildEvent(ownerId, eventId) {
@@ -86,8 +101,7 @@ class CalendarService {
         this.events.splice(this.events.indexOf(ev), 1)
       }
     })
-    this.StorageService.add('events', this.events)
-    this.update()
+    this.storeEvents()
   }
 }
 
