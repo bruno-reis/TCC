@@ -13,6 +13,12 @@ class SubjectCtrl {
     this.days = this.CalendarService.getDays()
   }
 
+  delete() {
+    this.SubjectService.deleteSubject(this.subject.id)
+    this.CalendarService.deleteEvent(this.subject.id)
+    this.$state.go('subjects.list', {reload: true, inherit: false});
+  }
+
   addClass() {
     this.$state.go('subject.addClass')
   }
