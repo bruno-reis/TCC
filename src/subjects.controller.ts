@@ -1,10 +1,11 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 class SubjectsCtrl {
-  public $inject = ['$state', 'SubjectService']
+  public $inject = ['$state', 'SubjectService', 'CalendarService']
   private subjects: Array<string>
 
   constructor(public $state,
+              public CalendarService,
               public SubjectService) {
     this.subjects = this.SubjectService.getSubjects()
   }

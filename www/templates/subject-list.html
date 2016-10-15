@@ -1,9 +1,10 @@
 <ion-view style="" id="subject-list" title="Materias">
   <ion-content class="has-header" padding="true">
 
-    <div class="card" ng-repeat="subject in vm.subjects track by subject.id"
-         ng-click="vm.selectSubject(subject.id)">
-      <div class="item item-text-wrap">{{subject.name}}</div>
+    <div class="card" ng-repeat="subject in vm.subjects track by subject.id">
+      <div class="item item-text-wrap" ng-click="vm.selectSubject(subject.id)">
+        {{subject.name}}
+      </div>
     </div>
 
     <button class="button button-block button-positive"

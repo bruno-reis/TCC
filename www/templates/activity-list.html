@@ -1,8 +1,9 @@
 <ion-view style="" id="activities" title="Atividades">
     <ion-content class="has-header" padding="true">
-      <div class="card" ng-repeat="activity in vm.activities track by activity.id"
-           ng-click="vm.selectActivity(activity.id)">
-        <div class="item item-text-wrap">{{activity.name}}</div>
+      <div class="card" ng-repeat="activity in vm.activities track by activity.id">
+        <div class="item item-text-wrap"  ng-click="vm.selectActivity(activity.id)">
+          {{activity.name}}
+        </div>
       </div>
 
       <button class="button button-block button-positive"

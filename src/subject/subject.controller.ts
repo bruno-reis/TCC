@@ -1,15 +1,38 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class SubjectCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService']
+  public $inject = ['$ionicPopup', '$stateParams', '$state', 'SubjectService', 'CalendarService']
+  private subject
+  private days
 
-  subject: any
-  dayName = ['','Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
-
-  constructor(public $state,
+  constructor(public $ionicPopup,
+              public $state,
               public $stateParams,
+              public CalendarService,
               public SubjectService) {
     this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
+    this.days = this.CalendarService.getDays()
+  }
+
+  delete() {
+    this.SubjectService.deleteSubject(this.subject.id)
+    this.CalendarService.deleteEvent(this.subject.id)
+    this.$state.go('subjects.list', {reload: true, inherit: false});
+  }
+
+  showConfirm() {
+    let controller = this
+    let confirmPopup = this.$ionicPopup.confirm({
+      title: 'Remover matéria',
+      template: 'Tem certeza que deseja remover a matéria \"' + controller.subject.name + '\"?',
+      cancelText: 'Cancelar',
+      okText: 'Sim'
+    })
+    confirmPopup.then(function(res) {
+      if (res) {
+        controller.delete()
+      }
+    })
   }
 
   addClass() {
@@ -42,6 +65,27 @@ class SubjectCtrl {
 
   hasAnyHomework() {
     return this.subject.homeworks.length > 1
+  }
+
+  deleteSubjectProperty(propId, propName) {
+    this.SubjectService.deleteSubjectProperty(this.subject.id, propName, propId)
+    this.CalendarService.deleteChildEvent(this.subject.id, propId)
+    this.$state.go('.^.info', this.$stateParams, {reload: true, inherit: false});
+  }
+
+  showConfirmClass(classId) {
+    let controller = this
+    let confirmPopup = this.$ionicPopup.confirm({
+      title: 'Remover aula',
+      template: 'Tem certeza que deseja remover essa aula?',
+      cancelText: 'Cancelar',
+      okText: 'Sim'
+    })
+    confirmPopup.then(function(res) {
+      if (res) {
+        controller.deleteSubjectProperty(classId, 'classes')
+      }
+    })
   }
 
   getExamsGrade() {

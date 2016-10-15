@@ -2,21 +2,16 @@
 
 class ActivityService {
   private $inject = ['StorageService']
-
-  private activityList = []
-  private activities = []
+  private activities
 
   //Creating a dummy empty object because we are using the index as an index
   constructor(public StorageService) {
-    let list = this.StorageService.get('activityList')
-    if (list) this.activityList = list
-    let data = this.StorageService.get('activities')
-    if (data) this.activities = data
+    this.update()
   }
 
   update() {
     let data = this.StorageService.get('activities')
-    if (data) this.activities = data
+    this.activities = data ? data : []
   }
 
   getActivities() {
@@ -34,12 +29,16 @@ class ActivityService {
     return activity[0]
   }
 
+  getNextId(list, startValue) {
+    //Get the id of the list last element and increase it by 1
+    let nextId = (list.length > 0) ? list[list.length-1].id + 1 : startValue
+    return nextId
+  }
+
   addActivity(activity) {
     //Adding 1000 to differentiate activities IDs from subjects ones
-    activity.id = (this.activities.length) + 1000
-    this.activityList.push(activity)
-    this.StorageService.add('activitiesList', this.activityList)
-    activity.days = [{}]
+    activity.id = this.getNextId(this.activities, 1000)
+    activity.days = []
     activity.startDate = new Date()
     this.activities.push(activity)
     this.storeActivities()
@@ -47,11 +46,22 @@ class ActivityService {
 
   addDay(activityId, input) {
     let activity = this.getActivity(activityId)
-    input.id = activity.days.length
+    input.id = this.getNextId(activity.days, 1)
     activity.days.push(input)
     this.storeActivities()
   }
   
+  deleteActivity(activityId) {
+    let activities = this.activities.filter( ac => ac.id != activityId)
+    this.StorageService.add('activities', activities)
+    this.update()
+  }
+  
+  deleteDay(activityId, dayId) {
+    let activity = this.getActivity(activityId)
+    activity.days = activity.days.filter( day => day.id != dayId)
+    this.storeActivities()
+  }
 }
 
 angular.module('app.services')
