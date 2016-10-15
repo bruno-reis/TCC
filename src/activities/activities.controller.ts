@@ -17,12 +17,7 @@ class ActivitiesCtrl {
   addActivity() {
     this.$state.go('activities.add')
   }
-  
-  deleteActivity(activityId) {
-    this.ActivityService.deleteActivity(activityId)
-    this.CalendarService.deleteEvent(activityId)
-    this.$state.go('.^.list', null, {reload: true, inherit: false});
-  }
+
 }
 
 angular.module('app.controllers')
