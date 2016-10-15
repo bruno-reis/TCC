@@ -1,20 +1,23 @@
 <ion-view style="" id="subject" title="{{vm.subject.name}}">
+  <ion-nav-buttons side="right">
+    <button class="button button-positive button-icon button-clear ion-android-delete"
+            ng-click="vm.showConfirm()"></button>
+  </ion-nav-buttons>
   <ion-content class="has-header" padding="false">
     <div class="card">
       <div class="item item-divider">Aulas</div>
       <div class="item item-text-wrap">
-        <ul class="list" ng-repeat="class in vm.subject.classes track by class.id" ng-if="class.id">
-          <li class="item">
+        <ul class="list" ng-repeat="class in vm.subject.classes track by class.id"
+            ng-if="class.id">
+          <li class="item item-button-right">
             {{vm.days[class.day]}} : {{class.startTime | date: 'HH:mm'}}
             - {{class.endTime | date: 'HH:mm'}}
             <span ng-show="class.room">: {{class.room}}</span>
-          </li>
-          <spam>
-            <a ng-click="vm.deleteSubjectProperty(class.id, 'classes')"
+            <a ng-click="vm.showConfirmClass(class.id)"
                class="button button-clear button-positive">
-              <i class="icon ion-trash-b"></i>
+              <i class="icon ion-android-delete"></i>
             </a>
-          </spam>
+          </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addClass()">
           <i class="icon ion-android-add"></i>
@@ -35,12 +38,6 @@
                class="button button-clear button-positive">
               <i class="icon ion-edit"></i>
             </a>
-            <spam>
-            <a ng-click="vm.deleteSubjectProperty(exam.id, 'exams')"
-               class="button button-clear button-positive">
-              <i class="icon ion-trash-b"></i>
-            </a>
-            </spam>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addExam()">
@@ -62,12 +59,6 @@
                class="button button-clear button-positive">
               <i class="icon ion-edit"></i>
             </a>
-            <spam>
-              <a ng-click="vm.deleteSubjectProperty(homework.id, 'homeworks')"
-                 class="button button-clear button-positive">
-                <i class="icon ion-trash-b"></i>
-              </a>
-            </spam>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addHomework()">
@@ -92,7 +83,7 @@
           <li class="item item-button-right">
             Média Final:
             {{ vm.getFinalGrade() === null ? 'Indefinida' : (vm.getFinalGrade() | number: 2) }}
-            <a href="#" class="button button-clear button-positive" 
+            <a href="#" class="button button-clear button-positive"
                ng-click="vm.editFinalGrade()">
               <i class="icon ion-edit"></i>
             </a>

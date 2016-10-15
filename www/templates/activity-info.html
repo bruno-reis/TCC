@@ -1,18 +1,20 @@
 <ion-view style="" id="activity" title="{{vm.activity.name}}">
+  <ion-nav-buttons side="right">
+    <button class="button button-positive button-icon button-clear ion-android-delete"
+            ng-click="vm.showConfirm()"></button>
+  </ion-nav-buttons>
   <ion-content class="has-header" padding="false">
     <div class="card">
       <div class="item item-divider">Horário</div>
       <div class="item item-text-wrap">
         <ul class="list" ng-repeat="day in vm.activity.days track by day.id" ng-if="day.id">
-          <li class="item">
+          <li class="item item-button-right">
             {{vm.dayName[day.day]}} : {{day.startTime | date: 'HH:mm'}}
             - {{day.endTime | date: 'HH:mm'}}
-            <spam>
-            <a ng-click="vm.deleteDay(vm.activity.id, day.id)"
+            <a ng-click="vm.showConfirmDay(day.id)"
                class="button button-clear button-positive">
-              <i class="icon ion-trash-b"></i>
+              <i class="icon ion-android-delete"></i>
             </a>
-            </spam>
           </li>
         </ul>
         <a class="item item-icon-left positive" ng-click="vm.addDay()">
