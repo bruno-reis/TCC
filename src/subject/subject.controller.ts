@@ -21,16 +21,16 @@ class SubjectCtrl {
   }
 
   showConfirm() {
-    let subjectController = this
+    let controller = this
     let confirmPopup = this.$ionicPopup.confirm({
       title: 'Remover matéria',
-      template: 'Tem certeza que deseja remover a matéria \"' + this.subject.name + '\"?',
+      template: 'Tem certeza que deseja remover a matéria \"' + controller.subject.name + '\"?',
       cancelText: 'Cancelar',
       okText: 'Sim'
     })
     confirmPopup.then(function(res) {
       if (res) {
-        subjectController.delete()
+        controller.delete()
       }
     })
   }
@@ -71,6 +71,21 @@ class SubjectCtrl {
     this.SubjectService.deleteSubjectProperty(this.subject.id, propName, propId)
     this.CalendarService.deleteChildEvent(this.subject.id, propId)
     this.$state.go('.^.info', this.$stateParams, {reload: true, inherit: false});
+  }
+
+  showConfirmClass(classId) {
+    let controller = this
+    let confirmPopup = this.$ionicPopup.confirm({
+      title: 'Remover aula',
+      template: 'Tem certeza que deseja remover essa aula?',
+      cancelText: 'Cancelar',
+      okText: 'Sim'
+    })
+    confirmPopup.then(function(res) {
+      if (res) {
+        controller.deleteSubjectProperty(classId, 'classes')
+      }
+    })
   }
 
   getExamsGrade() {

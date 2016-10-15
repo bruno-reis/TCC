@@ -1,7 +1,7 @@
 <ion-view style="" id="activity" title="{{vm.activity.name}}">
   <ion-nav-buttons side="right">
     <button class="button button-positive button-icon button-clear ion-android-delete"
-            ng-click="vm.deleteActivity()"></button>
+            ng-click="vm.showConfirm()"></button>
   </ion-nav-buttons>
   <ion-content class="has-header" padding="false">
     <div class="card">
@@ -11,7 +11,7 @@
           <li class="item item-button-right">
             {{vm.dayName[day.day]}} : {{day.startTime | date: 'HH:mm'}}
             - {{day.endTime | date: 'HH:mm'}}
-            <a ng-click="vm.deleteDay(vm.activity.id, day.id)"
+            <a ng-click="vm.showConfirmDay(day.id)"
                class="button button-clear button-positive">
               <i class="icon ion-android-delete"></i>
             </a>

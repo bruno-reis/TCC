@@ -1,12 +1,13 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class subjectEditExamCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService']
+  public $inject = ['$ionicPopup', '$stateParams', '$state', 'SubjectService']
   private input
   private subjectId
   private examId
 
-  constructor(public $state,
+  constructor(public $ionicPopup,
+              public $state,
               public $stateParams,
               public SubjectService,
               public CalendarService) {
@@ -27,6 +28,21 @@ class subjectEditExamCtrl {
     this.SubjectService.deleteSubjectProperty(this.subjectId, "exams", this.examId)
     this.CalendarService.deleteChildEvent(this.subjectId, this.examId)
     this.$state.go('.^.info', this.$stateParams, {reload: true, inherit: false});
+  }
+
+  showConfirm() {
+    let controller = this
+    let confirmPopup = this.$ionicPopup.confirm({
+      title: 'Remover prova',
+      template: 'Tem certeza que deseja remover a prova \"' + controller.input.title + '\"?',
+      cancelText: 'Cancelar',
+      okText: 'Sim'
+    })
+    confirmPopup.then(function(res) {
+      if (res) {
+        controller.delete()
+      }
+    })
   }
 }
 
