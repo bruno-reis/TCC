@@ -12,6 +12,7 @@ class ActivityService {
   update() {
     let data = this.StorageService.get('activities')
     this.activities = data ? data : []
+    // console.log("activities", this.activities)
   }
 
   getActivities() {
@@ -37,9 +38,11 @@ class ActivityService {
 
   addActivity(activity) {
     //Adding 1000 to differentiate activities IDs from subjects ones
+    let today = new Date()
     activity.id = this.getNextId(this.activities, 1000)
     activity.days = []
-    activity.startDate = new Date()
+    activity.startDate = today.getTime()
+    activity.endDate = new Date().setMonth(today.getMonth() + parseInt(activity.duration, 10))
     this.activities.push(activity)
     this.storeActivities()
   }
@@ -47,6 +50,7 @@ class ActivityService {
   addDay(activityId, input) {
     let activity = this.getActivity(activityId)
     input.id = this.getNextId(activity.days, 1)
+    input.type = "activity"
     activity.days.push(input)
     this.storeActivities()
   }

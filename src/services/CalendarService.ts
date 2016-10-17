@@ -28,35 +28,39 @@ class CalendarService {
     this.update()
   }
   
-  //Defined as external function to handle negatives values
+  //Defined as external function to handle negatives values i.e: '-3 mod 7'.
   mod(n, m) {
     return ((n % m) + m) % m
   }
 
-  createSingleEvent() {
+  createMultipleEvents(input, owner) {
+    let date = new Date(owner.startDate)
+    let startDate = new Date(owner.startDate)
+    let endDate = new Date(owner.endDate)
 
+    //Using MOD to set 'date' as the closest day after a class/activity 'startDate'
+    let diff = this.mod(input.day - startDate.getDay() , 7 )
+    date.setDate( startDate.getDate() + diff)
+
+    while (date <= endDate ) {
+      this.createEvent(input, owner, date)
+      date.setDate(date.getDate() + 7)
+    }
   }
 
-  createMultipleEvent() {
-    
-  }
+  createEvent(input, owner, date) {
+    input.startTime.setDate(date.getDate())
+    input.startTime.setMonth(date.getMonth())
+    input.startTime.setFullYear(date.getFullYear())
 
-  createEvent(input, owner, start, type) {
-    //TODO: refactor these create methods
-    // let date = new Date(start)
-
-    input.startTime.setMonth(start.getMonth())
-    input.startTime.setDate(start.getDate())
-    input.startTime.setFullYear(start.getFullYear())
-
-    input.endTime.setMonth(start.getMonth())
-    input.endTime.setDate(start.getDate())
-    input.endTime.setFullYear(start.getFullYear())
+    input.endTime.setDate(date.getDate())
+    input.endTime.setMonth(date.getMonth())
+    input.endTime.setFullYear(date.getFullYear())
 
     this.events.push({
       eventId: input.id,
       ownerId: owner.id,
-      type: type,
+      type: input.type,
       title: input.title || owner.name,
       startTime: input.startTime,
       endTime: input.endTime,
@@ -64,56 +68,38 @@ class CalendarService {
     })
     this.storeEvents()
   }
-
-  createClassEvents(input, subject) {
-    //TODO: refactor these create methods
-    subject.startDate = new Date(subject.startDate)
-    subject.endDate = new Date(subject.endDate)
-    
-    //Using MOD to adjust between subject start date and day when class starts
-    let diff = this.mod(input.day - subject.startDate.getDay() , 7 )
-    subject.startDate.setDate( subject.startDate.getDate() + diff)
-    
-    while ( subject.startDate <= subject.endDate ) {
-      this.createEvent(input, subject, subject.startDate, "class")
-      subject.startDate.setDate(subject.startDate.getDate() + 7)
-    }
-
-    this.storeEvents()
-  }
   
-  createActivityEvents(input, activity) {
-    //TODO: refactor these create methods
-    let end = new Date(activity.startDate)
-    let start = new Date(activity.startDate)
+  editChildEvent(ownerId, eventId, input) {
+    this.events.map( ev => {
+      if (ev.eventId == eventId && ev.ownerId == ownerId && ev.type == input.type) {
+        input.startTime.setDate(input.date.getDate())
+        input.startTime.setMonth(input.date.getMonth())
+        input.startTime.setFullYear(input.date.getFullYear())
 
-    activity.duration = parseInt(activity.duration, 10);
-    end.setMonth(start.getMonth() + activity.duration)
+        input.endTime.setDate(input.date.getDate())
+        input.endTime.setMonth(input.date.getMonth())
+        input.endTime.setFullYear(input.date.getFullYear())
 
-    while (start <= end ) {
-      this.createEvent(input, activity, start, "activity")
-      start.setDate(start.getDate() + 7)
-    }
-
-    this.storeEvents()
+        ev.title = input.title
+        ev.startTime = input.startTime
+        ev.endTime = input.endTime
+      }
+    })
+   this.storeEvents()
   }
 
   deleteEvent(ownerId) {
     //filter out the events given ownerId(activityId/subjectId)
-    let events = this.events.filter( ev => ev.ownerId != ownerId)
-    this.StorageService.add('events', events)
-    this.update()
+    this.events = this.events.filter( ev => ev.ownerId != ownerId)
+    this.storeEvents()
   }
 
   deleteChildEvent(ownerId, eventId) {
     //filter out the events from the ownerId that have the same eventId
-    this.events.map( ev => {
-      if (ev.eventId == eventId && ev.ownerId == ownerId) {
-        this.events.splice(this.events.indexOf(ev), 1)
-      }
+    this.events = this.events.filter(ev => {
+      return (ev.ownerId != ownerId) || (ev.eventId != eventId)
     })
-    this.StorageService.add('events', this.events)
-    this.update()
+    this.storeEvents()
   }
 }
 

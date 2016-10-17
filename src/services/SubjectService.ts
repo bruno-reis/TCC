@@ -55,6 +55,7 @@ class SubjectService {
   addSubjectProperty(subjectId, propName, input) {
     let subject = this.getSubject(subjectId)
     input.id = this.getNextId(subject[propName], 1)
+    input.type = propName
     subject[propName].push(input)
     this.StorageService.add('subjects', this.subjects)
     this.update()

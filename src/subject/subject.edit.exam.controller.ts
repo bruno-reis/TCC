@@ -1,6 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class subjectEditExamCtrl {
+
   public $inject = ['$ionicPopup', '$stateParams', '$state', 'SubjectService']
   private input
   private subjectId

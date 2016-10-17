@@ -15,7 +15,7 @@ class subjectAddExamCtrl {
 
   submit() {
     this.SubjectService.addSubjectProperty(this.$state.params['subjectId'], "exams", this.input)
-    this.CalendarService.createEvent(this.input, this.subject, this.input.date, "exam")
+    this.CalendarService.createEvent(this.input, this.subject, this.input.date)
     this.$state.go('.^.info')
   }
 }
