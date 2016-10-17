@@ -49,12 +49,12 @@ class CalendarService {
   }
 
   createEvent(input, owner, date) {
-    input.startTime.setMonth(date.getMonth())
     input.startTime.setDate(date.getDate())
+    input.startTime.setMonth(date.getMonth())
     input.startTime.setFullYear(date.getFullYear())
 
-    input.endTime.setMonth(date.getMonth())
     input.endTime.setDate(date.getDate())
+    input.endTime.setMonth(date.getMonth())
     input.endTime.setFullYear(date.getFullYear())
 
     this.events.push({
@@ -72,12 +72,12 @@ class CalendarService {
   editChildEvent(ownerId, eventId, input) {
     this.events.map( ev => {
       if (ev.eventId == eventId && ev.ownerId == ownerId && ev.type == input.type) {
-        input.startTime.setMonth(input.date.getMonth())
         input.startTime.setDate(input.date.getDate())
+        input.startTime.setMonth(input.date.getMonth())
         input.startTime.setFullYear(input.date.getFullYear())
 
-        input.endTime.setMonth(input.date.getMonth())
         input.endTime.setDate(input.date.getDate())
+        input.endTime.setMonth(input.date.getMonth())
         input.endTime.setFullYear(input.date.getFullYear())
 
         ev.title = input.title
