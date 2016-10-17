@@ -1,11 +1,12 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class SubjectService {
-  private $inject = ['StorageService']
+  private $inject = ['StorageService', 'PopupService']
   private subjects
 
   //Creating a dummy empty object because we are using the index as an index
-  constructor(public StorageService) {
+  constructor(public StorageService,
+              public PopupService) {
     this.update()
   }
 
@@ -88,6 +89,14 @@ class SubjectService {
     subject.examsWeight = examsWeight
     subject.homeworksWeight = homeworksWeight
     this.storeSubjects()
+  }
+
+  validateTime(input) {
+    if (input.startTime >= input.endTime) {
+      this.PopupService.timeErrorPopup().then(() => input.endTime = null)
+      return false
+    }
+    return true
   }
 }
 
