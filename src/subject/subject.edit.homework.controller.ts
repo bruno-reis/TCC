@@ -3,6 +3,7 @@
 class subjectEditHomeworkCtrl {
   public $inject = ['$ionicPopup', '$stateParams', '$state', 'SubjectService']
   private input
+  private subject
   private subjectId
   private homeworkId
 
@@ -11,8 +12,9 @@ class subjectEditHomeworkCtrl {
               public $stateParams,
               public SubjectService,
               public CalendarService) {
-    this.subjectId = this.$state.params['subjectId']
     this.homeworkId = this.$state.params['homeworkId']
+    this.subjectId = this.$state.params['subjectId']
+    this.subject = this.SubjectService.getSubject(this.subjectId)
     this.input = this.SubjectService
                   .getSubjectProperty(this.subjectId, this.homeworkId, 'homeworks')
     this.input.date = new Date(this.input.date)
@@ -21,6 +23,7 @@ class subjectEditHomeworkCtrl {
   }
 
   submit() {
+    if (this.SubjectService.validateTime(this.input) == false) return
     this.SubjectService.editSubjectProperty(this.subjectId, "homeworks", this.input)
     this.$state.go('.^.info')
   }
@@ -32,16 +35,15 @@ class subjectEditHomeworkCtrl {
   }
 
   showConfirm() {
-    let controller = this
     let confirmPopup = this.$ionicPopup.confirm({
       title: 'Remover trabalho',
-      template: 'Tem certeza que deseja remover o trabalho \"' + controller.input.title + '\"?',
+      template: 'Tem certeza que deseja remover o trabalho \"' + this.input.title + '\"?',
       cancelText: 'Cancelar',
       okText: 'Sim'
     })
     confirmPopup.then(function(res) {
       if (res) {
-        controller.delete()
+        this.delete()
       }
     })
   }

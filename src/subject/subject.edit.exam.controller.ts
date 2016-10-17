@@ -4,6 +4,7 @@ class subjectEditExamCtrl {
 
   public $inject = ['$ionicPopup', '$stateParams', '$state', 'SubjectService']
   private input
+  private subject
   private subjectId
   private examId
 
@@ -12,8 +13,9 @@ class subjectEditExamCtrl {
               public $stateParams,
               public SubjectService,
               public CalendarService) {
-    this.subjectId = this.$state.params['subjectId']
     this.examId = this.$state.params['examId']
+    this.subjectId = this.$state.params['subjectId']
+    this.subject = this.SubjectService.getSubject(this.subjectId)
     this.input = this.SubjectService.getSubjectProperty(this.subjectId, this.examId, "exams")
     this.input.date = new Date(this.input.date)
     this.input.startTime = new Date(this.input.startTime)
@@ -21,6 +23,7 @@ class subjectEditExamCtrl {
   }
 
   submit() {
+    if (this.SubjectService.validateTime(this.input) == false) return
     this.SubjectService.editSubjectProperty(this.subjectId, "exams", this.input)
     this.$state.go('.^.info')
   }
@@ -32,16 +35,15 @@ class subjectEditExamCtrl {
   }
 
   showConfirm() {
-    let controller = this
     let confirmPopup = this.$ionicPopup.confirm({
       title: 'Remover prova',
-      template: 'Tem certeza que deseja remover a prova \"' + controller.input.title + '\"?',
+      template: 'Tem certeza que deseja remover a prova \"' + this.input.title + '\"?',
       cancelText: 'Cancelar',
       okText: 'Sim'
     })
     confirmPopup.then(function(res) {
       if (res) {
-        controller.delete()
+        this.delete()
       }
     })
   }
