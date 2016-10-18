@@ -1,14 +1,13 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class activitiesAddDayCtrl {
-  public $inject = ['$ionicPopup', '$stateParams', '$state', 'ActivityService', 'CalendarService', 'PopupService']
+  public $inject = ['$stateParams', '$state', 'ActivityService', 'CalendarService', 'PopupService']
 
   private input
   private activity
 
   constructor(public $state,
               public $stateParams,
-              public $ionicPopup,
               public PopupService,
               public ActivityService,
               public CalendarService) {
@@ -19,7 +18,7 @@ class activitiesAddDayCtrl {
 
   validate() {
     if (this.input.startTime >= this.input.endTime) {
-      this.PopupService.timeErrorPopup().then(() => this.input.endTime = null)
+      this.PopupService.timeError().then(() => this.input.endTime = null)
       return false
     }
     return true

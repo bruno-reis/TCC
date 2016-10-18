@@ -1,16 +1,16 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class subjectEditHomeworkCtrl {
-  public $inject = ['$ionicPopup', '$stateParams', '$state', 'SubjectService']
+  public $inject = ['$stateParams', '$state', 'SubjectService', 'PopupService']
   private input
   private subject
   private subjectId
   private homeworkId
 
-  constructor(public $ionicPopup,
-              public $state,
+  constructor(public $state,
               public $stateParams,
               public SubjectService,
+              public PopupService,
               public CalendarService) {
     this.homeworkId = this.$state.params['homeworkId']
     this.subjectId = this.$state.params['subjectId']
@@ -35,17 +35,8 @@ class subjectEditHomeworkCtrl {
   }
 
   showConfirm() {
-    let confirmPopup = this.$ionicPopup.confirm({
-      title: 'Remover trabalho',
-      template: 'Tem certeza que deseja remover o trabalho \"' + this.input.title + '\"?',
-      cancelText: 'Cancelar',
-      okText: 'Sim'
-    })
-    confirmPopup.then(function(res) {
-      if (res) {
-        this.delete()
-      }
-    })
+    this.PopupService.deleteProperty('Trabalho', this.input.title)
+      .then( (res) => {if (res) this.delete() })
   }
 
 }

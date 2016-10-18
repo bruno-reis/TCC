@@ -93,7 +93,7 @@ class SubjectService {
 
   validateTime(input) {
     if (input.startTime >= input.endTime) {
-      this.PopupService.timeErrorPopup().then(() => input.endTime = null)
+      this.PopupService.timeError().then(() => input.endTime = null)
       return false
     }
     return true
