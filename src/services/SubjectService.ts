@@ -98,6 +98,14 @@ class SubjectService {
     }
     return true
   }
+
+  validateDate(input) {
+    if (input.startDate >= input.endDate) {
+      this.PopupService.dateError().then(() => input.endDate = null)
+      return false
+    }
+    return true
+  }
 }
 
 angular.module('app.services')

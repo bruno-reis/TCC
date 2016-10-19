@@ -16,6 +16,15 @@ class PopupService {
     return alertPopup
   }
 
+  dateError() {
+    let alertPopup = this.$ionicPopup.alert({
+      title: 'Erro',
+      template: '\'Data Fim\' deve ser maior que a \'Data Início\'',
+      okText: 'Confirmar'
+    })
+    return alertPopup
+  }
+
   deleteProperty(type, title) {
     let confirmPopup = this.$ionicPopup.confirm({
       title: 'Remover ' + type,
