@@ -7,6 +7,8 @@ class ActivitiesAddCtrl {
   constructor(public $state,
               public ActivityService,
               public StorageService) {
+    this.input = {}
+    this.input.duration = '1'
   }
 
   addActivity() {

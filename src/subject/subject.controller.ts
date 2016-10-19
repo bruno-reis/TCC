@@ -1,38 +1,17 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class SubjectCtrl {
-  public $inject = ['$ionicPopup', '$stateParams', '$state', 'SubjectService', 'CalendarService']
+  public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService', 'PopupService']
   private subject
   private days
 
-  constructor(public $ionicPopup,
-              public $state,
+  constructor(public $state,
               public $stateParams,
               public CalendarService,
+              public PopupService,
               public SubjectService) {
     this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
     this.days = this.CalendarService.getDays()
-  }
-
-  delete() {
-    this.SubjectService.deleteSubject(this.subject.id)
-    this.CalendarService.deleteEvent(this.subject.id)
-    this.$state.go('subjects.list', {reload: true, inherit: false});
-  }
-
-  showConfirm() {
-    let controller = this
-    let confirmPopup = this.$ionicPopup.confirm({
-      title: 'Remover matéria',
-      template: 'Tem certeza que deseja remover a matéria \"' + controller.subject.name + '\"?',
-      cancelText: 'Cancelar',
-      okText: 'Sim'
-    })
-    confirmPopup.then(function(res) {
-      if (res) {
-        controller.delete()
-      }
-    })
   }
 
   addClass() {
@@ -67,25 +46,26 @@ class SubjectCtrl {
     return this.subject.homeworks.length > 1
   }
 
+  showConfirm() {
+    this.PopupService.deleteProperty('Matéria', this.subject.name)
+      .then( (res) => { if(res) this.delete() })
+  }
+
+  delete() {
+    this.SubjectService.deleteSubject(this.subject.id)
+    this.CalendarService.deleteEvent(this.subject.id)
+    this.$state.go('subjects.list', {reload: true, inherit: false});
+  }
+
+  showConfirmClass(classId) {
+    this.PopupService.deleteOwner('Aula', 'essa aula')
+      .then( (res) => { if(res) this.deleteSubjectProperty(classId, 'classes') })
+  }
+
   deleteSubjectProperty(propId, propName) {
     this.SubjectService.deleteSubjectProperty(this.subject.id, propName, propId)
     this.CalendarService.deleteChildEvent(this.subject.id, propId)
     this.$state.go('.^.info', this.$stateParams, {reload: true, inherit: false});
-  }
-
-  showConfirmClass(classId) {
-    let controller = this
-    let confirmPopup = this.$ionicPopup.confirm({
-      title: 'Remover aula',
-      template: 'Tem certeza que deseja remover essa aula?',
-      cancelText: 'Cancelar',
-      okText: 'Sim'
-    })
-    confirmPopup.then(function(res) {
-      if (res) {
-        controller.deleteSubjectProperty(classId, 'classes')
-      }
-    })
   }
 
   getExamsGrade() {

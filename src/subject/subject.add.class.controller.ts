@@ -2,7 +2,6 @@
 
 class subjectAddClassCtrl {
   public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService']
-
   private input
   private subject
 
@@ -11,9 +10,12 @@ class subjectAddClassCtrl {
               public SubjectService,
               public CalendarService) {
     this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
+    this.input = {}
+    this.input.day = '1'
   }
 
   submit() {
+    if (this.SubjectService.validateTime(this.input) == false) return
     this.SubjectService.addSubjectProperty(this.$state.params['subjectId'], "classes", this.input)
     this.CalendarService.createMultipleEvents(this.input, this.subject)
     this.$state.go('.^.info')

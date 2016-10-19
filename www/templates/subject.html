@@ -1,6 +1,6 @@
 <ion-view style="" id="subject" title="{{vm.subject.name}}">
   <ion-nav-buttons side="right">
-    <button class="button button-positive button-icon button-clear ion-android-delete"
+    <button class="button button-assertive button-icon button-clear ion-android-delete"
             ng-click="vm.showConfirm()"></button>
   </ion-nav-buttons>
   <ion-content class="has-header" padding="false">
@@ -14,7 +14,7 @@
             - {{class.endTime | date: 'HH:mm'}}
             <span ng-show="class.room">: {{class.room}}</span>
             <a ng-click="vm.showConfirmClass(class.id)"
-               class="button button-clear button-positive">
+               class="button button-clear button-assertive">
               <i class="icon ion-android-delete"></i>
             </a>
           </li>

@@ -10,6 +10,7 @@ class SubjectAddCtrl {
   }
 
   addSubject() {
+    if (this.SubjectService.validateDate(this.input) == false) return
     this.SubjectService.addSubject(this.input)
     this.$state.go('subjects.list')
   }
