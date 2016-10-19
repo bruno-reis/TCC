@@ -1,18 +1,35 @@
-<ion-view style="" id="subeject-add-exam" title="Adicionar Prova">
-    <ion-content class="has-header" padding="true">
-        <form style="" class="list">
-            <label style="" class="item item-input">
-                <input placeholder="Nome" type="text">
-            </label>
-            <label style="" class="item item-input">
-                <input placeholder="Data" type="month">
-            </label>
-            <label style="" class="item item-input">
-                <input placeholder="Horário" type="time">
-            </label>
-            <label style="" class="item item-input">
-                <input placeholder="Peso" type="number">
-            </label>
-        </form>
-    </ion-content>
+<ion-view id="subeject-add-exam" title="Adicionar Prova">
+  <ion-content class="has-header" padding="true">
+    <form name="form" class="list" novalidate>
+      <label class="item item-input">
+        <span class="input-label">Titulo</span>
+        <input type="text" ng-model="vm.input.title" required>
+      </label>
+      <label  class="item item-input">
+        <span class="input-label">Data</span>
+        <input type="date" ng-model="vm.input.date"
+               min="{{vm.subject.startDate | date:'yyyy-MM-dd'}}"
+               max="{{vm.subject.endDate | date:'yyyy-MM-dd'}}" required>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Horário Inicio</span>
+        <input placeholder="12:34" type="time" ng-model="vm.input.startTime" required>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Horário Fim</span>
+        <input placeholder="12:34" type="time" ng-model="vm.input.endTime" required>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Sala</span>
+        <input type="text" placeholder="(Opcional)" ng-model="vm.input.room">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Peso</span>
+        <input type="number" step="1" ng-min="1" ng-max="10" ng-model="vm.input.weight">
+      </label>
+      <button class="button icon-left button-block button-positive"
+              ng-click="vm.submit()" ng-disabled="form.$invalid">Adiconar
+      </button>
+    </form>
+  </ion-content>
 </ion-view>

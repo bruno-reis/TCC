@@ -8,6 +8,7 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <!--Angular ui-calendar-->
     <link rel="stylesheet" href="lib/fullcalendar/dist/fullcalendar.css"/>
     <!-- jquery, moment, and angular have to get included before fullcalendar -->
     <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
@@ -16,12 +17,18 @@
     <script type="text/javascript" src="lib/fullcalendar/dist/fullcalendar.min.js"></script>
     <script type="text/javascript" src="lib/fullcalendar/dist/gcal.js"></script>
 
+
+    <!--Ionic Calendar-->
+    <link rel="stylesheet" href="lib/ionic-calendar/dist/css/calendar.min.css"/>
+    <script src="lib/ionic-calendar/dist/js/calendar-tpls.min.js"></script>
+
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
+    <!-- <link href="css/ionic.app.css" rel="stylesheet"> -->
+    <link href="css/tcc.css" rel="stylesheet">
+
 
     <style type="text/css">
       .platform-ios .manual-ios-statusbar-padding{
@@ -35,13 +42,9 @@
       }
     </style>
 
-    <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/routes.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/directives.js"></script>
-
-    <!-- Only required for Tab projects w/ pages in multiple tabs 
+    <!--Bundle containing all project files-->
+    <script src="js/dist.js"></script>
+    <!-- Only required for Tab projects w/ pages in multiple tabs
     <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
     -->
 
@@ -64,9 +67,9 @@
             </ion-header-bar>
             <ion-content padding="false" class="side-menu-left has-header">
                 <ion-list data-componentid="list1" style="">
-                    <ion-item data-componentid="list-item1" style="" menu-close="" ui-sref="root.subjectList">Matérias</ion-item>
-                    <ion-item data-componentid="list-item12" style="" menu-close="" ui-sref="activities">Atividades</ion-item>
-                    <ion-item data-componentid="list-item2" style="" menu-close="" ui-sref="root.calendar">Calendário</ion-item>
+                    <ion-item data-componentid="list-item1" style="" menu-close="" ui-sref="subjects.list">Matérias</ion-item>
+                    <ion-item data-componentid="list-item2" style="" menu-close="" ui-sref="activities.list">Atividades</ion-item>
+                    <ion-item data-componentid="list-item3" style="" menu-close="" ui-sref="calendar">Calendário</ion-item>
                 </ion-list>
             </ion-content>
         </ion-side-menu>

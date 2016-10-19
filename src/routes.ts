@@ -11,71 +11,113 @@ angular.module('app.routes', [])
         abstract:true
       })
 
-      .state('root.calendar', {
+      .state('calendar', {
         url: '/calendar',
-        views: {
-          'calendar': {
-            templateUrl: 'templates/calendar.html',
-            controller: 'scheduleCtrl'
-          }
-        }
+        templateUrl: 'templates/calendar.html',
+        controller: 'CalendarDemoCtrl'
       })
 
-      .state('root.subjectList', {
-        url: '/subject-list',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-list.html',
-            controller: 'subjectListCtrl'
-          }
-        }
+      .state('subjects', {
+        url: '/subjects',
+        template: '<ion-view id="subjectsList"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
       })
 
-      .state('root.subject', {
-        url: '/subject',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject.html',
-            controller: 'subjectCtrl'
-          }
-        }
+      .state('subjects.list', {
+        url: '/list',
+        templateUrl: 'templates/subject-list.html',
+        controller: 'subjectsCtrl as vm'
       })
 
-      .state('root.subjectAdd', {
-        url: '/subject-add',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-add.html',
-            controller: 'subjectAddCtrl'
-          }
-        }
+      .state('subjects.add', {
+        url: '/add',
+        templateUrl: 'templates/subject-add.html',
+        controller: 'subjectAddCtrl as vm'
       })
 
-      .state('root.subjectAddExam', {
-        url: '/subeject-add-exam',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-add-exam.html',
-            controller: 'subjectAddExamCtrl'
-          }
-        }
+      .state('subject', {
+        url: '/subject/:subjectId',
+        template: '<ion-view id="subjetcInfo"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
       })
 
-      .state('root.subjectAddHomework', {
-        url: '/subject-add-homework',
-        views: {
-          'subjectList': {
-            templateUrl: 'templates/subject-add-homework.html',
-            controller: 'subjectAddHomeworkCtrl'
-          }
-        }
+      .state('subject.info', {
+        url: '/',
+        templateUrl: 'templates/subject.html',
+        controller: 'subjectCtrl as vm'
+      })
+
+      .state('subject.addClass', {
+        url: '/add-class',
+        templateUrl: 'templates/subject-add-class.html',
+        controller: 'subjectAddClassCtrl as vm'
+      })
+
+      .state('subject.addExam', {
+        url: '/add-exam',
+        templateUrl: 'templates/subject-add-exam.html',
+        controller: 'subjectAddExamCtrl as vm'
+      })
+
+      .state('subject.editExam', {
+        url: '/exam/:examId',
+        templateUrl: 'templates/subject-edit-exam.html',
+        controller: 'subjectEditExamCtrl as vm'
+      })
+
+      .state('subject.addHomework', {
+        url: '/add-homework',
+        templateUrl: 'templates/subject-add-homework.html',
+        controller: 'subjectAddHomeworkCtrl as vm'
+      })
+
+      .state('subject.editHomework', {
+        url: '/homework/:homeworkId',
+        templateUrl: '/templates/subject-edit-homework.html',
+        controller: 'subjectEditHomeworkCtrl as vm'
+      })
+
+      .state('subject.editFinalGrade', {
+        url: '/edit-finalGrade',
+        templateUrl: '/templates/subject-edit-finalgrade.html',
+        controller: 'subjectEditFinalGradeCtrl as vm'
       })
 
       .state('activities', {
         url: '/activities',
-        templateUrl: 'templates/activities.html',
-        controller: 'activitiesCtrl'
+        template: '<ion-view id="activitiesList"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
       })
 
-    $urlRouterProvider.otherwise('/root/calendar')
+      .state('activities.list', {
+        url: '/list',
+        templateUrl: 'templates/activity-list.html',
+        controller: 'activitiesCtrl as vm'
+      })
+
+      .state('activities.add', {
+        url: '/add',
+        templateUrl: 'templates/activity-add.html',
+        controller: 'activitiesAddCtrl as vm'
+      })
+
+      .state('activity', {
+        url: 'activity/:activityId',
+        template: '<ion-view id="activity"> <ion-nav-view></ion-nav-view> </ion-view>',
+        abstract: true
+      })
+
+      .state('activity.info', {
+        url: '/info',
+        templateUrl: 'templates/activity-info.html',
+        controller: 'activitiesInfoCtrl as vm'
+      })
+
+      .state('activity.addDay', {
+        url: '/day/',
+        templateUrl: 'templates/activity-add-day.html',
+        controller: 'activitiesAddDayCtrl as vm'
+      })
+
+    $urlRouterProvider.otherwise('/subjects/list')
   });

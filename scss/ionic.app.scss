@@ -14,6 +14,21 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+span.grade {
+  display: block;
+  margin-bottom: 15px;
+}
+
+p.subtitle {
+  margin: 10px 16px;
+}
+
+span.times {
+  position: relative;
+  top: -3px;
+  font-weight: bold;
+  font-size: 10px;
+}
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;

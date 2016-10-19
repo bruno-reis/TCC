@@ -5,9 +5,10 @@ node_modules/
 platforms/
 plugins/
 resources/
+dist/
 www/lib/
 www/js/
 www/css/
 .idea/
-.bowerrc
 .editorconfig
+ionic.config.json

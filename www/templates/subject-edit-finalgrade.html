@@ -1,0 +1,33 @@
+<ion-view id="subeject-edit-finalgrade" title="Média Final">
+  <ion-content class="has-header" padding="true">
+    <form name="form" class="list" novalidate>
+      <label class="item item-input">
+        <span class="input-label">Peso da MP</span>
+        <input type="number" ng-model="vm.input.examsWeight"
+               min="0" max="10" step="0.1" required>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Peso da MT</span>
+        <input type="number" ng-model="vm.input.homeworksWeight"
+               min="0" max="10" step="0.1" required>
+      </label>
+      <p class="subtitle">MP = Média de provas</p>
+      <p class="subtitle">MT = Média de trabalhos</p>
+
+      <div class="card">
+        <div class="item item-divider">
+          Prévia
+        </div>
+        <div class="item item-text-wrap">
+          Média Final =
+          {{ (vm.input.examsWeight || 0) | number: 2 }} <span class="times">x</span> MP +
+          {{ (vm.input.homeworksWeight || 0) | number: 2}} <span class="times">x</span> MT
+        </div>
+      </div>
+
+      <button class="button icon-left button-block button-positive"
+              ng-click="vm.submit()" ng-disabled="form.$invalid">Salvar
+      </button>
+    </form>
+  </ion-content>
+</ion-view>

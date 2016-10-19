@@ -7,23 +7,38 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var typescript = require('gulp-tsc');
+var del = require('del');
+var concat = require('gulp-concat');
 var paths = {
   sass: ['./scss/**/*.scss'],
-  src: ['./src/*.ts']
+  src: ['./src/app.ts', './src/controllers.ts',
+    './src/directives.ts', './src/services.ts',
+    './src/services/*.ts', './src/activities/*.ts', './src/subject/*.ts',
+    './src/*.ts', './src/routes.ts'],
+  ts: ['./dist/bundle.ts']
 };
 
-gulp.task('default', ['sass', 'compile']);
-
-gulp.task('compile', function() {
+function bundleTS(done) {
   gulp.src(paths.src)
-    .pipe(typescript({
-      emitError: false
-    }))
-    .pipe(gulp.dest('www/js/'))
-})
+    .pipe(concat('bundle.ts'))
+    .pipe(gulp.dest('./dist/'))
+    .on('end', done);
+}
+
+function compileTS(done) {
+  gulp.src(paths.ts)
+    .pipe(typescript( {emitError: false}) )
+    .pipe(concat('dist.js'))
+    .pipe(gulp.dest('./www/js/'))
+    .on('end', done);
+}
+
+gulp.task('bundle', bundleTS);
+
+gulp.task('compile', ['bundle'], compileTS);
 
 gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
+  gulp.src(paths.sass)
     .pipe(sass())
     .on('error', sass.logError)
     .pipe(gulp.dest('./www/css/'))
@@ -59,3 +74,13 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+gulp.task('clean', function() {
+  "use strict";
+  return del([
+      './www/js/**/*.js'
+  ]);
+});
+
+gulp.task('default', ['sass', 'compile', "watch"]);
+

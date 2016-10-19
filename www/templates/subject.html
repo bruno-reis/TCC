@@ -1,34 +1,96 @@
-<ion-view style="" id="subject" title="Concorrentes">
-    <ion-content class="has-header" padding="false">
-        <div style="" class="list card">
-            <div class="item item-divider">Aulas</div>
-            <div class="item item-body">
-                <ion-list style="">
-                    <ion-item style="">Terça- 0800:0940 - B4</ion-item>
-                    <ion-item style="">Sexta- 1000:1140- B4</ion-item>
-                </ion-list>
-            </div>
-            <div class="item item-divider">+ Adicionar</div>
-        </div>
-        <div style="" class="list card">
-            <div class="item item-divider">Provas</div>
-            <div class="item item-body">
-                <ion-list style="">
-                    <ion-item style="">P1 - 29/Março - Nota: 6.0</ion-item>
-                </ion-list>
-                <a class="button button-positive  button-block button-clear icon ion-android-add" id="concorrentes-button3" ui-sref="root.subjectAddExam"></a>
-            </div>
-            <div class="item item-divider">+ Adicionar</div>
-        </div>
-        <div style="" class="list card">
-            <div class="item item-divider">Listas</div>
-            <div class="item item-body">
-                <ion-list style="">
-                    <ion-item style="">Lista 1 - 14/Março - Nota: 7.0</ion-item>
-                </ion-list>
-                <a class="button button-positive  button-block button-clear icon ion-android-add" id="concorrentes-button4" ui-sref="root.subjectAddHomework"></a>
-            </div>
-            <div class="item item-divider">+ Adicionar</div>
-        </div>
-    </ion-content>
+<ion-view style="" id="subject" title="{{vm.subject.name}}">
+  <ion-nav-buttons side="right">
+    <button class="button button-assertive button-icon button-clear ion-android-delete"
+            ng-click="vm.showConfirm()"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header" padding="false">
+    <div class="card">
+      <div class="item item-divider">Aulas</div>
+      <div class="item item-text-wrap">
+        <ul class="list" ng-repeat="class in vm.subject.classes track by class.id"
+            ng-if="class.id">
+          <li class="item item-button-right">
+            {{vm.days[class.day]}} : {{class.startTime | date: 'HH:mm'}}
+            - {{class.endTime | date: 'HH:mm'}}
+            <span ng-show="class.room">: {{class.room}}</span>
+            <a ng-click="vm.showConfirmClass(class.id)"
+               class="button button-clear button-assertive">
+              <i class="icon ion-android-delete"></i>
+            </a>
+          </li>
+        </ul>
+        <a class="item item-icon-left positive" ng-click="vm.addClass()">
+          <i class="icon ion-android-add"></i>
+          Adicionar
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">Provas</div>
+      <div class="item item-text-wrap">
+        <ul class="list" ng-repeat="exam in vm.subject.exams track by exam.id"
+            ng-if="exam.id">
+          <li class="item item-button-right">
+            {{exam.title}} : {{exam.date | date: 'dd/MM/yyyy'}} :
+            {{(exam.result | number: 2) || 'Sem nota'}}
+            <a ng-click="vm.editExam(exam.id)"
+               class="button button-clear button-positive">
+              <i class="icon ion-edit"></i>
+            </a>
+          </li>
+        </ul>
+        <a class="item item-icon-left positive" ng-click="vm.addExam()">
+          <i class="icon ion-android-add"></i>
+          Adicionar
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">Trabalhos</div>
+      <div class="item item-text-wrap">
+        <ul class="list" ng-repeat="homework in vm.subject.homeworks track by homework.id"
+            ng-if="homework.id">
+          <li class="item item-button-right">
+            {{homework.title}} : {{homework.date | date: 'dd/MM/yyyy'}} :
+            {{(homework.result | number: 2) || 'Sem nota'}}
+            <a ng-click="vm.editHomework(homework.id)"
+               class="button button-clear button-positive">
+              <i class="icon ion-edit"></i>
+            </a>
+          </li>
+        </ul>
+        <a class="item item-icon-left positive" ng-click="vm.addHomework()">
+          <i class="icon ion-android-add"></i>
+          Adicionar
+        </a>
+      </div>
+    </div>
+
+    <div class="card" ng-if="vm.hasAnyExam() || vm.hasAnyHomework()">
+      <div class="item item-divider">Notas</div>
+      <div class="item item-text-wrap">
+        <ul class="list">
+          <li class="item" ng-show="vm.hasAnyExam() && vm.hasAnyHomework()">
+            <span class="grade">
+              Média de Provas : {{ vm.getExamsGrade() | number: 2 }}
+            </span>
+            <span class="grade">
+              Média de Trabalhos: {{ vm.getHomeworksGrade() | number: 2 }}
+            </span>
+          </li>
+          <li class="item item-button-right">
+            Média Final:
+            {{ vm.getFinalGrade() === null ? 'Indefinida' : (vm.getFinalGrade() | number: 2) }}
+            <a href="#" class="button button-clear button-positive"
+               ng-click="vm.editFinalGrade()">
+              <i class="icon ion-edit"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </ion-content>
 </ion-view>
