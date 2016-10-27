@@ -73,13 +73,13 @@ angular.module('app.routes', [])
 
       .state('subject.editHomework', {
         url: '/homework/:homeworkId',
-        templateUrl: '/templates/subject-edit-homework.html',
+        templateUrl: 'templates/subject-edit-homework.html',
         controller: 'subjectEditHomeworkCtrl as vm'
       })
 
       .state('subject.editFinalGrade', {
         url: '/edit-finalGrade',
-        templateUrl: '/templates/subject-edit-finalgrade.html',
+        templateUrl: 'templates/subject-edit-finalgrade.html',
         controller: 'subjectEditFinalGradeCtrl as vm'
       })
 
