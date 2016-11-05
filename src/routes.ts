@@ -119,5 +119,17 @@ angular.module('app.routes', [])
         controller: 'activitiesAddDayCtrl as vm'
       })
 
+      .state('nextEvents', {
+        url: '/nextEvents',
+        templateUrl: 'templates/nextEvents.html',
+        controller: 'nextEventsCtrl as vm'
+      })
+
+      .state('grades', {
+        url: '/grades',
+        templateUrl: 'templates/grades.html',
+        controller: 'gradesCtrl as vm'
+      })
+
     $urlRouterProvider.otherwise('/subjects/list')
   });
