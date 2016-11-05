@@ -1,81 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <!--Angular ui-calendar-->
-    <link rel="stylesheet" href="lib/fullcalendar/dist/fullcalendar.css"/>
-    <!-- jquery, moment, and angular have to get included before fullcalendar -->
-    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/moment/min/moment.min.js"></script>
-    <script type="text/javascript" src="lib/angular-ui-calendar/src/calendar.js"></script>
-    <script type="text/javascript" src="lib/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="lib/fullcalendar/dist/gcal.js"></script>
+  <!--Angular ui-calendar-->
+  <link rel="stylesheet" href="lib/fullcalendar/dist/fullcalendar.css"/>
+  <!-- jquery, moment, and angular have to get included before fullcalendar -->
+  <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="lib/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="lib/angular-ui-calendar/src/calendar.js"></script>
+  <script type="text/javascript" src="lib/fullcalendar/dist/fullcalendar.min.js"></script>
+  <script type="text/javascript" src="lib/fullcalendar/dist/gcal.js"></script>
 
 
-    <!--Ionic Calendar-->
-    <link rel="stylesheet" href="lib/ionic-calendar/dist/css/calendar.min.css"/>
-    <script src="lib/ionic-calendar/dist/js/calendar-tpls.min.js"></script>
+  <!--Ionic Calendar-->
+  <link rel="stylesheet" href="lib/ionic-calendar/dist/css/calendar.min.css"/>
+  <script src="lib/ionic-calendar/dist/js/calendar-tpls.min.js"></script>
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
-    <!-- <link href="css/ionic.app.css" rel="stylesheet"> -->
-    <link href="css/tcc.css" rel="stylesheet">
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
+  <!-- <link href="css/ionic.app.css" rel="stylesheet"> -->
+  <link href="css/tcc.css" rel="stylesheet">
 
-    <!-- Angular Locale -->
-    <script src="lib/angular-i18n/angular-locale_pt-br.js"></script>
+  <!-- Angular Locale -->
+  <script src="lib/angular-i18n/angular-locale_pt-br.js"></script>
 
-    <style type="text/css">
-      .platform-ios .manual-ios-statusbar-padding{
-        padding-top:20px;
-      }
-      .manual-remove-top-padding{
-        padding-top:0px; 
-      }
-      .manual-remove-top-padding .scroll{
-        padding-top:0px !important;
-      }
-    </style>
+  <style type="text/css">
+    .platform-ios .manual-ios-statusbar-padding{
+      padding-top:20px;
+    }
+    .manual-remove-top-padding{
+      padding-top:0px;
+    }
+    .manual-remove-top-padding .scroll{
+      padding-top:0px !important;
+    }
+  </style>
 
-    <!--Bundle containing all project files-->
-    <script src="js/dist.js"></script>
-    <!-- Only required for Tab projects w/ pages in multiple tabs
-    <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
-    -->
+  <!--Bundle containing all project files-->
+  <script src="js/dist.js"></script>
+  <!-- Only required for Tab projects w/ pages in multiple tabs
+  <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
+  -->
 
-  </head>
-  <body ng-app="app" animation="slide-left-right-ios7">
-  <div style="">
-    <ion-side-menus data-componentid="side-menu21" style="" enable-menu-with-back-views="false">
-        <ion-side-menu-content>
-            <ion-nav-bar class="bar-stable">
-                <ion-nav-back-button></ion-nav-back-button>
-                <ion-nav-buttons side="left">
-                    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-                </ion-nav-buttons>
-            </ion-nav-bar>
-            <ion-nav-view></ion-nav-view>
-        </ion-side-menu-content>
-        <ion-side-menu style="background-color:#default;" side="left" id="side-menu21">
-            <ion-header-bar class="bar-stable">
-                <div class="title">Menu</div>
-            </ion-header-bar>
-            <ion-content padding="false" class="side-menu-left has-header">
-                <ion-list data-componentid="list1" style="">
-                    <ion-item data-componentid="list-item1" style="" menu-close="" ui-sref="subjects.list">Matérias</ion-item>
-                    <ion-item data-componentid="list-item2" style="" menu-close="" ui-sref="activities.list">Atividades</ion-item>
-                    <ion-item data-componentid="list-item3" style="" menu-close="" ui-sref="calendar">Calendário</ion-item>
-                </ion-list>
-            </ion-content>
-        </ion-side-menu>
-    </ion-side-menus>
+</head>
+<body ng-app="app" animation="slide-left-right-ios7">
+<div style="">
+  <ion-side-menus data-componentid="side-menu21" style="" enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+      <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button></ion-nav-back-button>
+        <ion-nav-buttons side="left">
+          <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        </ion-nav-buttons>
+      </ion-nav-bar>
+      <ion-nav-view></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu style="background-color:#default;" side="left" id="side-menu21">
+      <ion-header-bar class="bar-stable">
+        <div class="title">Menu</div>
+      </ion-header-bar>
+      <ion-content padding="false" class="side-menu-left has-header">
+        <ion-list data-componentid="list1" style="">
+          <ion-item data-componentid="list-item1" style="" menu-close="" ui-sref="subjects.list">Matérias</ion-item>
+          <ion-item data-componentid="list-item2" style="" menu-close="" ui-sref="activities.list">Atividades</ion-item>
+          <ion-item data-componentid="list-item3" style="" menu-close="" ui-sref="calendar">Calendário</ion-item>
+          <ion-item data-componentid="list-item4" style="" menu-close="" ui-sref="nextEvents">Próximos Eventos</ion-item>
+          <ion-item data-componentid="list-item5" style="" menu-close="" ui-sref="grades">Notas</ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-side-menu>
+  </ion-side-menus>
 </div>
-  </body>
+</body>
 </html>

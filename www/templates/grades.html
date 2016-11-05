@@ -1,0 +1,19 @@
+<ion-view id="grades">
+  <ion-view style="" id="subject-list" title="Notas">
+    <ion-content class="has-header" padding="true">
+
+      <div class="card" ng-repeat="grade in vm.subjectsExams track by grade.id+grade.ownerId" >
+        <div class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)">
+        {{grade.title}} : {{grade.type}} : {{grade.weight}} : {{grade.result}}
+        </div>
+      </div>
+
+      <div class="card" ng-repeat="grade in vm.subjectsHomework track by grade.id+grade.ownerId" >
+        <div class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)">
+          {{grade.title}} : {{grade.type}} : {{grade.weight}} : {{grade.result}}
+        </div>
+      </div>
+
+    </ion-content>
+  </ion-view>
+</ion-view>
