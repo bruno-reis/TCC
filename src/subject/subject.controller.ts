@@ -39,11 +39,11 @@ class SubjectCtrl {
   }
 
   hasAnyExam() {
-    return this.subject.exams.length > 1
+    return this.subject.exams.length > 0
   }
 
   hasAnyHomework() {
-    return this.subject.homeworks.length > 1
+    return this.subject.homeworks.length > 0
   }
 
   showConfirm() {
@@ -72,10 +72,9 @@ class SubjectCtrl {
     let exams = this.subject.exams
     let totalWeight = 0
     let totalScore = 0
-    if (!this.hasAnyExam()) {
-      return 0
-    }
-    for (let i = 1; i < exams.length; i++) {
+    
+    if (!this.hasAnyExam()) return 0
+    for (let i = 0; i < exams.length; i++) {
       if (exams[i].result != null) {
         totalScore += exams[i].result * exams[i].weight
       }
@@ -88,10 +87,9 @@ class SubjectCtrl {
     let homeworks = this.subject.homeworks
     let totalWeight = 0
     let totalScore = 0
-    if (!this.hasAnyHomework()) {
-      return 0
-    }
-    for (let i = 1; i < homeworks.length; i++) {
+    
+    if (!this.hasAnyHomework()) return 0
+    for (let i = 0; i < homeworks.length; i++) {
       if (homeworks[i].result != null) {
         totalScore += homeworks[i].result * homeworks[i].weight
       }
@@ -105,7 +103,8 @@ class SubjectCtrl {
       if (this.subject.examsWeight != null && this.subject.homeworksWeight != null) {
         let examsPart = this.getExamsGrade() * this.subject.examsWeight
         let homeworksPart = this.getHomeworksGrade() * this.subject.homeworksWeight
-        let result = examsPart + homeworksPart
+        let totalWeight = this.subject.examsWeight + this.subject.homeworksWeight
+        let result = (examsPart + homeworksPart) / totalWeight
         return result > 10 ? 10 : result
       }
       return null

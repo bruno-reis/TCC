@@ -7,7 +7,6 @@ angular.module('app.controllers', [])
     'use strict';
     $scope.calendar = {};
     $scope.calendar.eventSource = CalendarService.getEvents();
-
     $scope.changeMode = function (mode) {
       $scope.calendar.mode = mode;
     };

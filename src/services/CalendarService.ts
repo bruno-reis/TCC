@@ -20,7 +20,16 @@ class CalendarService {
   update() {
     let data = this.StorageService.get('events')
     if (data) this.events = data
+    this.fixEvents()
     // console.log("events", this.events)
+  }
+
+  fixEvents() {
+    let size = this.events.length
+    for (let i = 0; i < size; i++) {
+      this.events[i].startTime = new Date(this.events[i].startTime)
+      this.events[i].endTime = new Date(this.events[i].endTime)
+    }
   }
 
   storeEvents() {
