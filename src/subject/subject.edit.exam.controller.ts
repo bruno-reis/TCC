@@ -25,6 +25,7 @@ class subjectEditExamCtrl {
   submit() {
     if (this.SubjectService.validateTime(this.input) == false) return
     this.SubjectService.editSubjectProperty(this.subjectId, "exams", this.input)
+    this.CalendarService.editChildEvent(this.subjectId, this.examId, this.input)
     this.$state.go('.^.info')
   }
 
