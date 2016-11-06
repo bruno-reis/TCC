@@ -1,21 +1,25 @@
 <ion-view id="nextEvents">
-    <ion-view style="" id="subject-list" title="Próximos Eventos">
+    <ion-view style="" id="subject-list" title="Próximas Entregas">
       <ion-content class="has-header" padding="true">
 
-
         <div class="card">
-          <div class="item item-text-wrap" >
-            Eventos
-          </div>
+          <label class="item item-input item-select">
+            <div class="input-label">Acontecendo em: </div>
+            <select ng-model="vm.range" ng-click="vm.filterEvents()" required>
+              <option value="7">1 Semana</option>
+              <option value="14">2 Semanas</option>
+              <option value="30">1 Mês</option>
+            </select>
+          </label>
         </div>
 
-        <!--<div class="card" ng-repeat="subject in vm.subjects track by subject.id">-->
-          <!--<div class="item item-text-wrap" ng-click="vm.selectSubject(subject.id)">-->
-            <!--{{subject.name}}-->
-          <!--</div>-->
-        <!--</div>-->
-
-
+        <div class="card" ng-repeat="event in vm.nextEvents track by event.ownerId+event.eventId">
+          <div class="item item-text-wrap" ng-click="vm.selectSubject(event.ownerId)">
+            <h3>{{event.title}}</h3>
+            <br>
+            <h4>{{event.startTime | date: 'dd/MM/yyyy'}} : {{event.endTime | date: 'dd/MM/yyyy'}}</h4>
+          </div>
+        </div>
 
       </ion-content>
     </ion-view>
