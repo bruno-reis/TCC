@@ -7,7 +7,6 @@ angular.module('app.controllers', [])
     'use strict';
     $scope.calendar = {};
     $scope.calendar.eventSource = CalendarService.getEvents();
-    $scope.calendar.allDayLabel = 'Dia todo'
     $scope.changeMode = function (mode) {
       $scope.calendar.mode = mode;
     };
