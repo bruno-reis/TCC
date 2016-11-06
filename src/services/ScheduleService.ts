@@ -12,8 +12,8 @@ class ScheduleService {
     this.subjects = SubjectService.getSubjects()
     this.events = CalendarService.getEvents()
     this.criteria = {
-      minStudyTime: this.getTime(8, 0),
-      maxStudyTime: this.getTime(22, 0)
+      minStudyTime: this.getTime(8, 0, null),
+      maxStudyTime: this.getTime(22, 0, null)
     }
   }
 
@@ -31,7 +31,8 @@ class ScheduleService {
     
     // get free time blocks per day
     for (let day = dmin.getDay(); day <= dmax.getDay(); day++) {
-      weekdayFreeBlocks[day] = this.getDayFreeBlocks(weekdayEvents[day], dmin)
+      let date = this.getDateWithOffset(dmin, (day - dmin.getDay()))
+      weekdayFreeBlocks[day] = this.getDayFreeBlocks(weekdayEvents[day], date)
     }
   }
 
@@ -59,6 +60,12 @@ class ScheduleService {
     return freeBlocks
   }
 
+  getDateWithOffset(date, offset) {
+    let d = new Date(date)
+    d.setDate(d.getDate() + offset)
+    return d
+  }
+
   createBlock(startTime, endTime) {
     let duration = this.getDuration(startTime, endTime)
     return { startTime: startTime, endTime: endTime, duration: duration }
@@ -69,8 +76,8 @@ class ScheduleService {
     return (dmax.getHours() - dmin.getHours()) * 60 + (dmax.getMinutes() - dmin.getMinutes())
   }
 
-  getTime(hours, minutes) {
-    let d = new Date()
+  getTime(hours, minutes, date) {
+    let d = date == null ? new Date() : new Date(date)
     d.setHours(hours)
     d.setMinutes(minutes)
     d.setSeconds(0)
@@ -88,10 +95,7 @@ class ScheduleService {
   }
 
   fixDate(date, time) {
-    let fixDate = new Date(date)
-    fixDate.setHours(time.getHours())
-    fixDate.setMinutes(time.getMinutes())
-    return fixDate
+    return this.getTime(time.getHours(), time.getMinutes(), date)
   }
 
 }
