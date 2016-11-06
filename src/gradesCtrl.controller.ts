@@ -5,6 +5,7 @@ class GradesCtrl {
   private subjects = []
   private subjectsExams = []
   private subjectsHomework = []
+  private type = "exams"
 
   constructor(public $state,
               public $stateParams,
