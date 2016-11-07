@@ -5,7 +5,7 @@
         <div class="card">
           <label class="item item-input item-select">
             <div class="input-label">Acontecendo em: </div>
-            <select ng-model="vm.range" ng-click="vm.filterEvents()" required>
+            <select ng-model="vm.range" ng-change="vm.filterEvents()" required>
               <option value="7">1 Semana</option>
               <option value="14">2 Semanas</option>
               <option value="30">1 Mês</option>
@@ -13,9 +13,9 @@
           </label>
         </div>
 
-        <div class="card" ng-repeat="event in vm.nextEvents track by event.ownerId+event.eventId">
+        <div class="card" ng-repeat="event in vm.nextEvents track by event.ownerId+event.type+event.eventId">
           <div class="item item-text-wrap" ng-click="vm.selectSubject(event.ownerId)">
-            <h3>{{event.title}}</h3>
+            <h3>{{event.title}} - {{event.ownerName}}</h3>
             <br>
             <h4>{{event.startTime | date: 'dd/MM/yyyy'}} : {{event.endTime | date: 'dd/MM/yyyy'}}</h4>
           </div>

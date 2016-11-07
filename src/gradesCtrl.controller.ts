@@ -11,8 +11,8 @@ class GradesCtrl {
               public $stateParams,
               public SubjectService) {
     this.subjects = this.SubjectService.getSubjects()
-    this.subjects.map( sub => sub.exams.map( s => this.subjectsExams.push(s)))
-    this.subjects.map( sub => sub.homeworks.map( s => this.subjectsHomework.push(s)))
+    this.subjects.map( sub => sub.exams.map( s => { if (s.result) this.subjectsExams.push(s) }))
+    this.subjects.map( sub => sub.homeworks.map( s => { if (s.result) this.subjectsHomework.push(s) }))
   }
 
   selectSubject(subjectId) {

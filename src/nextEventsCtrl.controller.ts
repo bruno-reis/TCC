@@ -10,7 +10,7 @@ class NextEventsCtrl {
               public $stateParams,
               public CalendarService,
               public SubjectService) {
-    this.events = this.CalendarService.getEvents().filter(e => e.type == "homeworks");
+    this.events = this.CalendarService.getEvents().filter(e => e.type == "homeworks" || e.type == "exams");
     this.filterEvents()
   }
   
