@@ -13,8 +13,22 @@ class ScheduleService {
     this.events = CalendarService.getEvents()
     this.criteria = {
       minStudyTime: this.getTime(8, 0, null),
-      maxStudyTime: this.getTime(22, 0, null)
+      maxStudyTime: this.getTime(22, 0, null),
+      weeklyStudyTime: 120 // weekly study time per subject (in minutes)
     }
+  }
+
+  createSchedule(weekOffset) {
+    let dmin = new Date()
+    let dmax 
+    if (dmin.getDay() < 6) {
+      dmax = new Date()
+      dmax.setDate(dmin.getDate() + (6 - dmin.getDay()))
+    } else {
+      dmax = dmin
+    }
+    freeBlocks = this.getFreeStudyBlocks(dmin, dmax)
+    // TODO: organize study time base on classes and upcoming tasks (homeworks and exams)
   }
 
   getFreeStudyBlocks(dmin, dmax) {
@@ -34,14 +48,16 @@ class ScheduleService {
       let date = this.getDateWithOffset(dmin, (day - dmin.getDay()))
       weekdayFreeBlocks[day] = this.getDayFreeBlocks(weekdayEvents[day], date)
     }
+
+    return weekdayFreeBlocks
   }
 
   getDayFreeBlocks(events, date) {
     let ev, startTime, endTime
     let freeBlocks = []
     let index = 0
-    let dmin = this.fixDate(date, this.criteria.minStudyTime)
-    let dmax = this.fixDate(date, this.criteria.maxStudyTime)
+    let dmin = this.fixDateTime(date, this.criteria.minStudyTime)
+    let dmax = this.fixDateTime(date, this.criteria.maxStudyTime)
     if (events.length == 0) {
       return [this.createBlock(dmin, dmax)]
     }
@@ -94,7 +110,7 @@ class ScheduleService {
     })
   }
 
-  fixDate(date, time) {
+  fixDateTime(date, time) {
     return this.getTime(time.getHours(), time.getMinutes(), date)
   }
 
