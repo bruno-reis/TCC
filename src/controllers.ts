@@ -3,7 +3,7 @@
 angular.module('app.controllers', [])
   .controller('activitiesCtrl', function($scope) { })
 
-  .controller('CalendarDemoCtrl', function ($scope, CalendarService) {
+  .controller('CalendarDemoCtrl', function ($scope, $state, CalendarService) {
     'use strict';
     $scope.calendar = {};
     $scope.calendar.eventSource = CalendarService.getEvents();
@@ -12,8 +12,17 @@ angular.module('app.controllers', [])
     };
     
     $scope.onEventSelected = function (event) {
-      console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
+      if (event.type == 'activity') $scope.selectActivity(event.ownerId)
+      else $scope.selectSubject(event.ownerId)
     };
+
+    $scope.selectActivity = function (activityId) {
+      $state.go('activity.info', {activityId: activityId})
+    }
+
+    $scope.selectSubject = function (subjectId) {
+      $state.go('subject.info', {subjectId: subjectId})
+    }
 
     $scope.onViewTitleChanged = function (title) {
       $scope.viewTitle = title;
@@ -33,7 +42,6 @@ angular.module('app.controllers', [])
     };
 
     $scope.onTimeSelected = function (selectedTime) {
-      console.log('Selected time: ' + selectedTime);
     };
   });
 
