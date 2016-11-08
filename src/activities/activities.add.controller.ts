@@ -3,6 +3,7 @@
 class ActivitiesAddCtrl {
   public $inject = ['$state', 'ActivityService', 'StorageService']
   private input
+  private isRecurring = false
 
   constructor(public $state,
               public ActivityService,

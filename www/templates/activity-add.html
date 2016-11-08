@@ -5,14 +5,51 @@
         <span class="input-label">Nome</span>
         <input type="text" ng-model="vm.input.name" required>
       </label>
+      <ul class="list">
+        <li class="item item-toggle">
+          Atividade Recorrente
+          <label class="toggle">
+            <input type="checkbox" ng-model="vm.isRecurring">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </li>
+      </ul>
+      <div  ng-if="vm.isRecurring">
       <label class="item item-input item-select">
-        <div class="input-label">Duração</div>
+        <span class="input-label">Duração</span>
         <select ng-model="vm.input.duration" required>
           <option value=1>1 Mês</option>
           <option value=3>3 Meses</option>
           <option value=6>6 Meses</option>
         </select>
       </label>
+      </div>
+
+      <div  ng-if="!vm.isRecurring">
+        <label class="item item-input item-select">
+          <div class="input-label">Dia</div>
+          <select ng-model="vm.input.day" required>
+            <option value=0>Domingo</option>
+            <option value=1>Segunda</option>
+            <option value=2>Terça</option>
+            <option value=3>Quarta</option>
+            <option value=4>Quinta</option>
+            <option value=5>Sexta</option>
+            <option value=6>Sábado</option>
+          </select>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Horário Inicio</span>
+          <input type="time" ng-model="vm.input.startTime" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Horário Fim</span>
+          <input type="time" ng-model="vm.input.endTime" required>
+        </label>
+      </div>
+
       <button class="button icon-left button-block button-positive"
               ng-click="vm.addActivity()" ng-disabled="form.$invalid">Adicionar
       </button>
