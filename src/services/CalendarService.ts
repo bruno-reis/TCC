@@ -56,7 +56,7 @@ class CalendarService {
       date.setDate(date.getDate() + 7)
     }
   }
-
+ 
   createEvent(input, owner, date) {
     input.startTime.setDate(date.getDate())
     input.startTime.setMonth(date.getMonth())
@@ -69,6 +69,7 @@ class CalendarService {
     this.events.push({
       eventId: input.id,
       ownerId: owner.id,
+      ownerName: owner.name,
       type: input.type,
       title: input.title || owner.name,
       startTime: input.startTime,
