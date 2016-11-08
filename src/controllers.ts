@@ -10,6 +10,7 @@ angular.module('app.controllers', [])
     $scope.changeMode = function (mode) {
       $scope.calendar.mode = mode;
     };
+    $scope.customEventDetailUrl = 'templates/customEventDetail.html'
     
     $scope.onEventSelected = function (event) {
       if (event.type == 'activity') $scope.selectActivity(event.ownerId)
