@@ -13,7 +13,7 @@
           </label>
         </div>
 
-        <div class="card" ng-repeat="event in vm.nextEvents track by event.ownerId+event.type+event.eventId">
+        <div class="card" ng-repeat="event in vm.nextEvents | orderBy: 'startTime' track by event.ownerId+event.type+event.eventId">
           <div class="item item-text-wrap" ng-click="vm.selectSubject(event.ownerId)">
             <h3>{{event.title}} - {{event.ownerName}}</h3>
             <br>
