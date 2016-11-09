@@ -12,22 +12,32 @@
         </label>
       </div>
 
-      <div class="card" ng-if="vm.type=='exams'"
-           ng-repeat="grade in vm.subjectsExams track by grade.id+grade.ownerId">
-        <div class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)">
-          <h3>{{grade.title}} - {{grade.ownerName}}</h3>
-          <br>
-          <h4>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</h4>
+      <div class="card" ng-if="vm.type=='exams'">
+        <div class="item item-text-wrap" ng-if="vm.subjectsHomework.length==0">
+          Nenhuma Prova com Nota Cadastrada.
         </div>
+
+        <ul class="list" ng-if="vm.subjectsHomework.length>0">
+          <li class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)"
+              ng-repeat="grade in vm.subjectsExams track by grade.id+grade.ownerId">
+            <h3>{{grade.title}} - {{grade.ownerName}}</h3>
+            <p>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</p>
+          </li>
+        </ul>
       </div>
 
-      <div class="card" ng-if="vm.type=='homework'"
-           ng-repeat="grade in vm.subjectsHomework track by grade.id+grade.ownerId" >
-        <div class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)">
-          <h3>{{grade.title}} - {{grade.ownerName}}</h3>
-          <br>
-          <h4>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</h4>
+      <div class="card" ng-if="vm.type=='homework'">
+        <div class="item item-text-wrap" ng-if="vm.subjectsExams.length==0">
+          Nenhum Trabalho com Nota Cadastrada.
         </div>
+
+        <ul class="list" ng-if="vm.subjectsHomework.length>0">
+          <li class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)"
+              ng-repeat="grade in vm.subjectsHomework track by grade.id+grade.ownerId">
+            <h3>{{grade.title}} - {{grade.ownerName}}</h3>
+            <p>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</p>
+          </li>
+        </ul>
       </div>
 
     </ion-content>
