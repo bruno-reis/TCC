@@ -9,14 +9,14 @@
         <li class="item item-toggle">
           Atividade Recorrente
           <label class="toggle">
-            <input type="checkbox" ng-model="vm.isRecurring">
+            <input type="checkbox" ng-model="vm.input.recurring">
             <div class="track">
               <div class="handle"></div>
             </div>
           </label>
         </li>
       </ul>
-      <div  ng-if="vm.isRecurring">
+      <div ng-if="vm.input.recurring">
       <label class="item item-input item-select">
         <span class="input-label">Duração</span>
         <select ng-model="vm.input.duration" required>
@@ -27,31 +27,23 @@
       </label>
       </div>
 
-      <div  ng-if="!vm.isRecurring">
-        <label class="item item-input item-select">
-          <div class="input-label">Dia</div>
-          <select ng-model="vm.input.day" required>
-            <option value=0>Domingo</option>
-            <option value=1>Segunda</option>
-            <option value=2>Terça</option>
-            <option value=3>Quarta</option>
-            <option value=4>Quinta</option>
-            <option value=5>Sexta</option>
-            <option value=6>Sábado</option>
-          </select>
+      <div ng-if="!vm.input.recurring">
+        <label class="item item-input">
+          <span class="input-label">Data</span>
+          <input type="date" ng-model="vm.date" required>
         </label>
         <label class="item item-input">
           <span class="input-label">Horário Inicio</span>
-          <input type="time" ng-model="vm.input.startTime" required>
+          <input type="time" ng-model="vm.day.startTime" required>
         </label>
         <label class="item item-input">
           <span class="input-label">Horário Fim</span>
-          <input type="time" ng-model="vm.input.endTime" required>
+          <input type="time" ng-model="vm.day.endTime" required>
         </label>
       </div>
 
       <button class="button icon-left button-block button-positive"
-              ng-click="vm.addActivity()" ng-disabled="form.$invalid">Adicionar
+              ng-click="vm.submit()" ng-disabled="form.$invalid">Adicionar
       </button>
     </form>
   </ion-content>
