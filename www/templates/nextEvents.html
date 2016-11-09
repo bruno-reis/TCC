@@ -14,7 +14,11 @@
         </div>
 
         <div class="card">
-          <ul class="list">
+          <div class="item item-text-wrap" ng-if="vm.nextEvents.length==0">
+            Nenhum Evento Próximo
+          </div>
+
+          <ul class="list" ng-if="vm.nextEvents.length>0">
             <li class="item item-text-wrap"
                 ng-repeat="event in vm.nextEvents | orderBy: 'startTime' track by event.ownerId+event.type+event.eventId"
                 ng-click="vm.selectSubject(event.ownerId)">
