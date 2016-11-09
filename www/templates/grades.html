@@ -12,22 +12,24 @@
         </label>
       </div>
 
-      <div class="card" ng-if="vm.type=='exams'"
-           ng-repeat="grade in vm.subjectsExams track by grade.id+grade.ownerId">
-        <div class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)">
-          <h3>{{grade.title}} - {{grade.ownerName}}</h3>
-          <br>
-          <h4>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</h4>
-        </div>
+      <div class="card" ng-if="vm.type=='exams'">
+        <ul class="list">
+          <li class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)"
+              ng-repeat="grade in vm.subjectsExams track by grade.id+grade.ownerId">
+            <h3>{{grade.title}} - {{grade.ownerName}}</h3>
+            <p>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</p>
+          </li>
+        </ul>
       </div>
 
-      <div class="card" ng-if="vm.type=='homework'"
-           ng-repeat="grade in vm.subjectsHomework track by grade.id+grade.ownerId" >
-        <div class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)">
-          <h3>{{grade.title}} - {{grade.ownerName}}</h3>
-          <br>
-          <h4>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</h4>
-        </div>
+      <div class="card" ng-if="vm.type=='homework'">
+        <ul class="list">
+          <li class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)"
+              ng-repeat="grade in vm.subjectsHomework track by grade.id+grade.ownerId">
+            <h3>{{grade.title}} - {{grade.ownerName}}</h3>
+            <p>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</p>
+          </li>
+        </ul>
       </div>
 
     </ion-content>
