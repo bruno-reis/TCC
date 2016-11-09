@@ -20,7 +20,16 @@ class CalendarService {
   update() {
     let data = this.StorageService.get('events')
     if (data) this.events = data
+    this.fixEvents()
     // console.log("events", this.events)
+  }
+
+  fixEvents() {
+    let size = this.events.length
+    for (let i = 0; i < size; i++) {
+      this.events[i].startTime = new Date(this.events[i].startTime)
+      this.events[i].endTime = new Date(this.events[i].endTime)
+    }
   }
 
   storeEvents() {
@@ -47,7 +56,7 @@ class CalendarService {
       date.setDate(date.getDate() + 7)
     }
   }
-
+ 
   createEvent(input, owner, date) {
     input.startTime.setDate(date.getDate())
     input.startTime.setMonth(date.getMonth())
@@ -60,6 +69,7 @@ class CalendarService {
     this.events.push({
       eventId: input.id,
       ownerId: owner.id,
+      ownerName: owner.name,
       type: input.type,
       title: input.title || owner.name,
       startTime: input.startTime,

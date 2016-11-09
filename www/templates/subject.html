@@ -72,7 +72,7 @@
       <div class="item item-divider">Notas</div>
       <div class="item item-text-wrap">
         <ul class="list">
-          <li class="item" ng-show="vm.hasAnyExam() && vm.hasAnyHomework()">
+          <li class="item" ng-if="vm.hasAnyExam() && vm.hasAnyHomework()">
             <span class="grade">
               Média de Provas : {{ vm.getExamsGrade() | number: 2 }}
             </span>

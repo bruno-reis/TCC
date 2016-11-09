@@ -11,8 +11,14 @@
   <ion-content scroll="false" class="main-content">
     <p style="text-align: center">{{viewTitle}}</p>
     <calendar ng-model="calendar.currentDate" calendar-mode="calendar.mode" event-source="calendar.eventSource"
+              all-day-label="Dia todo"
+              no-events-label="Nenhum Evento"
+              format-week-title="MMMM yyyy, 'Semana' w"
+              format-hour-column="H'h'"
               range-changed="reloadSource(startTime, endTime)"
               event-selected="onEventSelected(event)" title-changed="onViewTitleChanged(title)"
-              time-selected="onTimeSelected(selectedTime)" step="30"></calendar>
+              time-selected="onTimeSelected(selectedTime)" step="30"
+              monthview-event-detail-template-url="customEventDetailUrl">
+    </calendar>
   </ion-content>
 </ion-view>

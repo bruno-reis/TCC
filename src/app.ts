@@ -1,6 +1,6 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ui.calendar', 'ui.rCalendar'])
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ui.rCalendar'])
 
   angular.module('app.directives', [])
 
