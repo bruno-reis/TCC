@@ -6,7 +6,17 @@
   <ion-content class="has-header" padding="false">
     <div class="card">
       <div class="item item-divider">Horário</div>
-      <div class="item item-text-wrap">
+      <div class="item item-text-wrap" ng-if="vm.activity.recurring==false">
+        <ul class="list">
+          <li class="item item-button-right">
+            {{vm.activity.startDate  | date: 'dd/MMM/yyyy'}} :
+            {{vm.activity.days[0].startTime | date: 'HH:mm'}}
+            - {{vm.activity.days[0].endTime | date: 'HH:mm'}}
+          </li>
+        </ul>
+      </div>
+
+      <div class="item item-text-wrap" ng-if="vm.activity.recurring">
         <ul class="list" ng-repeat="day in vm.activity.days track by day.id" ng-if="day.id">
           <li class="item item-button-right">
             {{vm.dayName[day.day]}} : {{day.startTime | date: 'HH:mm'}}

@@ -55,6 +55,20 @@ class ActivityService {
     this.storeActivities()
   }
   
+  addSingleActivity(activity, day, date) {
+    activity.days = []
+    day.type = "activity"
+    day.id = this.getNextId(activity.days, 1)
+    activity.days.push(day)
+
+    activity.id = this.getNextId(this.activities, 1000)
+    activity.type = "activity"
+    activity.startDate = date.getTime()
+    activity.endDate = date.getTime()
+    this.activities.push(activity)
+    this.storeActivities()
+  }
+  
   deleteActivity(activityId) {
     let activities = this.activities.filter( ac => ac.id != activityId)
     this.StorageService.add('activities', activities)
