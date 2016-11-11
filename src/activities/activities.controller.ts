@@ -17,7 +17,6 @@ class ActivitiesCtrl {
   addActivity() {
     this.$state.go('activities.add')
   }
-
 }
 
 angular.module('app.controllers')
