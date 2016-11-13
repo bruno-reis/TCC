@@ -1,0 +1,26 @@
+<ion-view id="schedules">
+  <ion-view style="" id="subject-list" title="Rotina de Estudo">
+    <ion-content class="has-header" padding="true">
+
+      <form name="form" class="list" novalidate>
+        <div class="item item-text-wrap">
+          <span>Horário mínimo do dia para começar a estudar</span>
+          <input type="time" ng-model="vm.input.minStudyTime" required>
+        </div>
+        <div class="item item-text-wrap">
+          <span>Horário máximo do dia para terminar de estudar</span>
+          <input type="time" ng-model="vm.input.maxStudyTime" required>
+        </div>
+        <div class="item item-text-wrap item-stacked-label">
+          <span>Quantidade de horas semanais de estudo para cada matéria</span>
+          <input type="number" ng-model="vm.input.weeklyStudyTime" step="1" required
+            placeholder="">
+        </div>
+        <button class="button icon-left button-block button-positive"
+          ng-click="vm.submit()" ng-disabled="form.$invalid">
+          Criar rotina
+        </button>
+      </form>
+    </ion-content>
+  </ion-view>
+</ion-view>

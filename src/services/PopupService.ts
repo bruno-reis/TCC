@@ -7,6 +7,15 @@ class PopupService {
 
   }
 
+  customError(template) {
+    let alertPopup = this.$ionicPopup.alert({
+      title: 'Erro',
+      template: template,
+      okText: 'Confirmar'
+    })
+    return alertPopup
+  }
+
   timeError() {
     let alertPopup = this.$ionicPopup.alert({
       title: 'Erro',
