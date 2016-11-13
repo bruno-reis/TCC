@@ -57,6 +57,12 @@ angular.module('app.routes', [])
         }
       })
 
+      .state('subject.addClass', {
+        url: '/add-class',
+        templateUrl: 'templates/subject-add-class.html',
+        controller: 'subjectAddClassCtrl as vm'
+      })
+      
       .state('subject.info.exams', {
         url: "/exams",
         views: {
@@ -85,12 +91,6 @@ angular.module('app.routes', [])
             controller: 'subjectCtrl as vm'
           }
         }
-      })
-
-      .state('subject.addClass', {
-        url: '/add-class',
-        templateUrl: 'templates/subject-add-class.html',
-        controller: 'subjectAddClassCtrl as vm'
       })
 
       .state('subject.addExam', {
