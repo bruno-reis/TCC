@@ -1,7 +1,7 @@
-<ion-view>
+<ion-view title="{{vm.subject.name}}">
   <ion-content>
     <div class="card">
-      <div class="item item-text-wrap">
+      <div class="item item-text-wrap" ng-if="vm.subject.homeworks.length > 0">
         <ul class="list" ng-repeat="homework in vm.subject.homeworks track by homework.id"
             ng-if="homework.id">
           <li class="item item-button-right">
