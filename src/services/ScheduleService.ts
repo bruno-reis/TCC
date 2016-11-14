@@ -5,6 +5,7 @@ class ScheduleService {
   private subjects
   private events
   private criteria
+  private maxId
 
   constructor(public SubjectService,
               public StorageService,
@@ -12,6 +13,7 @@ class ScheduleService {
     this.subjects = SubjectService.getSubjects()
     this.events = CalendarService.getEvents()
     this.update()
+    this.maxId = 1 + this.events.filter( ev => { return ev.type == "studies" }).length
   }
 
   saveCriteria(criteria) {
@@ -52,7 +54,7 @@ class ScheduleService {
       })
     })
     studyTimePerSubject = totalFreeTime > totalStudyTime ? 
-                              totalStudyTime : totalFreeTime / this.subjects.length
+                              this.criteria.weeklyStudyTime : totalFreeTime / this.subjects.length
     this.subjects.forEach(subject => {
       freeBlocks = this.allocateStudy(subject, freeBlocks, studyTimePerSubject)
     })
@@ -62,18 +64,24 @@ class ScheduleService {
     let classDays = subject.classes.map(cl => { return cl.day })
     let dailyStudy = studyTimePerSubject / classDays.length
     let daysLeft = classDays.length
-
+    let daysTaken = []
     // tries to schedule study to the same days as subject classes
     classDays.forEach(day => {
       let bd = blocks[day]
-      daysLeft = this.checkBlocks(bd, dailyStudy, daysLeft, subject)
+      if (this.checkBlocks(bd, dailyStudy, subject)) {
+        daysLeft = daysLeft - 1
+        daysTaken.push(day)
+      }
     })
 
     // tries to schedule any day if class days were unavailable
     if (daysLeft > 0) {
       for (let day = 0; day < 7; day++) {
         let bd = blocks[day]
-        daysLeft = this.checkBlocks(bd, dailyStudy, daysLeft, subject)
+        if (daysTaken.indexOf(day) > -1)
+          continue
+        if (this.checkBlocks(bd, dailyStudy, subject))
+          daysLeft = daysLeft - 1
       }
     }
 
@@ -88,12 +96,14 @@ class ScheduleService {
             bd[i].endTime.setMinutes(bd[i].endTime.getMinutes() - studyTimeLeft)
             bd[i].duration -= studyTimeLeft
             studyTimeLeft = 0
+            this.createStudyEvent(bd[i].endTime, oldEndTime, subject)
             break
           } else {
             let oldEndTime = new Date(bd[i].endTime.getTime())
             bd[i].endTime.setTime(bd[i].startTime.getTime())
             studyTimeLeft -= bd[i].duration
             bd[i].duration = 0
+            this.createStudyEvent(bd[i].endTime, oldEndTime, subject)
           }
         }
       }
@@ -101,17 +111,29 @@ class ScheduleService {
     return blocks
   }
 
-  checkBlocks(blocks, dailyStudy, daysLeft, subject) {
+  checkBlocks(blocks, dailyStudy, subject) {
     for (let i = 0; i < blocks.length; i++) {
       if (blocks[i].duration >= dailyStudy) {
         let oldEndTime = new Date(blocks[i].endTime.getTime())
-        daysLeft -= 1
         blocks[i].duration -= dailyStudy
-        blocks[i].endTime.setMinutes(blocks[i].endTime.getMinutes() - dailyStudy)    
-        break
+        blocks[i].endTime.setMinutes(blocks[i].endTime.getMinutes() - dailyStudy)
+        this.createStudyEvent(blocks[i].endTime, oldEndTime, subject)
+        return true
       }
     }
-    return daysLeft
+    return false
+  }
+
+  createStudyEvent(startTime, endTime, subject) {
+    let ev = {
+      startTime: startTime,
+      endTime: endTime,
+      id: this.maxId,
+      type: "studies",
+      title: "Estudar " + subject.name
+    }
+    this.CalendarService.createEvent(ev, subject, startTime)
+    this.maxId += 1
   }
 
   getFreeStudyBlocks(dmin, dmax) {

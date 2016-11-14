@@ -9,6 +9,9 @@ class schedulesCtrl {
                 public ScheduleService,
                 public PopupService) {
       this.input = this.ScheduleService.getCriteria()
+      if (typeof this.input == "object") {
+        this.input.weeklyStudyTime = this.input.weeklyStudyTime / 60
+      }
     }
 
     submit() {
@@ -16,7 +19,11 @@ class schedulesCtrl {
         this.PopupService.customError('\'Horário Máximo\' deve ser maior que \'Horário Mínimo\'')
         return
       }
+      // convert weeklyStudyTime from hours to minutes
+      this.input.weeklyStudyTime = this.input.weeklyStudyTime * 60
       this.ScheduleService.saveCriteria(this.input)
+      this.ScheduleService.createSchedule(0)
+      this.$state.go(".^.calendar")
     }
 }
 
