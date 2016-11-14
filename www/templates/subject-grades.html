@@ -1,0 +1,25 @@
+<ion-view>
+  <ion-content>
+    <div class="card">
+      <div class="item item-text-wrap">
+        <ul class="list">
+          <li class="item">
+            <h3>Média de Provas : {{ vm.getExamsGrade() | number: 2 }}</h3>
+          </li>
+          <li class="item">
+            <h3>Média de Trabalhos: {{ vm.getHomeworksGrade() | number: 2 }}</h3>
+          </li>
+          <li class="item item-button-right">
+            <h3> Média Final:
+              {{ vm.getFinalGrade() === null ? 'Indefinida' : (vm.getFinalGrade() | number: 2) }}
+            </h3>
+            <a href="#" class="button button-clear button-positive"
+               ng-click="vm.editFinalGrade()">
+              <i class="icon ion-edit"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
