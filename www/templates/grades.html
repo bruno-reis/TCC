@@ -13,13 +13,13 @@
       </div>
 
       <div class="card" ng-if="vm.type=='exams'">
-        <div class="item item-text-wrap" ng-if="vm.subjectsHomework.length==0">
-          Nenhuma Prova com Nota Cadastrada.
+        <div class="item item-text-wrap" ng-if="vm.subjectsExams.length==0">
+          Nenhuma Prova com nota cadastrada.
         </div>
 
-        <ul class="list" ng-if="vm.subjectsHomework.length>0">
+        <ul class="list" ng-if="vm.subjectsExams.length > 0">
           <li class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)"
-              ng-repeat="grade in vm.subjectsExams track by grade.id+grade.ownerId">
+              ng-repeat="grade in vm.subjectsExams track by grade.id + grade.ownerId">
             <h3>{{grade.title}} - {{grade.ownerName}}</h3>
             <p>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</p>
           </li>
@@ -27,13 +27,13 @@
       </div>
 
       <div class="card" ng-if="vm.type=='homework'">
-        <div class="item item-text-wrap" ng-if="vm.subjectsExams.length==0">
-          Nenhum Trabalho com Nota Cadastrada.
+        <div class="item item-text-wrap" ng-if="vm.subjectsHomework.length==0">
+          Nenhum Trabalho com nota cadastrada.
         </div>
 
-        <ul class="list" ng-if="vm.subjectsHomework.length>0">
+        <ul class="list" ng-if="vm.subjectsHomework.length > 0">
           <li class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)"
-              ng-repeat="grade in vm.subjectsHomework track by grade.id+grade.ownerId">
+              ng-repeat="grade in vm.subjectsHomework track by grade.id + grade.ownerId">
             <h3>{{grade.title}} - {{grade.ownerName}}</h3>
             <p>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</p>
           </li>

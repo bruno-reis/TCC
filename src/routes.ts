@@ -42,15 +42,55 @@ angular.module('app.routes', [])
       })
 
       .state('subject.info', {
-        url: '/',
+        url: '/info',
         templateUrl: 'templates/subject.html',
         controller: 'subjectCtrl as vm'
+      })
+
+      .state('subject.info.class', {
+        url: "/class",
+        views: {
+          'class': {
+            templateUrl: "templates/subject-class.html",
+            controller: 'subjectCtrl as vm'
+          }
+        }
       })
 
       .state('subject.addClass', {
         url: '/add-class',
         templateUrl: 'templates/subject-add-class.html',
         controller: 'subjectAddClassCtrl as vm'
+      })
+      
+      .state('subject.info.exams', {
+        url: "/exams",
+        views: {
+          'exams': {
+            templateUrl: "templates/subject-exams.html",
+            controller: 'subjectCtrl as vm'
+          }
+        }
+      })
+
+      .state('subject.info.homework', {
+        url: "/homework",
+        views: {
+          'homework': {
+            templateUrl: "templates/subject-homework.html",
+            controller: 'subjectCtrl as vm'
+          }
+        }
+      })
+
+      .state('subject.info.grades', {
+        url: "/grades",
+        views: {
+          'grades': {
+            templateUrl: "templates/subject-grades.html",
+            controller: 'subjectCtrl as vm'
+          }
+        }
       })
 
       .state('subject.addExam', {
