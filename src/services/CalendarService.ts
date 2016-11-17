@@ -111,6 +111,13 @@ class CalendarService {
     })
     this.storeEvents()
   }
+
+  deleteEventByType(type) {
+    this.events = this.events.filter(ev => {
+      return ev.type != type
+    })
+    this.storeEvents()
+  }
 }
 
 angular.module('app.services')

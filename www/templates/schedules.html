@@ -1,24 +1,38 @@
 <ion-view id="schedules">
   <ion-view style="" id="subject-list" title="Rotina de Estudo">
     <ion-content class="has-header" padding="true">
-
+      <h4 align="center">Personalize sua rotina de estudos</h4>
       <form name="form" class="list" novalidate>
-        <div class="item item-text-wrap">
-          <span>Horário mínimo do dia para começar a estudar</span>
-          <input type="time" ng-model="vm.input.minStudyTime" required>
-        </div>
-        <div class="item item-text-wrap">
-          <span>Horário máximo do dia para terminar de estudar</span>
-          <input type="time" ng-model="vm.input.maxStudyTime" required>
-        </div>
-        <div class="item item-text-wrap item-stacked-label">
-          <span>Quantidade de horas semanais de estudo para cada matéria</span>
-          <input type="number" ng-model="vm.input.weeklyStudyTime" step="1" required
-            placeholder="">
-        </div>
+        <ul>
+          <li class="item item-text-wrap">
+            <span>A partir de que horas você pode estudar?</span>
+            <input type="time" ng-model="vm.input.minStudyTime" required>
+          </li>
+          <li class="item item-text-wrap">
+            <span>Até que horas você pode estudar?</span>
+            <input type="time" ng-model="vm.input.maxStudyTime" required
+              placeholder="08:00">
+          </li>
+          <li class="item item-toggle item-text-wrap">
+            Estudar aos sábados e domingos?
+            <label class="toggle">
+               <input type="checkbox" ng-model="vm.input.weekendStudy">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+            </label>
+          </li>
+          <li class="item item-text-wrap">
+            <span>
+              Quantas horas por semana você deseja se dedicar para cada matéria fora da aula?
+            </span>
+            <input type="number" ng-model="vm.input.weeklyStudyTime" step="1" required
+              placeholder="22:00">
+          </li>
+        </ul>
         <button class="button icon-left button-block button-positive"
           ng-click="vm.submit()" ng-disabled="form.$invalid">
-          Criar rotina
+          Gerar rotina
         </button>
       </form>
     </ion-content>

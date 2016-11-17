@@ -22,6 +22,7 @@ class schedulesCtrl {
       // convert weeklyStudyTime from hours to minutes
       this.input.weeklyStudyTime = this.input.weeklyStudyTime * 60
       this.ScheduleService.saveCriteria(this.input)
+      this.ScheduleService.clearPreviousSchedules()
       this.ScheduleService.createSchedule(0)
       this.$state.go(".^.calendar")
     }

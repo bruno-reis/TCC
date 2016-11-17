@@ -10,8 +10,6 @@ class ScheduleService {
   constructor(public SubjectService,
               public StorageService,
               public CalendarService) {
-    this.subjects = SubjectService.getSubjects()
-    this.events = CalendarService.getEvents()
     this.update()
     this.maxId = 1 + this.events.filter( ev => { return ev.type == "studies" }).length
   }
@@ -22,8 +20,8 @@ class ScheduleService {
   }
 
   getCriteria() {
-    if (this.criteria == null)
-      return {}
+    this.update()
+    if (this.criteria == null) return {}
     return this.criteria
   }
 
@@ -34,30 +32,42 @@ class ScheduleService {
       this.criteria.minStudyTime = new Date(this.criteria.minStudyTime)
       this.criteria.maxStudyTime = new Date(this.criteria.maxStudyTime)
     }
+    this.subjects = this.SubjectService.getSubjects()
+    this.events = this.CalendarService.getEvents()
+  }
+
+  clearPreviousSchedules() {
+    this.CalendarService.deleteEventByType("studies")
+    this.update()
   }
 
   createSchedule(weekOffset) {
     let dmax, freeBlocks, studyTimePerSubject
-    let dmin = new Date()
     let totalFreeTime = 0
     let totalStudyTime = 120 * this.subjects.length
-    if (dmin.getDay() < 6) {
-      dmax = new Date()
-      dmax.setDate(dmin.getDate() + (6 - dmin.getDay()))
+    let dmin = this.getTime(0, 0, null)
+    let maxDay = this.criteria.weekendStudy ? 6 : 5
+    while (!this.criteria.weekendStudy && dmin.getDay() % 6 == 0) {
+      dmin.setDate(dmin.getDate() + 1)
+    }
+    if (dmin.getDay() < maxDay) {
+      dmax = this.getTime(0, 0, null)
+      dmax.setDate(dmin.getDate() + (maxDay - dmin.getDay()))
     } else {
       dmax = dmin
     }
     freeBlocks = this.getFreeStudyBlocks(dmin, dmax)
-    freeBlocks.forEach(day => {
-      day.forEach(block => {
-        totalFreeTime += block.duration
-      })
-    })
-    studyTimePerSubject = totalFreeTime > totalStudyTime ? 
-                              this.criteria.weeklyStudyTime : totalFreeTime / this.subjects.length
-    this.subjects.forEach(subject => {
-      freeBlocks = this.allocateStudy(subject, freeBlocks, studyTimePerSubject)
-    })
+    console.log(freeBlocks)
+    // freeBlocks.forEach(day => {
+    //   day.forEach(block => {
+    //     totalFreeTime += block.duration
+    //   })
+    // })
+    // studyTimePerSubject = totalFreeTime > totalStudyTime ? 
+    //                           this.criteria.weeklyStudyTime : totalFreeTime / this.subjects.length
+    // this.subjects.forEach(subject => {
+    //   freeBlocks = this.allocateStudy(subject, freeBlocks, studyTimePerSubject)
+    // })
   }
 
   allocateStudy(subject, blocks, studyTimePerSubject) {
