@@ -1,4 +1,8 @@
 <ion-view title="{{vm.subject.name}}">
+  <ion-nav-buttons side="right">
+    <button class="button button-assertive button-icon button-clear ion-android-delete"
+            ng-click="vm.showConfirm()"></button>
+  </ion-nav-buttons>
   <ion-content>
     <div class="card">
       <div class="item item-text-wrap" ng-if="vm.subject.homeworks.length > 0">
