@@ -7,10 +7,10 @@
         {{::event.endTime|date: 'HH:mm'}}
       </td>
       <td ng-if="event.allDay" class="monthview-eventdetail-timecolumn">All day</td>
-      <td class="event-detail" ng-if="event.type!='activity'">
+      <td class="event-detail" ng-if="event.type=='homeworks' || event.type=='exams' ">
         {{::event.title}} - {{::event.ownerName}}
       </td>
-      <td class="event-detail" ng-if="event.type=='activity'">
+      <td class="event-detail" ng-if="event.type=='classes' || event.type=='activity'">
         {{::event.title}}
       </td>
     </tr>
