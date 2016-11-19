@@ -18,7 +18,7 @@ class SubjectService {
 
   getNextId(list, startValue) {
     //Get the id of the list last element and increase it by 1
-    let nextId = (list.length > 0) ? list[list.length-1].id + 1 : startValue
+    let nextId = (list.length > 0) ? list[list.length - 1].id + 1 : startValue
     return nextId
   }
 
@@ -72,16 +72,16 @@ class SubjectService {
   }
 
   deleteSubject(subjectId) {
-    let subjects = this.subjects.filter( sb => sb.id != subjectId)
+    let subjects = this.subjects.filter(sb => sb.id != subjectId)
     this.StorageService.add('subjects', subjects)
     this.update()
   }
-  
+
 
   deleteSubjectProperty(subjectId, propName, propId) {
     //Property can be a homework/exam/class
     let subject = this.getSubject(subjectId)
-    subject[propName] = subject[propName].filter( ch => ch.id != propId)
+    subject[propName] = subject[propName].filter(ch => ch.id != propId)
     this.StorageService.add('subjects', this.subjects)
     this.update()
   }
@@ -108,6 +108,48 @@ class SubjectService {
     }
     return true
   }
+
+  checkSubjectExists(subjectName) {
+    let result = this.subjects.filter(s => s.name == subjectName)
+    if (result.length > 0) {
+      this.PopupService.duplicateNameError(subjectName).then()
+      return true
+    }
+    return false
+  }
+
+
+  checkSubjectPropertyTitle(subjectId, propertyType, property) {
+    let subject = this.getSubject(subjectId)
+    let result = subject[propertyType].filter(s => s.title == property.title)
+    if (result.length > 0) {
+      this.PopupService.duplicateNameError(property.title).then(() => property.title = null)
+      return true
+    }
+    return false
+  }
+
+  checkSubjectPropertyTime(subjectId, propertyType, property) {
+    let result = []
+    let subject = this.getSubject(subjectId)
+
+    subject[propertyType].map(s => {
+      let startTime = new Date(s.startTime).getTime()
+      let endTime = new Date(s.endTime).getTime()
+      let date = new Date(s.date).getTime()
+      if (date == property.date.getTime() &&
+        (startTime == property.startTime.getTime() || endTime == property.endTime.getTime())) {
+        result.push(s)
+        this.PopupService.duplicateDateError().then(() =>
+            property.date = null,
+          property.startDate = null,
+          property.endDate = null)
+        return true
+      }
+    })
+    return false
+  }
+
 }
 
 angular.module('app.services')
