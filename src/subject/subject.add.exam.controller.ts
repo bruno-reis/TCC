@@ -1,14 +1,15 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class subjectAddExamCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService']
+  public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService', 'NotificationService']
   private input
   private subject
 
   constructor(public $state,
               public $stateParams,
               public SubjectService,
-              public CalendarService) {
+              public CalendarService,
+              public NotificationService) {
     this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
     this.input = { weight:1 }
   }
