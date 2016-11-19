@@ -1,63 +1,128 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class NotificationService {
-  private $inject = ['$cordovaLocalNotification']
+  private $inject = ['StorageService', '$cordovaLocalNotification', '$rootScope']
 
   private schedule
-  private update
+  private edit
+  private cancel
+  private notifications
 
-  constructor(public $cordovaLocalNotification) {
+  constructor(public StorageService,
+              public $cordovaLocalNotification,
+              public $rootScope) {
     let service = this
+    this.update()
+    console.log($cordovaLocalNotification)
     ionic.Platform.ready(function() {
       service.schedule = function (notification) {
-        if (ionic.Platform.isWebView())
+        if (ionic.Platform.isWebView()) {
+          service.addNotification(notification)
           $cordovaLocalNotification.schedule(notification)
+        }
       }
-      service.update = function (notification) {
+      service.edit = function (notification) {
         if (ionic.Platform.isWebView())
           $cordovaLocalNotification.update(notification)
+      }
+
+      service.cancel = function (notification) {
+        if (ionic.Platform.isWebView())
+          $cordovaLocalNotification.cancel(notification)
+      }
+      if (ionic.Platform.isWebView()) {
+        $rootScope.$on("$cordovaLocalNotification:schedule", function(ev, notification, st) {
+          console.log("Notificação criada")
+        })
+
+        $rootScope.$on("$cordovaLocalNotification:update", function(ev, notification, st) {
+          console.log("Notificacao alterada")
+        })
+
+        $rootScope.$on("$cordovaLocalNotification:cancel", function(ev, notification, st) {
+          console.log("Notificacao cancelada")
+        })
       }
     })
   }
 
-  createNotification(input, subject, inputTypeLabel) {
-    let notification = this.getNotification(input, subject, inputTypeLabel, true)
-    let notificationWeekBefore = this.getNotification(input, subject, inputTypeLabel, false)
+  update() {
+    let data = this.StorageService.get("notifications")
+    this.notifications = data ? data : []
+  }
+
+  getNextId() {
+    return this.notifications.length + 1
+  }
+
+  addNotification(notification) {
+    this.notifications.push(notification)
+    this.StorageService.add("notifications", this.notifications)
+    this.update()
+  }
+
+  createNotifications(input, subject, taskType) {
+    let taskDate = this.getDateWithOffset(input.date, 0)
+    taskDate.setHours(input.startTime.getHours())
+    taskDate.setMinutes(input.startTime.getMinutes())
+    let notificationAtTaskDate = this.getNotification(
+      this.getNextId(),
+      this.formatTitle(input, subject, taskType),
+      this.formatText(input, subject, taskDate, false),
+      input.date)
+    this.schedule(notificationAtTaskDate)
+    let oneWeekBeforeTaskDate = this.getDateWithOffset(taskDate, -7)
     let today = new Date()
-    let weekbeforeEvent = new Date(input.date)
-    weekbeforeEvent.setDate(weekbeforeEvent.getDate() - 7)
-    if (weekbeforeEvent > today) this.schedule(notificationWeekBefore)
-    if(input.date > today) this.schedule(notification)
-  }
-
-  updateNotification(input, subject, inputTypeLabel) {
-  }
-
-  getNotification(input, subject, inputTypeLabel, today) {
-    if (today) {
-      return {
-        id: subject.id + ":" + input.type + ":" + input.id + ":today",
-        title: inputTypeLabel + " hoje!",
-        text: input.title + " - " + subject.name 
-          + " é hoje às " + input.startTime.getHours()
-          + ":" + input.startTime.getMinutes(),
-        at: new Date(input.date.getTime())
-      }
-    } else {
-      let today = new Date()
-      let weekbefore = new Date(input.date)
-      weekbefore.setDate(weekbefore.getDate() - 7)
-      weekbefore.setHours(input.startTime.getHours())
-      weekbefore.setMinutes(input.startTime.getMinutes())
-      return {
-        id: subject.id + ":" + input.type + ":" + input.id + ":weekbefore",
-        title: inputTypeLabel + " semana que vem!",
-        text: input.title + " - " + subject.name 
-          + " é semana que vem no dia" + input.startTime.getDate()
-          + "/" + input.startTime.getMonth(),
-        at: new Date(weekbefore.getTime())
-      }
+    if (today < oneWeekBeforeTaskDate) {
+      let notificationOneWeekBeforeTaskDate = this.getNotification(
+        this.getNextId(),
+        this.formatTitle(input, subject, taskType),
+        this.formatText(input, subject, taskDate, true),
+        oneWeekBeforeTaskDate)
+      this.schedule(notificationOneWeekBeforeTaskDate)
     }
+  }
+
+  updateNotifications(input, subject, taskType) {
+  }
+
+  cancelNotifications(input, subject) {
+  }
+
+  getNotification(id, title, text, at) {
+    return {
+      id: id,
+      title: title,
+      text: text,
+      at: at
+    }
+  }
+
+  getDateWithOffset(date, offset) {
+    let d = new Date(date)
+    d.setDate(d.getDate() + offset)
+    return d
+  }
+
+  formatText(input, subject, date, isNextWeek) {
+    let text = input.title + " de " + subject.name + " é"
+    text += isNextWeek ? " na próxima semana " : " hoje "
+    text += "(" + this.formatDate(date, isNextWeek) + ")"
+    return text
+  }
+
+  formatTitle(input, subject, taskType) {
+    return taskType + " " + input.title + " de " + subject.name
+  }
+
+  formatDate(date, showDate) {
+    let strDate
+    let minutes = date.getMinutes()
+    minutes = minutes < 10 ? "0" + minutes : minutes
+    strDate = showDate ?
+                date.getDate() + "/" + date.getMonth()
+                : date.getHours() + ":" + minutes
+    return strDate
   }
 }
 
