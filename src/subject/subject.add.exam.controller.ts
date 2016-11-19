@@ -18,7 +18,8 @@ class subjectAddExamCtrl {
     if (this.SubjectService.validateTime(this.input) == false) return
     this.SubjectService.addSubjectProperty(this.$state.params['subjectId'], "exams", this.input)
     this.CalendarService.createEvent(this.input, this.subject, this.input.date)
-    this.$state.go('.^.info')
+    this.NotificationService.createNotification(this.input, this.subject, "Prova")
+    this.$state.go('.^.info.exams')
   }
 }
 
