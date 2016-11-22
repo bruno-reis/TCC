@@ -118,7 +118,6 @@ class SubjectService {
     return false
   }
 
-
   checkSubjectPropertyTitle(subjectId, propertyType, property) {
     let subject = this.getSubject(subjectId)
     let result = subject[propertyType].filter(s => s.title == property.title)
@@ -130,24 +129,38 @@ class SubjectService {
   }
 
   checkSubjectPropertyTime(subjectId, propertyType, property) {
-    let result = []
+    let result = 0
     let subject = this.getSubject(subjectId)
 
     subject[propertyType].map(s => {
       let startTime = new Date(s.startTime).getTime()
       let endTime = new Date(s.endTime).getTime()
       let date = new Date(s.date).getTime()
-      if (date == property.date.getTime() &&
-        (startTime == property.startTime.getTime() || endTime == property.endTime.getTime())) {
-        result.push(s)
-        this.PopupService.duplicateDateError().then(() =>
-            property.date = null,
-          property.startDate = null,
-          property.endDate = null)
-        return true
+      if (date == property.date.getTime()) {
+        if (startTime == property.startTime.getTime() || endTime == property.endTime.getTime()) {
+          this.PopupService.duplicateDateError().then(() => property.date = null)
+          result++
+        }
       }
     })
-    return false
+    if (result > 0) {return true} else {return false}
+  }
+
+  checkSubjectClassTime(subjectId, property) {
+    let result = 0
+    let subject = this.getSubject(subjectId)
+
+    subject["classes"].map(s => {
+      let startTime = new Date(s.startTime).getTime()
+      let endTime = new Date(s.endTime).getTime()
+      if (s.day == property.day) {
+        if (startTime == property.startTime.getTime() || endTime == property.endTime.getTime()) {
+          this.PopupService.duplicateDateError().then(() => property.startTime = null)
+          result++
+        }
+      }
+    })
+    if (result > 0) {return true} else {return false}
   }
 
 }

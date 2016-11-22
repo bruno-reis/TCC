@@ -16,6 +16,7 @@ class subjectAddClassCtrl {
 
   submit() {
     if (this.SubjectService.validateTime(this.input) == false) return
+    if (this.SubjectService.checkSubjectClassTime(this.subject.id, this.input)) return
     this.SubjectService.addSubjectProperty(this.$state.params['subjectId'], "classes", this.input)
     this.CalendarService.createMultipleEvents(this.input, this.subject)
     this.$state.go('.^.info')
