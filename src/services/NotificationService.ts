@@ -7,13 +7,13 @@ class NotificationService {
   private edit
   private cancel
   private notifications
+  private nextId
 
   constructor(public StorageService,
               public $cordovaLocalNotification,
               public $rootScope) {
     let service = this
     this.update()
-    console.log($cordovaLocalNotification)
     ionic.Platform.ready(function() {
       service.schedule = function (notification) {
         if (ionic.Platform.isWebView()) {
@@ -26,21 +26,25 @@ class NotificationService {
           $cordovaLocalNotification.update(notification)
       }
 
-      service.cancel = function (notification) {
+      service.cancel = function (notifications) {
         if (ionic.Platform.isWebView())
-          $cordovaLocalNotification.cancel(notification)
+          $cordovaLocalNotification.cancel(notifications)
       }
       if (ionic.Platform.isWebView()) {
+        console.log($cordovaLocalNotification.getAll())
         $rootScope.$on("$cordovaLocalNotification:schedule", function(ev, notification, st) {
           console.log("Notificação criada")
+          console.log($cordovaLocalNotification.getAll())
         })
 
         $rootScope.$on("$cordovaLocalNotification:update", function(ev, notification, st) {
           console.log("Notificacao alterada")
+          console.log($cordovaLocalNotification.getAll())
         })
 
         $rootScope.$on("$cordovaLocalNotification:cancel", function(ev, notification, st) {
           console.log("Notificacao cancelada")
+          console.log($cordovaLocalNotification.getAll())
         })
       }
     })
@@ -49,52 +53,93 @@ class NotificationService {
   update() {
     let data = this.StorageService.get("notifications")
     this.notifications = data ? data : []
+    data = parseInt(this.StorageService.get("notifications.nextId"))
+    this.nextId = data ? data : 0
   }
 
   getNextId() {
-    return this.notifications.length + 1
+    this.nextId += 1
+    return this.nextId
   }
 
   addNotification(notification) {
-    this.notifications.push(notification)
+    this.notifications.push(notification.data)
+    this.storeNotifications()
+  }
+
+  storeNotifications() {
     this.StorageService.add("notifications", this.notifications)
+    this.StorageService.add("notifications.nextId", this.nextId)
     this.update()
   }
 
   createNotifications(input, subject, taskType) {
+    let today = new Date()
     let taskDate = this.getDateWithOffset(input.date, 0)
     taskDate.setHours(input.startTime.getHours())
     taskDate.setMinutes(input.startTime.getMinutes())
+    if (today > taskDate) return
     let notificationAtTaskDate = this.getNotification(
       this.getNextId(),
       this.formatTitle(input, subject, taskType),
       this.formatText(input, subject, taskDate, false),
-      input.date)
+      input.date,
+      input,
+      subject)
     this.schedule(notificationAtTaskDate)
     let oneWeekBeforeTaskDate = this.getDateWithOffset(taskDate, -7)
-    let today = new Date()
     if (today < oneWeekBeforeTaskDate) {
       let notificationOneWeekBeforeTaskDate = this.getNotification(
         this.getNextId(),
         this.formatTitle(input, subject, taskType),
         this.formatText(input, subject, taskDate, true),
-        oneWeekBeforeTaskDate)
+        oneWeekBeforeTaskDate,
+        input,
+        subject)
       this.schedule(notificationOneWeekBeforeTaskDate)
     }
   }
 
   updateNotifications(input, subject, taskType) {
+    this.cancelNotifications(input, subject)
+    this.createNotifications(input, subject, taskType)
   }
+
 
   cancelNotifications(input, subject) {
+    let notificationIds = this.searchNotifications(input, subject)
+    this.notifications = this.notifications.filter(n => {
+      return notificationIds.indexOf(n.notificationId) < 0
+    })
+    this.storeNotifications()
+    this.cancel(notificationIds)
   }
 
-  getNotification(id, title, text, at) {
+  searchNotifications(input, subject) {
+    let notifications = this.notifications.filter(n => {
+      return n.ownerId == subject.id
+              && n.taskType == input.type
+              && n.taskId == input.id
+    })
+    notifications = notifications.map(n => {
+      return n.notificationId
+    })
+    return notifications
+  }
+
+  getNotification(id, title, text, at, input, subject) {
     return {
       id: id,
       title: title,
       text: text,
-      at: at
+      at: at,
+      icon: 'file://img/icon_notify.png',
+      data: {
+        notificationId: id,
+        ownerId: subject.id,
+        taskType: input.type,
+        taskId: input.id
+      }
     }
   }
 

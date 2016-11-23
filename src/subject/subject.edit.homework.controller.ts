@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class subjectEditHomeworkCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService', 'PopupService']
+  public $inject = ['$stateParams', '$state', 'SubjectService', 'PopupService', 'NotificationService']
   private input
   private subject
   private subjectId
@@ -11,7 +11,8 @@ class subjectEditHomeworkCtrl {
               public $stateParams,
               public SubjectService,
               public PopupService,
-              public CalendarService) {
+              public CalendarService,
+              public NotificationService) {
     this.homeworkId = this.$state.params['homeworkId']
     this.subjectId = this.$state.params['subjectId']
     this.subject = this.SubjectService.getSubject(this.subjectId)
@@ -26,13 +27,15 @@ class subjectEditHomeworkCtrl {
     if (this.SubjectService.validateTime(this.input) == false) return
     this.SubjectService.editSubjectProperty(this.subjectId, "homeworks", this.input)
     this.CalendarService.editChildEvent(this.subjectId, this.homeworkId, this.input)
-    this.$state.go('.^.info')
+    this.NotificationService.updateNotifications(this.input, this.subject, "Trabalho")
+    this.$state.go('.^.info.homework')
   }
 
   delete() {
     this.SubjectService.deleteSubjectProperty(this.subjectId, "homeworks", this.homeworkId)
     this.CalendarService.deleteChildEvent(this.subjectId, this.homeworkId)
-    this.$state.go('.^.info', this.$stateParams, {reload: true, inherit: false});
+    this.NotificationService.cancelNotifications(this.input, this.subject)
+    this.$state.go('.^.info.homework', this.$stateParams, {reload: true, inherit: false});
   }
 
   showConfirm() {
