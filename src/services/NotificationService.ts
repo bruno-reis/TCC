@@ -115,6 +115,17 @@ class NotificationService {
     this.cancel(notificationIds)
   }
 
+  cancelSubjectNotifications(subjectId) {
+    let notificationIds = this.notifications.filter(n => {
+      return n.ownerId == subjectId
+    }).map(n => { return n.notificationId })
+    this.notifications = this.notifications.filter(n => {
+      return n.ownerId != subjectId
+    })
+    this.storeNotifications()
+    this.cancel(notificationIds)
+  }
+
   searchNotifications(input, subject) {
     let notifications = this.notifications.filter(n => {
       return n.ownerId == subject.id

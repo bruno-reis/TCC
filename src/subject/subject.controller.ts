@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 class SubjectCtrl {
-  public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService', 'PopupService']
+  public $inject = ['$stateParams', '$state', 'SubjectService', 'CalendarService', 'PopupService', 'NotificationService']
   private subject
   private days
 
@@ -9,7 +9,8 @@ class SubjectCtrl {
               public $stateParams,
               public CalendarService,
               public PopupService,
-              public SubjectService) {
+              public SubjectService,
+              public NotificationService) {
     this.subject = this.SubjectService.getSubject(this.$state.params['subjectId'])
     this.days = this.CalendarService.getDays()
   }
@@ -54,6 +55,7 @@ class SubjectCtrl {
   delete() {
     this.SubjectService.deleteSubject(this.subject.id)
     this.CalendarService.deleteEvent(this.subject.id)
+    this.NotificationService.cancelSubjectNotifications(this.subject.id)
     this.$state.go('subjects.list', {reload: true, inherit: false});
   }
 
