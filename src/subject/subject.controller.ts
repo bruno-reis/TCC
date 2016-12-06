@@ -47,7 +47,7 @@ class SubjectCtrl {
   }
 
   showModal(modalName, propType?, propId?) {
-    let attr = ['id', 'title', 'result', 'date', 'startTime', 'endTime', 'room', 'weight']
+    let attr = ['id', 'title', 'result', 'date', 'startTime', 'endTime', 'room', 'weight', 'type']
     this.resetInput()
     if (propType == "exams") {
       let exam = this.SubjectService.getSubjectProperty(this.subject.id, propId, "exams")
