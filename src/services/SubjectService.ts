@@ -84,7 +84,6 @@ class SubjectService {
   }
 
   deleteSubject(subjectId) {
-
     this.subjects = this.subjects.filter( sb => sb.id != subjectId)
     this.storeSubjects()
   }
@@ -92,7 +91,7 @@ class SubjectService {
   deleteSubjectProperty(subjectId, propName, propId) {
     //Property can be a homework/exam/class
     let subject = this.getSubject(subjectId)
-    subject[propName] = subject[propName].filter( ch => ch.id != propId)
+    subject[propName] = subject[propName].filter(ch => ch.id != propId)
     this.storeSubjects()
   }
 
