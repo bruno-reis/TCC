@@ -70,16 +70,19 @@ class SubjectCtrl {
   }
 
   addClass() {
-    if (this.SubjectService.validateTime(this.input['addClass']) == false) return
-    this.SubjectService
-      .addSubjectProperty(this.subject.id, "classes", this.input['addClass'])
-    this.CalendarService.createMultipleEvents(this.input['addClass'], this.subject)
+    let input = this.input['addClass']
+    if (this.SubjectService.validateTime(input) == false) return
+    if (this.SubjectService.checkSubjectClassTime(this.subject.id, input)) return
+    this.SubjectService.addSubjectProperty(this.subject.id, "classes", input)
+    this.CalendarService.createMultipleEvents(input, this.subject)
     this.closeModal('addClass')
   }
 
   addExam() {
     let input = this.input['addExam']
     if (this.SubjectService.validateTime(this.input) == false) return
+    if (this.SubjectService.checkSubjectPropertyTitle(this.subject.id, 'exams', input)) return
+    if (this.SubjectService.checkSubjectPropertyTime(this.subject.id, 'exams', input)) return
     this.SubjectService.addSubjectProperty(this.subject.id, "exams", input)
     this.CalendarService.createEvent(input, this.subject, input.date)
     this.closeModal('addExam')
