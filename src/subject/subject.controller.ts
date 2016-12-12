@@ -88,6 +88,17 @@ class SubjectCtrl {
     this.closeModal('addExam')
   }
 
+  fillExamTime(modalName) {
+    let examDay = this.input[modalName].date.getDay()
+    let clazz = this.subject.classes.find(c => {
+      return c.day == examDay
+    })
+    if (clazz) {
+      this.input[modalName].startTime = new Date(clazz.startTime)
+      this.input[modalName].endTime = new Date(clazz.endTime)
+    }
+  }
+
   editExam() {
     let input = this.input['editExam']
     if (this.SubjectService.validateTime(input) == false) return
