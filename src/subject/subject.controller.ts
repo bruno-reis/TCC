@@ -60,6 +60,7 @@ class SubjectCtrl {
       for (let i = 0; i < attr.length; i++) {
         this.input[modalName][attr[i]] = homework[attr[i]]
       }
+      this.input[modalName].dueTime = this.input[modalName].startTime
     }
     this.ModalService.showModal(modalName)
   }
@@ -109,7 +110,9 @@ class SubjectCtrl {
 
   addHomework() {
     let input = this.input['addHomework']
-    if (this.SubjectService.validateTime(this.input) == false) return
+    input.startTime = input.dueTime
+    input.endTime = input.dueTime
+    delete input.dueTime
     this.SubjectService.addSubjectProperty(this.subject.id, "homeworks", input)
     this.CalendarService.createEvent(input, this.subject, input.date)
     this.closeModal('addHomework')
@@ -117,6 +120,9 @@ class SubjectCtrl {
 
   editHomework() {
     let input = this.input['editHomework']
+    input.startTime = input.dueTime
+    input.endTime = input.dueTime
+    delete input.dueTime
     if (this.SubjectService.validateTime(input) == false) return
     this.SubjectService.editSubjectProperty(this.subject.id, "homeworks", input)
     this.CalendarService.editChildEvent(this.subject.id, input.id, input)
