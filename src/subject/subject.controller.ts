@@ -70,6 +70,30 @@ class SubjectCtrl {
     this.ModalService.closeModal(modalName)
   }
 
+  existsClassWithSameDate(input) {
+    let clazz = this.subject.classes.find(c => {
+      return c.startTime.getHours() == input.startTime.getHours() &&
+             c.startTime.getMinutes() == input.startTime.getMinutes() &&
+             c.endTime.getHours() == input.endTime.getHours() &&
+             c.endTime.getMinutes() == input.endTime.getMinutes() &&
+             c.day == input.date.getDay()
+    })
+    return clazz != null
+  }
+
+  fillExamTime(modalName) {
+    if (this.input[modalName].date instanceof Date) {
+      let examDay = this.input[modalName].date.getDay()
+      let clazz = this.subject.classes.find(c => {
+        return c.day == examDay
+      })
+      if (clazz) {
+        this.input[modalName].startTime = new Date(clazz.startTime)
+        this.input[modalName].endTime = new Date(clazz.endTime)
+      }
+    }
+  }
+
   addClass() {
     let input = this.input['addClass']
     if (this.SubjectService.validateTime(input) == false) return
@@ -87,27 +111,29 @@ class SubjectCtrl {
     this.SubjectService.addSubjectProperty(this.subject.id, "exams", input)
     this.CalendarService.createEvent(input, this.subject, input.date)
     this.closeModal('addExam')
-  }
-
-  fillExamTime(modalName) {
-    if (this.input[modalName].date instanceof Date) {
-      let examDay = this.input[modalName].date.getDay()
-      let clazz = this.subject.classes.find(c => {
-        return c.day == examDay
-      })
-      if (clazz) {
-        this.input[modalName].startTime = new Date(clazz.startTime)
-        this.input[modalName].endTime = new Date(clazz.endTime)
-      }
+    if (this.existsClassWithSameDate(input)) {
+      this.CalendarService.changeEventVisibility(this.subject.id, 'classes',
+        input.startTime, input.endTime, true)
     }
   }
 
   editExam() {
     let input = this.input['editExam']
+    let oldExam = this.subject.exams.find(s => { return s.id == input.id })
     if (this.SubjectService.validateTime(input) == false) return
     this.SubjectService.editSubjectProperty(this.subject.id, "exams", input)
     this.CalendarService.editChildEvent(this.subject.id, input.id, input)
     this.closeModal('editExam')
+    if (this.existsClassWithSameDate(oldExam) &&
+        !this.CalendarService.equals(oldExam.startTime, input.startTime) &&
+        !this.CalendarService.equals(oldExam.endTime, input.endTime)) {
+      this.CalendarService.changeEventVisibility(this.subject.id, 'classes',
+        oldExam.startTime, oldExam.endTime, false)
+    }
+    if (this.existsClassWithSameDate(input)) {
+      this.CalendarService.changeEventVisibility(this.subject.id, 'classes',
+        input.startTime, input.endTime, true)
+    }
   }
 
   addHomework() {
@@ -185,6 +211,13 @@ class SubjectCtrl {
   }
 
   deleteSubjectProperty(propId, propName) {
+    if (propName == "exams") {
+      let exam = this.subject.exams.find(e => { return e.id == propId })
+      if (this.existsClassWithSameDate(exam)) {
+        this.CalendarService.changeEventVisibility(this.subject.id, "classes",
+            exam.startTime, exam.endTime, false)
+      }
+    }
     this.SubjectService.deleteSubjectProperty(this.subject.id, propName, propId)
     this.CalendarService.deleteChildEvent(this.subject.id, propId, propName)
     this.updateSubject()

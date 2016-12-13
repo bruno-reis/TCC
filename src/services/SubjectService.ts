@@ -30,15 +30,26 @@ class SubjectService {
     let subject = this.subjects.find(sb => sb.id == subjectId)
     subject.exams.forEach(ex => {
       ex.date = new Date(ex.date)
-      ex.startTime = new Date(ex.startTime)
-      ex.endTime = new Date(ex.endTime)
+      ex.startTime = this.fixDate(ex.date, new Date(ex.startTime))
+      ex.endTime = this.fixDate(ex.date, new Date(ex.endTime))
     })
     subject.homeworks.forEach(hw => {
       hw.date = new Date(hw.date)
-      hw.startTime = new Date(hw.startTime)
-      hw.endTime = new Date(hw.endTime)
+      hw.startTime = this.fixDate(hw.date, new Date(hw.startTime))
+      hw.endTime = this.fixDate(hw.date, new Date(hw.endTime))
+    })
+    subject.classes.forEach(cl => {
+      cl.startTime = new Date(cl.startTime)
+      cl.endTime = new Date(cl.endTime)
     })
     return subject
+  }
+
+  fixDate(date, time) {
+    time.setDate(date.getDate())
+    time.setMonth(date.getMonth())
+    time.setFullYear(date.getFullYear())
+    return time
   }
 
   getSubjectProperty(subjectId, propId, propName) {
