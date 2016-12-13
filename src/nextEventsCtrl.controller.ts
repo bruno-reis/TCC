@@ -11,7 +11,6 @@ class NextEventsCtrl {
               public CalendarService,
               public SubjectService) {
     this.events = this.CalendarService.getEvents().filter(e => e.type == "homeworks" || e.type == "exams");
-    console.log(this.events)
   }
 
   eventsInOneWeek() {

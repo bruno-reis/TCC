@@ -125,7 +125,6 @@ class SubjectCtrl {
     input.startTime = input.dueTime
     input.endTime = input.dueTime
     delete input.dueTime
-    if (this.SubjectService.validateTime(input) == false) return
     this.SubjectService.editSubjectProperty(this.subject.id, "homeworks", input)
     this.CalendarService.editChildEvent(this.subject.id, input.id, input)
     this.closeModal('editHomework')
