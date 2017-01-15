@@ -1,11 +1,9 @@
-<ion-view style="" id="calendar" title=" ">
-  <!--<ion-content class="has-header" scroll="false" padding="true">-->
+<ion-view title="">
   <ion-nav-buttons side="right">
     <button class="button" ng-disabled="isToday()" ng-click="today()">Hoje</button>
-    <button class="button" ng-click="changeMode('month')">M</button>
-    <button class="button" ng-click="changeMode('week')">S</button>
-    <button class="button" ng-click="changeMode('day')">D</button>
-    <!--<button class="button" ng-click="loadEvents()">Load</button>-->
+    <button class="button" ng-click="changeMode('month')">Mês</button>
+    <button class="button" ng-click="changeMode('week')">Semana</button>
+    <button class="button" ng-click="changeMode('day')">Dia</button>
   </ion-nav-buttons>
 
   <ion-content scroll="false" class="main-content">

@@ -13,12 +13,11 @@ class SubjectService {
   update() {
     let data = this.StorageService.get('subjects')
     this.subjects = data ? data : []
-    // console.log("subs", this.subjects)
   }
 
   getNextId(list, startValue) {
     //Get the id of the list last element and increase it by 1
-    let nextId = (list.length > 0) ? list[list.length-1].id + 1 : startValue
+    let nextId = (list.length > 0) ? list[list.length - 1].id + 1 : startValue
     return nextId
   }
 
@@ -28,12 +27,22 @@ class SubjectService {
 
   getSubject(subjectId) {
     //Using filter instead of array index bc indexes would change after delete
-    let subject = this.subjects.filter(sb => sb.id == subjectId)
-    return subject[0]
+    let subject = this.subjects.find(sb => sb.id == subjectId)
+    subject.exams.forEach(ex => {
+      ex.date = new Date(ex.date)
+      ex.startTime = new Date(ex.startTime)
+      ex.endTime = new Date(ex.endTime)
+    })
+    subject.homeworks.forEach(hw => {
+      hw.date = new Date(hw.date)
+      hw.startTime = new Date(hw.startTime)
+      hw.endTime = new Date(hw.endTime)
+    })
+    return subject
   }
 
   getSubjectProperty(subjectId, propId, propName) {
-    let subject = this.subjects.find(sb => sb.id == subjectId)
+    let subject = this.getSubject(subjectId)
     let subjectProperty = subject[propName].find(sc => sc.id == propId)
     return subjectProperty
   }
@@ -60,30 +69,30 @@ class SubjectService {
     input.ownerId = subjectId
     input.ownerName = subject.name
     subject[propName].push(input)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    this.storeSubjects()
   }
 
   editSubjectProperty(subjectId, propName, input) {
-    let subjectProp = this.getSubjectProperty(subjectId, input.id, propName)
-    subjectProp = input
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    let subject = this.getSubject(subjectId)
+    subject[propName] = subject[propName].map(prop => {
+      if (prop.id == input.id) {
+        return input
+      }
+      return prop
+    })
+    this.storeSubjects()
   }
 
   deleteSubject(subjectId) {
-    let subjects = this.subjects.filter( sb => sb.id != subjectId)
-    this.StorageService.add('subjects', subjects)
-    this.update()
+    this.subjects = this.subjects.filter( sb => sb.id != subjectId)
+    this.storeSubjects()
   }
-  
 
   deleteSubjectProperty(subjectId, propName, propId) {
     //Property can be a homework/exam/class
     let subject = this.getSubject(subjectId)
-    subject[propName] = subject[propName].filter( ch => ch.id != propId)
-    this.StorageService.add('subjects', this.subjects)
-    this.update()
+    subject[propName] = subject[propName].filter(ch => ch.id != propId)
+    this.storeSubjects()
   }
 
   setFinalGradeWeights(subjectId, examsWeight, homeworksWeight) {
@@ -108,6 +117,61 @@ class SubjectService {
     }
     return true
   }
+
+  checkSubjectExists(subjectName) {
+    let result = this.subjects.filter(s => s.name == subjectName)
+    if (result.length > 0) {
+      this.PopupService.duplicateNameError(subjectName).then()
+      return true
+    }
+    return false
+  }
+
+  checkSubjectPropertyTitle(subjectId, propertyType, property) {
+    let subject = this.getSubject(subjectId)
+    let result = subject[propertyType].filter(s => s.title == property.title)
+    if (result.length > 0) {
+      this.PopupService.duplicateNameError(property.title).then(() => property.title = null)
+      return true
+    }
+    return false
+  }
+
+  checkSubjectPropertyTime(subjectId, propertyType, property) {
+    let result = 0
+    let subject = this.getSubject(subjectId)
+
+    subject[propertyType].map(s => {
+      let startTime = new Date(s.startTime).getTime()
+      let endTime = new Date(s.endTime).getTime()
+      let date = new Date(s.date).getTime()
+      if (date == property.date.getTime()) {
+        if (startTime == property.startTime.getTime() || endTime == property.endTime.getTime()) {
+          this.PopupService.duplicateDateError().then(() => property.date = null)
+          result++
+        }
+      }
+    })
+    if (result > 0) {return true} else {return false}
+  }
+
+  checkSubjectClassTime(subjectId, property) {
+    let result = 0
+    let subject = this.getSubject(subjectId)
+
+    subject["classes"].map(s => {
+      let startTime = new Date(s.startTime).getTime()
+      let endTime = new Date(s.endTime).getTime()
+      if (s.day == property.day) {
+        if (startTime == property.startTime.getTime() || endTime == property.endTime.getTime()) {
+          this.PopupService.duplicateDateError().then(() => property.startTime = null)
+          result++
+        }
+      }
+    })
+    if (result > 0) {return true} else {return false}
+  }
+
 }
 
 angular.module('app.services')

@@ -104,10 +104,10 @@ class CalendarService {
     this.storeEvents()
   }
 
-  deleteChildEvent(ownerId, eventId) {
+  deleteChildEvent(ownerId, eventId, eventType) {
     //filter out the events from the ownerId that have the same eventId
     this.events = this.events.filter(ev => {
-      return (ev.ownerId != ownerId) || (ev.eventId != eventId)
+      return (ev.ownerId != ownerId) || (ev.eventId != eventId) || (ev.type != eventType)
     })
     this.storeEvents()
   }
