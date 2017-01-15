@@ -64,6 +64,15 @@ class PopupService {
     })
     return alertPopup
   }
+
+  duplicateHomeworkTypeError() {
+    let alertPopup = this.$ionicPopup.alert({
+      title: 'Erro',
+      template: 'Já existe esse tipo de trabalho.',
+      okText: 'Confirmar'
+    })
+    return alertPopup
+  }
 }
 
 

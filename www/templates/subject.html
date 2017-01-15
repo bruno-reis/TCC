@@ -62,11 +62,12 @@
         <ion-content>
           <div class="card">
             <div class="item item-text-wrap" ng-if="vm.subject.homeworks.length > 0">
-              <ul class="list" ng-repeat="homework in vm.subject.homeworks track by homework.id"
+              <ul class="list" ng-repeat="homework in vm.subject.homeworks | orderBy: 'startTime' track by homework.id"
                   ng-if="homework.id">
                 <li class="item item-button-right">
-                  <h3>{{homework.title}} : {{homework.date | date: 'dd/MM/yyyy'}}</h3>
+                  <h3>{{homework.title}} : {{ homework.homeworkType }}</h3>
                   <p>
+                    {{homework.date | date: 'dd/MM/yyyy'}} -
                     {{homework.startTime | date: 'shortTime'}}
                   </p>
                   <p>Nota: {{(homework.result | number: 2) || 'Sem nota'}}</p>
@@ -91,10 +92,10 @@
             <div class="item item-text-wrap">
               <ul class="list">
                 <li class="item">
-                  <h3>Média de Provas : {{ vm.getExamsGrade() | number: 2 }}</h3>
+                  <h3>Média de Prova: {{ vm.getExamsGrade() | number: 2 }}</h3>
                 </li>
-                <li class="item">
-                  <h3>Média de Trabalhos: {{ vm.getHomeworksGrade() | number: 2 }}</h3>
+                <li class="item" ng-repeat="type in vm.getHomeworkTypesInUse()">
+                  <h3>Média de {{ type }}: {{ vm.getHomeworksGrade(type) | number: 2 }}</h3>
                 </li>
                 <li class="item item-button-right">
                   <h3> Média Final:

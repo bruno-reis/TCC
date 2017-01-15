@@ -7,6 +7,7 @@ class SubjectCtrl {
   private subject
   private days
   private input
+  private homeworkTypes
 
   constructor(public $state,
               public $scope,
@@ -16,7 +17,9 @@ class SubjectCtrl {
               public SubjectService) {
     this.updateSubject()
     this.days = this.CalendarService.getDays()
+    this.homeworkTypes = this.SubjectService.getHomeworkTypes()
     this.setModals()
+    this.resetInput()
   }
 
   updateSubject() {
@@ -25,25 +28,29 @@ class SubjectCtrl {
 
   setModals() {
     let scope = this.$scope
-    this.ModalService.createModal(scope, 'templates/subject-add-class.html', 'addClass')
-    this.ModalService.createModal(scope, 'templates/subject-add-exam.html', 'addExam')
-    this.ModalService.createModal(scope, 'templates/subject-edit-exam.html', 'editExam')
-    this.ModalService.createModal(scope, 'templates/subject-add-homework.html', 'addHomework')
-    this.ModalService.createModal(scope, 'templates/subject-edit-homework.html', 'editHomework')
-    this.ModalService.createModal(scope, 'templates/subject-edit-finalgrade.html', 'editFinalGrade')
+    let modal = this.ModalService
+    modal.createModal(scope, 'templates/subject-add-class.html', 'addClass')
+    modal.createModal(scope, 'templates/subject-add-exam.html', 'addExam')
+    modal.createModal(scope, 'templates/subject-edit-exam.html', 'editExam')
+    modal.createModal(scope, 'templates/subject-add-homework.html', 'addHomework')
+    modal.createModal(scope, 'templates/subject-edit-homework.html', 'editHomework')
+    modal.createModal(scope, 'templates/subject-edit-finalgrade.html', 'editFinalGrade')
+    modal.createModal(scope, 'templates/subject-add-homework-type.html', 'addHomeworkType')
   }
 
   resetInput() {
+    let homeworkTypes = this.getHomeworkTypes()
     this.input = {}
     this.input['addClass'] = { day: '1' }
     this.input['addExam'] = { weight: 1 }
-    this.input['addHomework'] = { weight: 1 }
-    this.input['editFinalGrade'] = { 
+    this.input['addHomework'] = { weight: 1, homeworkType: homeworkTypes[0] }
+    this.input['editFinalGrade'] = {
       examsWeight: this.subject.examsWeight,
-      homeworksWeight: this.subject.homeworksWeight
+      homeworksWeight: this.subject.homeworksWeight ? this.subject.homeworksWeight : {}
     }
     this.input['editExam'] = {}
     this.input['editHomework'] = {}
+    this.input['addHomeworkType'] = {}
   }
 
   showModal(modalName, propType?, propId?) {
@@ -61,6 +68,7 @@ class SubjectCtrl {
         this.input[modalName][attr[i]] = homework[attr[i]]
       }
       this.input[modalName].dueTime = this.input[modalName].startTime
+      this.input[modalName].homeworkType = homework.homeworkType
     }
     this.ModalService.showModal(modalName)
   }
@@ -101,6 +109,30 @@ class SubjectCtrl {
     this.SubjectService.addSubjectProperty(this.subject.id, "classes", input)
     this.CalendarService.createMultipleEvents(input, this.subject)
     this.closeModal('addClass')
+  }
+
+  addHomeworkType(modalName) {
+    let input = this.input['addHomeworkType']
+    if (!this.SubjectService.validateHomeworkType(input))
+      return
+    this.SubjectService.addHomeworkType(input.type)
+    this.homeworkTypes.push(input.type)
+    this.input[modalName].homeworkType = input.type
+    this.closeModal('addHomeworkType')
+    this.input['addHomeworkType'] = {}
+  }
+
+  checkHomeworkType(modalName) {
+    let homeworkType = this.input[modalName].homeworkType
+    if (homeworkType == '_new') {
+      this.input['addHomeworkType'].modalName = modalName
+      this.ModalService.showModal('addHomeworkType')
+    }
+  }
+
+  closeHomeworkTypeModal(modalName) {
+    this.input[modalName].homeworkType = ''
+    this.closeModal('addHomeworkType')
   }
 
   addExam() {
@@ -190,7 +222,7 @@ class SubjectCtrl {
           this.deleteSubjectProperty(input.id, 'exams')
           this.closeModal('editExam')
         }
-      }) 
+      })
   }
 
   showConfirmHomework() {
@@ -201,7 +233,7 @@ class SubjectCtrl {
           this.deleteSubjectProperty(input.id, 'homeworks')
           this.closeModal('editHomework')
         }
-      }) 
+      })
   }
 
   delete() {
@@ -223,11 +255,22 @@ class SubjectCtrl {
     this.updateSubject()
   }
 
+  getMaxWeight() {
+    let types = this.getHomeworkTypesInUse()
+    let input = this.input['editFinalGrade']
+    let maxWeight = 0
+    maxWeight += input.examsWeight ? input.examsWeight : 0
+    types.forEach(t => {
+      maxWeight += input.homeworksWeight[t] ? input.homeworksWeight[t] : 0
+    })
+    return maxWeight
+  }
+
   getExamsGrade() {
     let exams = this.subject.exams
     let totalWeight = 0
     let totalScore = 0
-    
+
     if (!this.hasAnyExam()) return 0
     for (let i = 0; i < exams.length; i++) {
       if (exams[i].result != null) {
@@ -238,11 +281,13 @@ class SubjectCtrl {
     return totalScore / totalWeight
   }
 
-  getHomeworksGrade() {
-    let homeworks = this.subject.homeworks
+  getHomeworksGrade(type) {
     let totalWeight = 0
     let totalScore = 0
-    
+    let homeworks = this.subject.homeworks.filter(hw => {
+      return hw.homeworkType == type
+    })
+
     if (!this.hasAnyHomework()) return 0
     for (let i = 0; i < homeworks.length; i++) {
       if (homeworks[i].result != null) {
@@ -254,18 +299,31 @@ class SubjectCtrl {
   }
 
   getFinalGrade() {
-    if (this.hasAnyExam() && this.hasAnyHomework()) {
-      if (this.subject.examsWeight != null && this.subject.homeworksWeight != null) {
-        let examsPart = this.getExamsGrade() * this.subject.examsWeight
-        let homeworksPart = this.getHomeworksGrade() * this.subject.homeworksWeight
-        let totalWeight = this.subject.examsWeight + this.subject.homeworksWeight
-        let result = (examsPart + homeworksPart) / totalWeight
-        return result > 10 ? 10 : result
-      }
-      return null
+    if (this.subject.examsWeight != null && this.subject.homeworksWeight != null) {
+      let examsPart = this.getExamsGrade() * this.subject.examsWeight
+      let homeworksPart = 0
+      this.getHomeworkTypesInUse().forEach(type => {
+        homeworksPart += this.getHomeworksGrade(type) * this.subject.homeworksWeight[type]
+      })
+      let totalWeight = this.getMaxWeight()
+      let result = (examsPart + homeworksPart) / totalWeight
+      return result > 10 ? 10 : result
     }
-    if (this.hasAnyExam()) return this.getExamsGrade()
-    if (this.hasAnyHomework()) return this.getHomeworksGrade()
+    return null
+  }
+
+  getHomeworkTypes() {
+    return this.SubjectService.getHomeworkTypes()
+  }
+
+  getHomeworkTypesInUse() {
+    let types = []
+    this.subject.homeworks.forEach(hw => {
+      if (types.indexOf(hw.homeworkType) < 0) {
+        types.push(hw.homeworkType)
+      }
+    })
+    return types
   }
 }
 

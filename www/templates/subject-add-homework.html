@@ -10,8 +10,19 @@
         <span class="input-label">Titulo</span>
         <input type="text" ng-model="vm.input['addHomework'].title" required>
       </label>
+      <label class="item item-input item-select item-text-wrap">
+        <div class="input-label">Tipo de trabalho</div>
+        <select ng-model="vm.input['addHomework'].homeworkType"
+          ng-change="vm.checkHomeworkType('addHomework')" required>
+          <option ng-repeat="type in vm.homeworkTypes"
+            value="{{ type }}">{{ type }}</option>
+          <option value="_new">
+            Adicionar novo tipo
+          </option>
+        </select>
+      </label>
       <label class="item item-input">
-          <span class="input-label">Data</span>
+        <span class="input-label">Data</span>
         <input type="date" ng-model="vm.input['addHomework'].date"
                min="{{vm.subject.startDate | date:'yyyy-MM-dd'}}"
                max="{{vm.subject.endDate | date:'yyyy-MM-dd'}}" required>
