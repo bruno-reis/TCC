@@ -23,12 +23,9 @@
                max="{{vm.subject.endDate | date:'yyyy-MM-dd'}}" required>
       </label>
       <label class="item item-input">
-        <span class="input-label">Horário Inicio</span>
-        <input placeholder="12:34" type="time" ng-model="vm.input['editHomework'].startTime" required>
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Horário Fim</span>
-        <input placeholder="12:38" type="time" ng-model="vm.input['editHomework'].endTime" required>
+        <span class="input-label">Horário de Entrega</span>
+        <input placeholder="12:34" type="time"
+               ng-model="vm.input['editHomework'].dueTime" required>
       </label>
       <label class="item item-input">
         <span class="input-label">Sala</span>

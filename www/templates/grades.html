@@ -5,39 +5,35 @@
       <div class="card">
         <label class="item item-input item-select">
           <div class="input-label">Filtrar por: </div>
-          <select ng-model="vm.type" required>
-            <option value="exams">Provas</option>
-            <option value="homework">Trabalhos</option>
+          <select ng-model="vm.option"
+                  ng-change="vm.selectSubject()" required>
+            <option value="0">Todas as matérias</option>
+            <option ng-repeat="subject in vm.subjects"
+                    value="{{ subject.id }}">{{subject.name}}</option>
           </select>
         </label>
       </div>
 
-      <div class="card" ng-if="vm.type=='exams'">
-        <div class="item item-text-wrap" ng-if="vm.subjectsExams.length==0">
-          Nenhuma Prova com nota cadastrada.
+      <div class="card" ng-repeat="subject in vm.selectedSubjects">
+        <div class="item item-divider">
+          {{ subject.name }}
         </div>
-
-        <ul class="list" ng-if="vm.subjectsExams.length > 0">
-          <li class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)"
-              ng-repeat="grade in vm.subjectsExams track by grade.id + grade.ownerId">
-            <h3>{{grade.title}} - {{grade.ownerName}}</h3>
-            <p>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</p>
+        <ul class="list" ng-if="vm.countSubjectResults(subject) > 0">
+          <li class="item item-text-wrap"
+              ng-repeat="exam in subject.exams"
+              ng-if="exam.result != null">
+            <h2>{{exam.title}}: {{exam.result | number: 2}}</h2>
+          </li>
+          <li class="item item-text-wrap"
+              ng-repeat="hw in subject.homeworks"
+              ng-if="hw.result != null">
+            <h2>{{hw.title}}: {{hw.result | number: 2}}</h2>
           </li>
         </ul>
-      </div>
-
-      <div class="card" ng-if="vm.type=='homework'">
-        <div class="item item-text-wrap" ng-if="vm.subjectsHomework.length==0">
-          Nenhum Trabalho com nota cadastrada.
+        <div class="item item-text-wrap"
+             ng-if="vm.countSubjectResults(subject) == 0">
+          Nenhuma nota cadastrada ainda.
         </div>
-
-        <ul class="list" ng-if="vm.subjectsHomework.length > 0">
-          <li class="item item-text-wrap" ng-click="vm.selectSubject(grade.ownerId)"
-              ng-repeat="grade in vm.subjectsHomework track by grade.id + grade.ownerId">
-            <h3>{{grade.title}} - {{grade.ownerName}}</h3>
-            <p>Nota: {{grade.result || 'Sem nota'}} - Peso: {{grade.weight}}</p>
-          </li>
-        </ul>
       </div>
 
     </ion-content>
