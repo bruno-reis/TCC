@@ -10,7 +10,7 @@ class CalendarService {
   }
   
   getEvents() {
-    return this.events
+    return this.events.filter(ev => { return !ev.hidden })
   }
   
   getDays() {
@@ -21,7 +21,6 @@ class CalendarService {
     let data = this.StorageService.get('events')
     if (data) this.events = data
     this.fixEvents()
-    // console.log("events", this.events)
   }
 
   fixEvents() {
@@ -104,10 +103,10 @@ class CalendarService {
     this.storeEvents()
   }
 
-  deleteChildEvent(ownerId, eventId) {
+  deleteChildEvent(ownerId, eventId, eventType) {
     //filter out the events from the ownerId that have the same eventId
     this.events = this.events.filter(ev => {
-      return (ev.ownerId != ownerId) || (ev.eventId != eventId)
+      return (ev.ownerId != ownerId) || (ev.eventId != eventId) || (ev.type != eventType)
     })
     this.storeEvents()
   }
@@ -118,6 +117,24 @@ class CalendarService {
     })
     this.storeEvents()
   }
+
+  changeEventVisibility(ownerId, eventType, startTime, endTime, hidden) {
+    let event = this.events.filter(ev => {
+      return (ev.ownerId == ownerId) && (ev.type == eventType) &&
+             this.equals(ev.startTime, startTime) && this.equals(ev.endTime, endTime)
+    })[0]
+    event.hidden = hidden
+    this.storeEvents()
+  }
+
+  equals(date1, date2) {
+    return date1.getFullYear() == date2.getFullYear() &&
+           date1.getMonth() == date2.getMonth() &&
+           date1.getDate() == date2.getDate() &&
+           date1.getHours() == date2.getHours() &&
+           date1.getMinutes() == date2.getMinutes()
+  }
+
 }
 
 angular.module('app.services')

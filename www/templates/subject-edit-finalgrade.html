@@ -1,33 +1,44 @@
-<ion-view id="subeject-edit-finalgrade" title="Média Final">
-  <ion-content class="has-header" padding="true">
+<ion-modal-view>
+  <ion-header-bar>
+    <button class="button button-dark button-clear button-icon ion-android-arrow-back"
+            ng-click="vm.closeModal('editFinalGrade')"></button>
+    <h1 class="title">Editar Média Final</h1>
+  </ion-header-bar>
+  <ion-content class="padding has-header">
     <form name="form" class="list" novalidate>
       <label class="item item-input">
         <span class="input-label">Peso da MP</span>
-        <input type="number" ng-model="vm.input.examsWeight"
-               min="0" max="10" step="0.1" required>
+        <input type="number" ng-model="vm.input['editFinalGrade'].examsWeight"
+               min="0" max="10" step="1" required>
       </label>
-      <label class="item item-input">
-        <span class="input-label">Peso da MT</span>
-        <input type="number" ng-model="vm.input.homeworksWeight"
-               min="0" max="10" step="0.1" required>
+      <label class="item item-input" ng-repeat="type in vm.getHomeworkTypesInUse()">
+        <span class="input-label">Peso da M{{ type[0].toUpperCase() }}</span>
+        <input type="number" ng-model="vm.input['editFinalGrade'].homeworksWeight[type]"
+               min="0" max="10" step="1" required>
       </label>
-      <p class="subtitle">MP = Média de provas</p>
-      <p class="subtitle">MT = Média de trabalhos</p>
-
+      <p class="subtitle">MP = Média de Prova</p>
+      <p ng-repeat="type in vm.getHomeworkTypesInUse()" class="subtitle">
+        M{{ type[0].toUpperCase() }} = Média de {{ type }}
+      </p>
+      
       <div class="card">
         <div class="item item-divider">
-          Prévia
+          Prévia da Média Final 
         </div>
         <div class="item item-text-wrap">
           Média Final =
-          {{ (vm.input.examsWeight || 0) | number: 2 }} <span class="times">x</span> MP +
-          {{ (vm.input.homeworksWeight || 0) | number: 2}} <span class="times">x</span> MT
+          ({{ (vm.input['editFinalGrade'].examsWeight || 0) }}
+          <span class="times">x</span> MP
+          <span ng-repeat="type in vm.getHomeworkTypesInUse()">
+            + {{ (vm.input['editFinalGrade'].homeworksWeight[type] || 0) }}
+            <span class="times">x</span> M{{ type[0].toUpperCase() }}
+          </span>) / {{ vm.getMaxWeight() }}
         </div>
       </div>
-
+      
       <button class="button icon-left button-block button-positive"
-              ng-click="vm.submit()" ng-disabled="form.$invalid">Salvar
+              ng-click="vm.editFinalGrade()" ng-disabled="form.$invalid">Salvar
       </button>
     </form>
   </ion-content>
-</ion-view>
+</ion-modal-view>

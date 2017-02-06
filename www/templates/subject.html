@@ -1,22 +1,116 @@
-<ion-view style="" id="subject" title="{{vm.subject.name}}">
+<ion-view title="{{vm.subject.name}}">
   <ion-nav-buttons side="right">
     <button class="button button-assertive button-icon button-clear ion-android-delete"
             ng-click="vm.showConfirm()"></button>
   </ion-nav-buttons>
-
-  <ion-tabs class="tabs-top">
-    <ion-tab title="Aulas" ui-sref="subject.info.class">
-     <ion-nav-view name="class"></ion-nav-view>
+  <ion-tabs class="tabs-top tabs-striped">
+    <ion-tab title="Aulas">
+      <ion-view>
+          <ion-content>
+            <div class="card">
+              <div class="item item-text-wrap" ng-if="vm.subject.classes.length > 0">
+                <ul class="list" ng-repeat="class in vm.subject.classes track by class.id"
+                    ng-if="class.id">
+                  <li class="item item-text-wrap item-button-right">
+                    <h3> {{vm.days[class.day]}}</h3>
+                    <p> {{class.startTime | date: 'HH:mm'}}- {{class.endTime | date: 'HH:mm'}}
+                    <p> {{class.room}}</p>
+                    <a ng-click="vm.showConfirmClass(class.id)"
+                       class="button button-clear button-assertive">
+                      <i class="icon ion-android-delete"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <a class="item item-icon-left positive" ng-click="vm.showModal('addClass')">
+                <i class="icon ion-android-add"></i>Adicionar
+              </a>
+            </div>
+          </ion-content>
+      </ion-view>
     </ion-tab>
-    <ion-tab title="Provas" ui-sref="subject.info.exams">
-      <ion-nav-view name="exams"></ion-nav-view>
+    <ion-tab title="Provas">
+      <ion-view>
+        <ion-content>
+          <div class="card">
+            <div class="item item-text-wrap" ng-if="vm.subject.exams.length > 0">
+              <ul class="list" ng-repeat="exam in vm.subject.exams track by exam.id"
+                  ng-if="exam.id">
+                <li class="item item-button-right">
+                  <h3>{{exam.title}} : {{exam.date | date: 'dd/MM/yyyy'}}</h3>
+                  <p>
+                    {{exam.startTime | date: 'shortTime'}} :
+                    {{exam.endTime | date: 'shortTime'}}
+                  </p>
+                  <p>Nota: {{(exam.result | number: 2) || 'indefinida'}}</p>
+                  <a ng-click="vm.showModal('editExam', 'exams', exam.id)"
+                     class="button button-clear button-positive">
+                    <i class="icon ion-edit"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <a class="item item-icon-left positive" ng-click="vm.showModal('addExam')">
+              <i class="icon ion-android-add"></i>Adicionar
+            </a>
+          </div>
+        </ion-content>
+      </ion-view>
     </ion-tab>
-    <ion-tab title="Trabalhos" ui-sref="subject.info.homework">
-      <ion-nav-view name="homework"></ion-nav-view>
+    <ion-tab title="Trabalhos">
+      <ion-view>
+        <ion-content>
+          <div class="card">
+            <div class="item item-text-wrap" ng-if="vm.subject.homeworks.length > 0">
+              <ul class="list" ng-repeat="homework in vm.subject.homeworks | orderBy: 'startTime' track by homework.id"
+                  ng-if="homework.id">
+                <li class="item item-button-right">
+                  <h3>{{homework.title}} : {{ homework.homeworkType }}</h3>
+                  <p>
+                    {{homework.date | date: 'dd/MM/yyyy'}} -
+                    {{homework.startTime | date: 'shortTime'}}
+                  </p>
+                  <p>Nota: {{(homework.result | number: 2) || 'Sem nota'}}</p>
+                  <a ng-click="vm.showModal('editHomework', 'homeworks', homework.id)"
+                     class="button button-clear button-positive">
+                    <i class="icon ion-edit"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <a class="item item-icon-left positive" ng-click="vm.showModal('addHomework')">
+              <i class="icon ion-android-add"></i>Adicionar
+            </a>
+          </div>
+        </ion-content>
+      </ion-view>
     </ion-tab>
-    <ion-tab title="Notas" ui-sref="subject.info.grades">
-      <ion-nav-view name="grades"></ion-nav-view>
+    <ion-tab title="Médias">
+      <ion-view>
+        <ion-content>
+          <div class="card">
+            <div class="item item-text-wrap">
+              <ul class="list">
+                <li class="item">
+                  <h3>Média de Prova: {{ vm.getExamsGrade() | number: 2 }}</h3>
+                </li>
+                <li class="item" ng-repeat="type in vm.getHomeworkTypesInUse()">
+                  <h3>Média de {{ type }}: {{ vm.getHomeworksGrade(type) | number: 2 }}</h3>
+                </li>
+                <li class="item item-button-right">
+                  <h3> Média Final:
+                    {{ vm.getFinalGrade() === null ? 'Indefinida' : (vm.getFinalGrade() | number: 2) }}
+                  </h3>
+                  <a href="#" class="button button-clear button-positive"
+                     ng-click="vm.showModal('editFinalGrade')">
+                    <i class="icon ion-edit"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </ion-content>
+      </ion-view>
     </ion-tab>
   </ion-tabs>
-
 </ion-view>

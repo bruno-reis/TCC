@@ -55,6 +55,33 @@ class PopupService {
     })
     return confirmPopup
   }
+
+  duplicateNameError(name) {
+    let alertPopup = this.$ionicPopup.alert({
+      title: 'Erro',
+      template: 'Nome \"' + name +  '\" já existe.',
+      okText: 'Confirmar'
+    })
+    return alertPopup
+  }
+
+  duplicateDateError() {
+    let alertPopup = this.$ionicPopup.alert({
+      title: 'Erro',
+      template: 'Já existe um evento nesse dia e horário.',
+      okText: 'Confirmar'
+    })
+    return alertPopup
+  }
+
+  duplicateHomeworkTypeError() {
+    let alertPopup = this.$ionicPopup.alert({
+      title: 'Erro',
+      template: 'Já existe esse tipo de trabalho.',
+      okText: 'Confirmar'
+    })
+    return alertPopup
+  }
 }
 
 
