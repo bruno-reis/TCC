@@ -57,17 +57,16 @@ class ScheduleService {
       dmax = dmin
     }
     freeBlocks = this.getFreeStudyBlocks(dmin, dmax)
-    console.log(freeBlocks)
-    // freeBlocks.forEach(day => {
-    //   day.forEach(block => {
-    //     totalFreeTime += block.duration
-    //   })
-    // })
-    // studyTimePerSubject = totalFreeTime > totalStudyTime ? 
-    //                           this.criteria.weeklyStudyTime : totalFreeTime / this.subjects.length
-    // this.subjects.forEach(subject => {
-    //   freeBlocks = this.allocateStudy(subject, freeBlocks, studyTimePerSubject)
-    // })
+    freeBlocks.forEach(day => {
+      day.forEach(block => {
+        totalFreeTime += block.duration
+      })
+    })
+    studyTimePerSubject = totalFreeTime > totalStudyTime ? 
+                              this.criteria.weeklyStudyTime : totalFreeTime / this.subjects.length
+    this.subjects.forEach(subject => {
+      freeBlocks = this.allocateStudy(subject, freeBlocks, studyTimePerSubject)
+    })
   }
 
   allocateStudy(subject, blocks, studyTimePerSubject) {
@@ -78,26 +77,26 @@ class ScheduleService {
     // tries to schedule study to the same days as subject classes
     classDays.forEach(day => {
       let bd = blocks[day]
-      if (this.checkBlocks(bd, dailyStudy, subject)) {
+      if (bd && this.checkBlocks(bd, dailyStudy, subject)) {
         daysLeft = daysLeft - 1
         daysTaken.push(day)
       }
     })
 
-    // tries to schedule any day if class days were unavailable
+    // tries to schedule any day (except if already taken) if class days were unavailable
     if (daysLeft > 0) {
-      for (let day = 0; day < 7; day++) {
+      for (let day = 0; day < 7 && daysLeft > 0; day++) {
         let bd = blocks[day]
         if (daysTaken.indexOf(day) > -1)
           continue
-        if (this.checkBlocks(bd, dailyStudy, subject))
+        if (bd && this.checkBlocks(bd, dailyStudy, subject))
           daysLeft = daysLeft - 1
       }
     }
 
     // case there was no block with duration bigger than daily study
     if (daysLeft > 0) {
-      for (let day = 0; day < 7; day++) {
+      for (let day = 0; day < 7 && daysLeft > 0; day++) {
         let studyTimeLeft = daysLeft * dailyStudy
         let bd = blocks[day]
         for (let i = 0; i < bd.length && studyTimeLeft > 0; i++) {
