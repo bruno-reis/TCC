@@ -91,5 +91,12 @@ angular.module('app.routes', [])
         templateUrl: 'templates/grades.html',
         controller: 'gradesCtrl as vm'
       })
+
+      .state('schedules', {
+        url: '/schedules',
+        templateUrl: 'templates/schedules.html',
+        controller: 'schedulesCtrl as vm'
+      })
+
     $urlRouterProvider.otherwise('/subjects/list')
   });

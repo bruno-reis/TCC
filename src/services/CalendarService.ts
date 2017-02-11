@@ -111,6 +111,13 @@ class CalendarService {
     this.storeEvents()
   }
 
+  deleteEventByType(type) {
+    this.events = this.events.filter(ev => {
+      return ev.type != type
+    })
+    this.storeEvents()
+  }
+
   changeEventVisibility(ownerId, eventType, startTime, endTime, hidden) {
     let event = this.events.filter(ev => {
       return (ev.ownerId == ownerId) && (ev.type == eventType) &&
@@ -127,6 +134,7 @@ class CalendarService {
            date1.getHours() == date2.getHours() &&
            date1.getMinutes() == date2.getMinutes()
   }
+
 }
 
 angular.module('app.services')
