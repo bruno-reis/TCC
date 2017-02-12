@@ -17,6 +17,14 @@
         <span class="input-label">Data Fim</span>
         <input type="date" ng-model="vm.input.endDate" required>
       </label>
+      <label class="item item-input item-select">
+        <span class="input-label">Dificuldade</span>
+        <select ng-model="vm.input.difficulty" required>
+          <option value="easy">Fácil</option>
+          <option value="regular" selected="selected">Regular</option>
+          <option value="difficult">Difícil</option>
+        </select>
+      </label>
       <button class="button icon-left button-block button-positive"
               ng-click="vm.addSubject()" ng-disabled="form.$invalid">Adicionar
       </button>
